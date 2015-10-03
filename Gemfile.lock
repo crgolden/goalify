@@ -41,6 +41,7 @@ GEM
     autoprefixer-rails (6.0.3)
       execjs
       json
+    backports (3.6.6)
     bcrypt (3.1.10)
     bootstrap-sass (3.3.5.1)
       autoprefixer-rails (>= 5.0.0.1)
@@ -54,6 +55,7 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -84,6 +86,8 @@ GEM
     diff-lcs (1.2.5)
     docile (1.1.5)
     erubis (2.7.0)
+    ethon (0.8.0)
+      ffi (>= 1.3.0)
     execjs (2.6.0)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
@@ -94,13 +98,24 @@ GEM
       i18n (~> 0.5)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
+    faraday_middleware (0.10.0)
+      faraday (>= 0.7.4, < 0.10)
+    ffi (1.9.10)
     font-awesome-sass (4.4.0)
       sass (>= 3.2)
+    gh (0.14.0)
+      addressable
+      backports
+      faraday (~> 0.8)
+      multi_json (~> 1.0)
+      net-http-persistent (>= 2.7)
+      net-http-pipeline
     gherkin (2.12.2)
       multi_json (~> 1.3)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     hashie (3.4.2)
+    highline (1.7.7)
     i18n (0.7.0)
     jbuilder (2.3.2)
       activesupport (>= 3.0.0, < 5)
@@ -111,10 +126,13 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.3)
     jwt (1.5.1)
+    launchy (2.4.3)
+      addressable (~> 2.3)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
+    method_source (0.8.2)
     mime-types (2.6.2)
     mini_portile (0.6.2)
     minitest (5.8.1)
@@ -122,6 +140,8 @@ GEM
     multi_test (0.1.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
+    net-http-persistent (2.9.4)
+    net-http-pipeline (1.0.1)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     oauth2 (1.0.0)
@@ -146,7 +166,14 @@ GEM
       omniauth (~> 1.2)
     orm_adapter (0.5.0)
     pg (0.18.3)
+    pry (0.9.12.6)
+      coderay (~> 1.0)
+      method_source (~> 0.8)
+      slop (~> 3.4)
     puma (2.14.0)
+    pusher-client (0.6.2)
+      json
+      websocket (~> 1.0)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -219,6 +246,7 @@ GEM
       json (~> 1.8)
       simplecov-html (~> 0.10.0)
     simplecov-html (0.10.0)
+    slop (3.6.0)
     spring (1.4.0)
     spring-commands-rspec (1.0.4)
       spring (>= 0.9.1)
@@ -231,8 +259,21 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.1)
+    travis (1.8.0)
+      addressable (~> 2.3)
+      backports
+      faraday (~> 0.9)
+      faraday_middleware (~> 0.9, >= 0.9.1)
+      gh (~> 0.13)
+      highline (~> 1.6)
+      launchy (~> 2.1)
+      pry (~> 0.9, < 0.10)
+      pusher-client (~> 0.4)
+      typhoeus (~> 0.6, >= 0.6.8)
     turbolinks (2.5.3)
       coffee-rails
+    typhoeus (0.8.0)
+      ethon (>= 0.8.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     tzinfo-data (1.2015.6)
@@ -242,6 +283,7 @@ GEM
       json (>= 1.8.0)
     warden (1.2.3)
       rack (>= 1.0)
+    websocket (1.2.2)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -275,6 +317,7 @@ DEPENDENCIES
   simplecov
   spring
   spring-commands-rspec
+  travis
   turbolinks
   tzinfo-data
   uglifier

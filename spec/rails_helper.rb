@@ -17,7 +17,6 @@ RSpec.configure do |config|
 
   config.include Devise::TestHelpers, type: :controller # sign_in, sign_out methods in controller specs
   config.include FactoryGirl::Syntax::Methods # create, build, etc. methods without FactoryGirl prefix
-  config.include Features::SessionHelpers, type: :feature
   config.include Omniauth::Mock
   config.include Warden::Test::Helpers # login_as, logout methods in Capybara specs
 

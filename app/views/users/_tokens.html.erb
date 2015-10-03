@@ -1,0 +1,15 @@
+<table class="table table-striped">
+  <tr class="row">
+    <th>Image:</th>
+    <th>Provider:</th>
+    <th colspan="2">Expires at:</th>
+  </tr>
+  <% @user.tokens.accessible_by(current_ability).each do |token| %>
+      <tr class="row">
+        <td><%= image_tag token.image, size: '50x50' %></td>
+        <td><%= link_to token.provider, token %></td>
+        <td><%= token.expires_at.to_formatted_s(:short) %></td>
+        <td><%= link_to 'Delete', token, method: :delete, data: {confirm: 'Are you sure?'} if can? :destroy, token %></td>
+      </tr>
+  <% end %>
+</table>

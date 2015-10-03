@@ -1,0 +1,10 @@
+language: ruby
+script:
+- export RAILS_ENV=test
+- bundle exec rake db:create db:schema:load db:test:prepare
+- bundle exec rake cucumber
+deploy:
+  provider: heroku
+  api_key:
+    secure: ihtyRE7+Kj/jNMwX8MWqadtsDz7jknDcgG8HqpjAN9Z01dH6cBbXOUfMIgnkwVD7rEnttQ6s3GSt1KF1a74k+cKPWUOIUDhgkjA6jzr6BnjAIGbEgVOJJ9W2QNH9rRqWm/x76nVfVYLZ6M1a/8sH2at5KZLfzsFPjiBbsDXIxGX0TmZ6hcscAyGZ0YFxtJR878wY1kOEoWy/hkEQHFiuj49aPvwfc+UKZBFqZHAVbmRCq3J7jhAjBRm06X60dNtPmTqNTNvOYFG6w6fkxXzhYpkfhVBot3mn1oMoBWh2ExCoJ9f5uWlDH6Z9t87hjx9so+ERyWoUKR6ZgIqsT6FGE44iwwi3wKeDBys2QY6QlQA1Tv8QhT1obCCqFXb8GDZ735Hgjb/L+B/uXpnWgh7UYr2d+/E4U+6mR45fjmNxFb/27QD67SD/8fsDmkQLjpab/V0G57+J4u2wE7U9KQoV5d5PtgDDPsT3zFC+QNQsguZHnr396w9B370CgqKo8o3b2J/rMUzpAN3aFuPeuh95+jY0/42LTP97Lpg3KwQhBzaSzZULJ69izr5XboltlqHpqFMFYWa5JK8TZAb3JQP45hZ9H35WshM5EbicQDcixj585UPrnvnVq+AdqNrjHF6LRn83KQcO0f+THpWQ2MuLNEfvpN4yh7olu6xY7TVSsjM=
+  app: deeprog

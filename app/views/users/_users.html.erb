@@ -1,0 +1,26 @@
+<table class="table table-striped">
+  <tr class="row">
+    <th>Name:</th>
+    <th colspan="3">Email:</th>
+  </tr>
+  <% @users.each do |user| %>
+      <tr class="row">
+        <td><%= link_to user.name, user %></td>
+        <td><%= mail_to user.email, user.email %></td>
+        <td>
+          <% if user_signed_in? && current_user.admin? %>
+              <%= link_to 'Edit', edit_user_path(user) %>
+          <% else %>
+              <%= link_to 'Edit', edit_user_registration_path if can? :update, user %>
+          <% end %></td>
+        <td>
+          <% if user_signed_in? && current_user.admin? %>
+              <%= link_to 'Deactivate', user, method: :delete,
+                          data: {confirm: 'Are you sure?'} %>
+          <% else %>
+              <%= link_to 'Deactivate', cancel_user_registration_path,
+                          data: {confirm: 'Are you sure?'} if can? :destroy, user %>
+          <% end %></td>
+      </tr>
+  <% end %>
+</table>

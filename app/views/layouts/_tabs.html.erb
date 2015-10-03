@@ -1,0 +1,32 @@
+<ul class="nav nav-tabs" role="tablist">
+  <% if current_page?(goals_path) %>
+      <li class="active"><%= link_to 'All Goals', goals_path %></li>
+  <% elsif current_page?(users_path) %>
+      <li class="active"><%= link_to 'All Users', users_path %></li>
+  <% elsif user_signed_in? && current_page?(authenticated_root_path) %>
+      <li class="active"><%= link_to 'Home', authenticated_root_path %></li>
+  <% elsif current_page?(root_path) %>
+      <li class="active"><%= link_to 'Home', root_path %></li>
+  <% elsif current_page?(new_goal_path) %>
+      <li class="active"><%= link_to 'New Goal', new_goal_path %></li>
+  <% elsif current_page?(new_user_path) %>
+      <li class="active"><%= link_to 'New User', new_user_path %></li>
+  <% elsif current_page?(pages_about_path) %>
+      <li class="active"><%= link_to 'About', pages_about_path %></li>
+  <% elsif current_page?(new_user_session_path) %>
+      <li class="active"><%= link_to 'Sign in', new_user_session_path %></li>
+  <% elsif current_page?(new_user_registration_path) %>
+      <li class="active"><%= link_to 'Sign up', new_user_registration_path %></li>
+  <% elsif current_page?(edit_user_registration_path) %>
+      <li class="active"><%= render 'layouts/tabs/user' if @user %></li>
+  <% elsif params[:id] %>
+      <%= render 'layouts/tabs/goal' if @goal %>
+      <%= render 'layouts/tabs/user' if @user %>
+      <%= render 'layouts/tabs/comment' if @comment %>
+      <%= render 'layouts/tabs/token' if @token %>
+  <% elsif params[:goal_id] %>
+      <%= render 'layouts/tabs/comments' if @goal.comments.accessible_by(current_ability).present? %>
+  <% elsif params[:user_id] %>
+      <%= render 'layouts/tabs/tokens' if @user.tokens.accessible_by(current_ability).present? %>
+  <% end %>
+</ul>

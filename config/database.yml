@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+  database: goalify_development
+
+test: &test
+  <<: *default
+  database: goalify_test
+
+production:
+  <<: *default
+  database: goalify_production
+cucumber:
+  <<: *test

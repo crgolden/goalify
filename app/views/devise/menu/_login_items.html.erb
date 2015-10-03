@@ -1,0 +1,16 @@
+<% if user_signed_in? %>
+    <li><%= link_to(destroy_user_session_path, :method => :delete) do %>
+          <i class="glyphicon glyphicon-log-out"></i> Sign out
+      <% end %></li>
+<% else %>
+    <li><%= link_to new_user_session_path do %>
+          <i class="glyphicon glyphicon-log-in"></i> Sign in
+      <% end %></li>
+    <li class="divider"></li>
+    <li><%= link_to user_omniauth_authorize_path(:facebook) do %>
+          <i class="fa fa-facebook-square"></i> Sign in with Facebook
+      <% end %></li>
+    <li><%= link_to user_omniauth_authorize_path(:google_oauth2) do %>
+          <i class="fa fa-google-plus-square"></i> Sign in with Google
+      <% end %></li>
+<% end %>

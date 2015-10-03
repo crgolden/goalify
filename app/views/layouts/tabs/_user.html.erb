@@ -1,0 +1,37 @@
+<li><%= link_to 'All Users', users_path %></li>
+<% if current_page?(@user) %>
+    <li class="active"><%= link_to 'View User', @user %></li>
+<% else %>
+    <li><%= link_to 'View User', @user %></li>
+<% end %>
+<% if can? :update, @user %>
+    <% if current_page?(edit_user_path(@user)) %>
+        <% if user_signed_in? && current_user.admin? %>
+            <li class="active"><%= link_to 'Edit User', edit_user_path(@user) %></li>
+        <% else %>
+            <li class="active"><%= link_to 'Edit User', edit_user_registration_path %></li>
+        <% end %>
+    <% elsif current_page?(edit_user_registration_path) %>
+        <% if user_signed_in? && current_user.admin? %>
+            <li class="active"><%= link_to 'Edit User', edit_user_path(@user) %></li>
+        <% else %>
+            <li class="active"><%= link_to 'Edit User', edit_user_registration_path %></li>
+        <% end %>
+    <% else %>
+        <% if user_signed_in? && current_user.admin? %>
+            <li><%= link_to 'Edit User', edit_user_path(@user) %></li>
+        <% else %>
+            <li><%= link_to 'Edit User', edit_user_registration_path %></li>
+        <% end %>
+    <% end %>
+<% end %>
+<% if user_signed_in? && current_user.admin? %>
+    <li><%= link_to 'Deactivate User', @user, method: :delete,
+                    data: {confirm: 'Are you sure?'} %></li>
+<% else %>
+    <li><%= link_to 'Deactivate User', cancel_user_registration_path,
+                    data: {confirm: 'Are you sure?'} if can? :destroy, @user %></li>
+<% end %>
+<% if @user.tokens.accessible_by(current_ability).present? %>
+    <li><%= link_to 'All Tokens', user_tokens_path(@user) %></li>
+<% end %>

@@ -1,0 +1,14 @@
+<table class="table table-striped">
+  <tr class="row">
+    <th colspan="3">Title:</th>
+    <th>User:</th>
+  </tr>
+  <% @goals.accessible_by(current_ability).each do |goal| %>
+      <tr class="row">
+        <td><%= link_to goal.title, goal %></td>
+        <td><%= link_to 'Edit', edit_goal_path(goal) if can? :update, goal %></td>
+        <td><%= link_to 'Delete', goal, method: :delete, data: {confirm: 'Are you sure?'} if can? :destroy, goal %></td>
+        <td><%= link_to goal.user.name, goal.user %></td>
+      </tr>
+  <% end %>
+</table>

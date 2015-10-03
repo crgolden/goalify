@@ -1,0 +1,39 @@
+<table class="table">
+  <tr class="row">
+    <th>Name:</th>
+    <th colspan="3">Email:</th>
+  </tr>
+  <tr class="row">
+    <td><%= link_to @user.name, @user %></td>
+    <td><%= mail_to @user.email, @user.email %></td>
+    <td>
+      <% if user_signed_in? && current_user.admin? %>
+          <%= link_to 'Edit', edit_user_path(@user) %>
+      <% else %>
+          <%= link_to 'Edit', edit_user_registration_path if can? :update, @user %>
+      <% end %></td>
+    <td>
+      <% if user_signed_in? && current_user.admin? %>
+          <%= link_to 'Deactivate User', @user, method: :delete,
+                      data: {confirm: 'Are you sure?'} %>
+      <% else %>
+          <%= link_to 'Deactivate User', cancel_user_registration_path,
+                      data: {confirm: 'Are you sure?'} if can? :destroy, @user %>
+      <% end %></td>
+  </tr>
+  <tr class="row">
+    <td colspan="4">
+      <% if user_signed_in? && current_user.admin? %>
+          <p>Role: <%= @user.role %></p>
+      <% end %>
+
+      <p>Joined on: <%= @user.created_at.to_formatted_s(:short) %></p>
+
+      <% if @user.current_sign_in_at %>
+          <p>Last logged in on: <%= @user.current_sign_in_at.to_formatted_s(:short) %></p>
+      <% else %>
+          <p>Never logged in.</p>
+      <% end %>
+      <p>No. times logged in: <%= @user.sign_in_count %></p></td>
+  </tr>
+</table>

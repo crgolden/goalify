@@ -1,0 +1,18 @@
+<li><%= link_to 'All Goals', goals_path %></li>
+<li><%= link_to 'View Goal', @comment.goal %></li>
+<li><%= link_to 'All Comments', goal_comments_path(@comment.goal) %></li>
+<% if current_page?(@comment) %>
+    <li class="active"><%= link_to 'View Comment', @comment %></li>
+<% else %>
+    <li><%= link_to 'View Comment', @comment %></li>
+<% end %>
+<% if can? :update, @comment %>
+    <% if current_page?(edit_comment_path @comment) %>
+        <li class="active"><%= link_to 'Edit Comment', edit_comment_path(@comment) %></li>
+    <% else %>
+        <li><%= link_to 'Edit Comment', edit_comment_path(@comment) %></li>
+    <% end %>
+<% end %>
+<% if can? :destroy, @comment %>
+    <li><%= link_to 'Delete Comment', @comment, method: :delete, data: {confirm: 'Are you sure?'} %></li>
+<% end %>

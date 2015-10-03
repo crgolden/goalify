@@ -1,0 +1,7 @@
+<% if @goal.comments.accessible_by(current_ability).present? %>
+    <%= render layout: 'layouts/panel', locals: {title: 'Viewing Goal Comments'} do %>
+        <%= render 'goals/comments' %>
+    <% end %>
+<% else %>
+    <% flash[:notice] = 'Create some comments for this Goal!' %>
+<% end %>

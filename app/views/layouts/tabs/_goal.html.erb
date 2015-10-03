@@ -1,0 +1,19 @@
+<li><%= link_to 'All Goals', goals_path %></li>
+<% if current_page?(@goal) %>
+    <li class="active"><%= link_to 'View Goal', @goal %></li>
+<% else %>
+    <li><%= link_to 'View Goal', @goal %></li>
+<% end %>
+<% if can? :update, @goal %>
+    <% if current_page?(edit_goal_path @goal) %>
+        <li class="active"><%= link_to 'Edit Goal', edit_goal_path(@goal) %></li>
+    <% else %>
+        <li><%= link_to 'Edit Goal', edit_goal_path(@goal) %></li>
+    <% end %>
+<% end %>
+<% if can? :destroy, @goal %>
+    <li><%= link_to 'Delete Goal', @goal, method: :delete, data: {confirm: 'Are you sure?'} %></li>
+<% end %>
+<% if @goal.comments.accessible_by(current_ability).present? %>
+    <li><%= link_to 'All Comments', goal_comments_path(@goal) %></li>
+<% end %>

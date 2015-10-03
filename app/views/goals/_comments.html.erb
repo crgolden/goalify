@@ -1,0 +1,14 @@
+<table class="table table-striped">
+  <tr class="row">
+    <th colspan="3">Body:</th>
+    <th>User:</th>
+  </tr>
+  <% @goal.comments.accessible_by(current_ability).each do |comment| %>
+      <tr class="row">
+        <td><%= link_to comment.body, comment %></td>
+        <td><%= link_to 'Edit', edit_comment_path(comment) if can? :update, comment %></td>
+        <td><%= link_to 'Delete', comment, method: :delete, data: {confirm: 'Are you sure?'} if can? :destroy, comment %></td>
+        <td><%= link_to comment.user.name, comment.user %></td>
+      </tr>
+  <% end %>
+</table>

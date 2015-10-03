@@ -1,0 +1,18 @@
+<%= render layout: 'layouts/panel', locals: {title: 'Viewing User'} do %>
+    <%= render @user %>
+<% end %>
+<% if @user.tokens.accessible_by(current_ability).present? %>
+    <%= render layout: 'layouts/panel', locals: {title: 'Viewing User Tokens'} do %>
+        <%= render 'users/tokens' %>
+    <% end %>
+<% end %>
+<% if @user.goals.accessible_by(current_ability).present? %>
+    <%= render layout: 'layouts/panel', locals: {title: 'Viewing User Goals'} do %>
+        <%= render 'users/goals' %>
+    <% end %>
+<% end %>
+<% if @user.comments.accessible_by(current_ability).present? %>
+    <%= render layout: 'layouts/panel', locals: {title: 'Viewing User Comments'} do %>
+        <%= render 'users/comments' %>
+    <% end %>
+<% end %>

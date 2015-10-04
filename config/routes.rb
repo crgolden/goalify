@@ -4,18 +4,20 @@ Rails.application.routes.draw do
   authenticated :user do
     root to: 'pages#home', as: 'authenticated_root'
   end
-  root 'pages#welcome'
 
+  root 'pages#welcome'
   get 'pages/about' => 'pages#about'
 
   resources :goals do
     resources :comments, shallow: true
   end
 
+  resources :users, only: [:show, :index, :destroy] do
+    resources :tokens, only: [:index]
+  end
+
   scope '/admin' do
-    resources :users do
-      resources :tokens, only: [:index]
-    end
+    resources :users, only: [:edit, :update, :create, :new]
   end
 
   resources :tokens, only: [:show, :destroy]
@@ -35,4 +37,22 @@ Rails.application.routes.draw do
 #   resources :posts, concerns: :toggleable
 #   resources :photos, concerns: :toggleable
 
+  namespace :api, defaults: {format: 'json'} do
+    namespace :v1 do
+
+      resources :goals do
+        resources :comments, shallow: true
+      end
+
+      resources :users, only: [:show, :index, :destroy] do
+        resources :tokens, only: [:index]
+      end
+
+      scope '/admin' do
+        resources :users, only: [:edit, :update, :create, :new]
+      end
+
+      resources :tokens, only: [:show, :destroy]
+    end
+  end
 end

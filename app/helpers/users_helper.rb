@@ -1,44 +1,29 @@
 module UsersHelper
   def create_success
-    flash[:success] = 'User successfully created'
-    respond_to do |format|
-      format.html { redirect_to @user }
-      format.json { render :show, status: :created, user: @user }
-    end
+    flash[:success] = 'User successfully created.'
+    redirect_to @user
   end
 
   def create_errors
-    flash[:error] = 'There was a problem creating the user'
-    respond_to do |format|
-      format.html { render :new }
-      format.json { render json: @user.errors, status: :unprocessable_entity }
-    end
+    flash[:error] = 'There was a problem creating the user.'
+    render :new
   end
 
   def update_success
     sign_in(@user == current_user ? @user : current_user, bypass: true)
     flash[:success] = 'User was successfully updated.'
-    respond_to do |format|
-      format.html { redirect_to @user }
-      format.json { render :show, status: :ok, user: @user }
-    end
+    redirect_to @user
   end
 
   def update_errors
     sign_in(@user == current_user ? @user : current_user, bypass: true)
     flash[:error] = 'There was a problem updating the user.'
-    respond_to do |format|
-      format.html { render :edit }
-      format.json { render json: @user.errors, status: :unprocessable_entity }
-    end
+    render :edit
   end
 
   def destroy_success
     flash[:success] = 'User was successfully deleted.'
-    respond_to do |format|
-      format.html { redirect_to users_path }
-      format.json { head :no_content }
-    end
+    redirect_to users_path
   end
 
   protected

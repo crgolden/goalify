@@ -29,7 +29,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user.soft_delete if destroy_success
+    destroy_success if @user.soft_delete
   end
 
   private

@@ -28,7 +28,7 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'simplecov', require: false
   gem 'spring' # Spring speeds up development by keeping your application running in the background.
-  gem 'spring-commands-rspec'
+  # gem 'spring-commands-rspec'
   gem 'travis'
   # gem 'web-console' # Access an IRB console on exception pages or by using <%= console %> in views
   # gem 'guard-rspec' # Watches for saved spec files and triggers events automatically

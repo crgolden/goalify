@@ -3,7 +3,7 @@ feature 'User delete', :devise do
   scenario 'user can delete own account' do
     user = create :user
     login_as(user)
-    visit authenticated_root_path
+    visit root_path
     click_link 'Edit registration'
     expect(page).to have_content 'Editing User'
     expect { User.destroy(user.id) }.to change { User.count }.by(-1)

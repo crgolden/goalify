@@ -1,6 +1,8 @@
 == README
 
 {<img src="https://travis-ci.org/deeprog/goalify.svg?branch=master" alt="Build Status" />}[https://travis-ci.org/deeprog/goalify]
+{<img src="https://codeclimate.com/github/deeprog/goalify/badges/gpa.svg" />}[https://codeclimate.com/github/deeprog/goalify]
+{<img src="https://codeclimate.com/github/deeprog/goalify/badges/coverage.svg" />}[https://codeclimate.com/github/deeprog/goalify/coverage]
 
 This README would normally document whatever steps are necessary to get the
 application up and running.

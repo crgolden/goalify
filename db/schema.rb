@@ -15,17 +15,18 @@ ActiveRecord::Schema.define(version: 20150918224950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension 'uuid-ossp'
 
-  create_table "comments", force: :cascade do |t|
-    t.integer  "goal_id"
-    t.integer  "user_id"
+  create_table "comments", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.uuid "goal_id"
+    t.uuid "user_id"
     t.text     "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "goals", force: :cascade do |t|
-    t.integer  "user_id"
+  create_table "goals", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.uuid "user_id"
     t.string   "title"
     t.text     "text"
     t.references "parent", index: true
@@ -33,8 +34,8 @@ ActiveRecord::Schema.define(version: 20150918224950) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "tokens", force: :cascade do |t|
-    t.integer  "user_id"
+  create_table "tokens", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
+    t.uuid "user_id"
     t.string   "access_token"
     t.string   "refresh_token"
     t.string   "provider"
@@ -45,7 +46,7 @@ ActiveRecord::Schema.define(version: 20150918224950) do
     t.datetime "updated_at",    null: false
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
     t.integer  "role",                   default: 0,  null: false
     t.integer  "status",                 default: 0,  null: false
     t.string   "email",                  default: "", null: false
@@ -69,7 +70,6 @@ ActiveRecord::Schema.define(version: 20150918224950) do
     t.datetime "locked_at"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
-    t.datetime "deleted_at"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

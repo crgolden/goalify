@@ -11,10 +11,8 @@
         new_user_registration_path
       when /^the (Goalify )?Home\s?page$/ then
         root_path
-      when /^the My Goals page$/ then
-        pages_my_goals_path
       when /^the About page$/ then
-        pages_about_path
+        page_path('about')
       when /^the new Goal page$/ then
         new_goal_path
       when /^the edit Goal page for "(.*)"$/ then

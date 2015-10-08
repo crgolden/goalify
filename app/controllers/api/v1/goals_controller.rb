@@ -1,9 +1,8 @@
 module Api
   module V1
-    class GoalsController < ApplicationController
+    class GoalsController < ApiController
       include GoalsHelper
       load_resource
-      acts_as_token_authentication_handler_for User, except: [:show, :index], fallback: :exception
 
       def index
       end
@@ -16,7 +15,7 @@ module Api
           @goal.user = current_user
           @goal.save ? create_success : create_errors
         else
-          render json: {message: 'Not authorized'}, status: 401
+          render json: {message: 'Unauthorized'}, status: 401
         end
       end
 
@@ -24,15 +23,15 @@ module Api
         if user_signed_in? && (current_user.admin? || (current_user == @goal.user))
           @goal.update(goal_params) ? update_success : update_errors
         else
-          render json: {message: 'Not authorized'}, status: 401
+          render json: {message: 'Unauthorized'}, status: 401
         end
       end
 
       def destroy
         if user_signed_in? && (current_user.admin? || (current_user == @goal.user))
-          destroy_success if @goal.destroy
+          @goal.destroy ? destroy_success : destroy_errors
         else
-          render json: {message: 'Not authorized'}, status: 401
+          render json: {message: 'Unauthorized'}, status: 401
         end
       end
 
@@ -40,6 +39,12 @@ module Api
 
       def goal_params
         params.require(:goal).permit(:title, :text)
+      end
+
+      def query_params
+        # this assumes that an album belongs to a user and has a :user_id
+        # allowing us to filter by this
+        params.permit(:user_id, :title)
       end
     end
   end

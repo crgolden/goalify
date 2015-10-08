@@ -1,9 +1,8 @@
 module Api
   module V1
-    class UsersController < ApplicationController
+    class UsersController < ApiController
       include UsersHelper
       load_resource
-      acts_as_token_authentication_handler_for User, except: [:show, :index], fallback: :exception
 
       def index
       end
@@ -15,7 +14,7 @@ module Api
         if user_signed_in? && current_user.admin?
           @user.save ? create_success : create_errors
         else
-          render json: {message: 'Not authorized'}, status: 401
+          render json: {message: 'Unauthorized'}, status: 401
         end
       end
 
@@ -28,15 +27,15 @@ module Api
             @user.update_without_password(user_params) ? update_success : update_errors
           end
         else
-          render json: {message: 'Not authorized'}, status: 401
+          render json: {message: 'Unauthorized'}, status: 401
         end
       end
 
       def destroy
         if user_signed_in? && (current_user.admin? || (current_user == @user))
-          destroy_success if @user.soft_delete
+          @user.soft_delete ? destroy_success : destroy_errors
         else
-          render json: {message: 'Not authorized'}, status: 401
+          render json: {message: 'Unauthorized'}, status: 401
         end
       end
 
@@ -46,6 +45,10 @@ module Api
         accessible = [:name, :email]
         accessible << [:password, :password_confirmation] unless params[:user][:password].blank?
         params.require(:user).permit(accessible)
+      end
+
+      def query_params
+        params.permit(:name)
       end
     end
   end

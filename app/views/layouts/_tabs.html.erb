@@ -3,16 +3,14 @@
       <li class="active"><%= link_to 'All Goals', goals_path %></li>
   <% elsif current_page?(users_path) %>
       <li class="active"><%= link_to 'All Users', users_path %></li>
-  <% elsif user_signed_in? && current_page?(authenticated_root_path) %>
-      <li class="active"><%= link_to 'Home', authenticated_root_path %></li>
-  <% elsif current_page?(root_path) %>
-      <li class="active"><%= link_to 'Home', root_path %></li>
+  <% elsif current_page?(page_path('home')) %>
+      <li class="active"><%= link_to 'Home', page_path('home') %></li>
   <% elsif current_page?(new_goal_path) %>
       <li class="active"><%= link_to 'New Goal', new_goal_path %></li>
   <% elsif current_page?(new_user_path) %>
       <li class="active"><%= link_to 'New User', new_user_path %></li>
-  <% elsif current_page?(pages_about_path) %>
-      <li class="active"><%= link_to 'About', pages_about_path %></li>
+  <% elsif current_page?(page_path('about')) %>
+      <li class="active"><%= link_to 'About', page_path('about') %></li>
   <% elsif current_page?(new_user_session_path) %>
       <li class="active"><%= link_to 'Sign in', new_user_session_path %></li>
   <% elsif current_page?(new_user_registration_path) %>

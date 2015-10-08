@@ -5,6 +5,7 @@ gem 'coffee-rails' # Use CoffeeScript for .coffee assets and views
 gem 'devise'
 gem 'faker'
 gem 'font-awesome-sass'
+gem 'high_voltage'
 gem 'jbuilder' # Build JSON APIs with ease
 gem 'jquery-rails' # Use jquery as the JavaScript library
 gem 'omniauth'
@@ -22,13 +23,16 @@ gem 'tzinfo-data' # Needed for rake to work in Windows
 gem 'uglifier' # Use Uglifier as compressor for JavaScript assets
 group :development, :test do
   gem 'byebug' # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'codeclimate-test-reporter', group: :test, require: nil
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'factory_girl_rails'
+  gem 'json-schema'
   gem 'rspec-rails'
+  gem 'shoulda-matchers'
   gem 'simplecov', require: false
   gem 'spring' # Spring speeds up development by keeping your application running in the background.
-  # gem 'spring-commands-rspec'
+  gem 'spring-commands-rspec'
   gem 'travis'
   # gem 'web-console' # Access an IRB console on exception pages or by using <%= console %> in views
   # gem 'guard-rspec' # Watches for saved spec files and triggers events automatically

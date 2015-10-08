@@ -1,10 +1,9 @@
 module Api
   module V1
-    class CommentsController < ApplicationController
+    class CommentsController < ApiController
       include CommentsHelper
       load_resource :goal
       load_resource :comment, through: :goal, shallow: true
-      acts_as_token_authentication_handler_for User, except: [:show, :index], fallback: :exception
 
       def index
       end
@@ -18,7 +17,7 @@ module Api
           @comment.user = current_user
           @comment.save ? create_success : create_errors
         else
-          render json: {message: 'Not authorized'}, status: 401
+          render json: {message: 'Unauthorized'}, status: 401
         end
       end
 
@@ -26,15 +25,15 @@ module Api
         if user_signed_in? && (current_user.admin? || (current_user == @comment.user))
           @comment.update(comment_params) ? update_success : update_errors
         else
-          render json: {message: 'Not authorized'}, status: 401
+          render json: {message: 'Unauthorized'}, status: 401
         end
       end
 
       def destroy
         if user_signed_in? && (current_user.admin? || (current_user == @comment.user))
-          destroy_success if @comment.destroy
+          @comment.destroy ? destroy_success : destroy_errors
         else
-          render json: {message: 'Not authorized'}, status: 401
+          render json: {message: 'Unauthorized'}, status: 401
         end
       end
 

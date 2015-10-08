@@ -1,3 +1,3 @@
-json.goals @goals do |goal|
+json.array! @goals do |goal|
   json.partial! 'goal', goal: goal
 end

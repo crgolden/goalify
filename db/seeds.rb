@@ -5,18 +5,18 @@ end
 
 50.times do
   Token.create access_token: 'access_token', refresh_token: 'refresh_token',
-               provider: Faker::Lorem.word, uid: Faker::Number.between(1,100), expires_at: Time.now,
-               user: User.find(Faker::Number.between(1, 50)), image: Faker::Avatar.image
+               provider: Faker::Lorem.word, uid: Faker::Number.between(1, 100), expires_at: Time.now,
+               user: User.offset(rand(User.count)).first, image: Faker::Avatar.image
 end
 
 250.times do
   Goal.create title: Faker::Lorem.word, text: Faker::Lorem.word,
-              user: User.find(Faker::Number.between(1, 50))
+              user: User.offset(rand(User.count)).first
 end
 
 500.times do
-  Comment.create body: Faker::Lorem.paragraph, user: User.find(Faker::Number.between(1, 50)),
-      goal: Goal.find(Faker::Number.between(1, 50))
+  Comment.create body: Faker::Lorem.paragraph, user: User.offset(rand(User.count)).first,
+                 goal: Goal.offset(rand(Goal.count)).first
 end
 
 User.find_or_create_by! email: ENV['ADMIN_EMAIL'] do |user|

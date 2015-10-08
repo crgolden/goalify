@@ -1,0 +1,110 @@
+{
+  "definitions": {
+    "authentication_token": {
+      "type": "string"
+    },
+    "confirmation_sent_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "confirmation_token": {
+      "type": "string"
+    },
+    "confirmed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "current_sign_in_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "current_sign_in_ip": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "email": {
+      "type": "string"
+    },
+    "encrypted_password": {
+      "type": "string"
+    },
+    "failed_attempts": {
+      "type": "integer"
+    },
+    "id": {
+      "type": "string"
+    },
+    "last_sign_in_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_sign_in_ip": {
+      "type": "string"
+    },
+    "locked_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "name": {
+      "type": "string"
+    },
+    "remember_created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reset_password_sent_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reset_password_token": {
+      "type": "string"
+    },
+    "role": {
+      "type": "integer"
+    },
+    "sign_in_count": {
+      "type": "integer"
+    },
+    "status": {
+      "type": "integer"
+    },
+    "unconfirmed_email": {
+      "type": "string"
+    },
+    "unlock_token": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "type": "object",
+  "required": [
+    "user"
+  ],
+  "properties": {
+    "user": {
+      "type": "object",
+      "required": [
+        "email",
+        "id",
+        "name"
+      ],
+      "properties": {
+        "email": {
+          "$ref": "#/definitions/email"
+        },
+        "id": {
+          "$ref": "#/definitions/id"
+        },
+        "name": {
+          "$ref": "#/definitions/name"
+        }
+      }
+    }
+  }
+}

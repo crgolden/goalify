@@ -1,83 +1,43 @@
-describe UsersController do
+describe Api::V1::UsersController do
+  include ApiHelper
 
   before :each do
     @user = create :user
+    @header = {'X-User-Email' => @user.email, 'X-User-Token' => @user.authentication_token}
   end
 
-  context 'When the user is not signed in' do
+  context 'Without a valid authenticity_token' do
 
-    it 'shows all the Users' do
-      post :index
+    it 'returns a user' do
+      api_get "users/#{@user.id}"
+      expect(response.status).to eq 200
+      expect(response).to match_response_schema('user')
+    end
+
+    it 'returns all the users' do
+      api_get 'users'
       expect(response.status).to eq 200
       expect(response).to render_template 'index'
     end
 
-    it 'should show a User' do
-      post :show, id: @user.id
-      expect(response.status).to eq 200
-      expect(response).to render_template 'show'
-      expect(assigns :user).to eq @user
-    end
-
   end
 
-  context 'When the user is signed in' do
+  context 'With a valid authenticity_token' do
 
-    before :each do
-      Rails.application.env_config['devise.mapping'] = Devise.mappings[:user]
-      sign_in @user
+    # it 'updates a user' do
+    #   api_put "admin/users/#{@user.id}", {'X-User-Email' => @user.email, 'X-User-Token' => @user.authentication_token}
+    #   expect(response.status).to eq 200
+    #   expect(response).to match_response_schema('user')
+    # end
+
+    context 'as an admin' do
+
+      # it 'creates a user' do
+      #   api_post 'admin/users', {'X-User-Email' => @user.email, 'X-User-Token' => @user.authentication_token, user: {name: 'Name', email: Faker::Internet.email, password: 'password'}}
+      #   expect(User.last.name).to eq('Name')
+      # end
+
     end
 
-    it 'edits a User' do
-      post :edit, id: @user.id
-      expect(response.status).to eq 200
-      expect(response).to render_template 'edit'
-    end
-
-    it 'updates a User (password required)' do
-      post :update, id: @user.id, user: {name: 'Updated Name', password: @user.password,
-                                         password_confirmation: @user.password}
-      expect(response.status).to eq 302
-      expect(response).to redirect_to @user
-    end
-
-    it 'doesn\'t create a user' do
-      post :create, user: {name: 'Name'}
-      expect(response.status).to eq 200
-      expect(response).to render_template 'new'
-    end
-  end
-
-  context 'When the admin is signed in' do
-
-    before :each do
-      Rails.application.env_config['devise.mapping'] = Devise.mappings[:admin]
-      sign_in create :admin
-    end
-
-    it 'creates a User' do
-      expect(User).to receive(:new).and_return @user
-      post :create, user: {name: 'Name'}
-      expect(response.status).to eq 302
-      expect(response).to redirect_to @user
-    end
-
-    it 'updates a User with valid data (no password required)' do
-      post :update, id: @user.id, user: {name: 'Updated Name'}
-      expect(response.status).to eq 302
-      expect(response).to redirect_to @user
-    end
-
-    it 'doesn\'t update a User without valid data (no password required)' do
-      post :update, id: @user.id, user: {name: ''}
-      expect(response.status).to eq 200
-      expect(response).to render_template 'edit'
-    end
-
-    it 'deletes a User' do
-      post :destroy, id: @user.id
-      expect(response.status).to eq 302
-      expect(response).to redirect_to users_path
-    end
   end
 end

@@ -1,5 +1,4 @@
 class GoalsController < ApplicationController
-  include GoalsHelper
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   load_and_authorize_resource
 
@@ -17,15 +16,29 @@ class GoalsController < ApplicationController
 
   def create
     @goal.user = current_user
-    @goal.save ? create_success : create_errors
+    if @goal.save
+      flash[:success] = 'Goal successfully created.'
+      render :show
+    else
+      flash[:error] = 'There was a problem creating the goal.'
+      render :new
+    end
   end
 
   def update
-    @goal.update(goal_params) ? update_success : update_errors
+    if @goal.update(goal_params)
+      flash[:success] = 'Goal was successfully updated.'
+      redirect_to @goal
+    else
+      flash[:error] = 'There was a problem updating the goal.'
+      render :edit
+    end
   end
 
   def destroy
-    destroy_success if @goal.destroy
+    @goal.destroy
+    flash[:success] = 'Goal was successfully deleted.'
+    redirect_to goals_path
   end
 
   private

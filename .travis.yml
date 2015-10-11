@@ -4,13 +4,6 @@ script:
 - bundle exec rake db:create db:schema:load db:test:prepare
 - bundle exec rake cucumber
 - bundle exec rspec --color --format documentation
-deploy:
-  provider: heroku
-  api_key:
-    secure: O/VlxTq6+L6jQ02MVfvCOMXqQCcHmcJRAhtu1kaqY7RAcTnnL8ER5VjYHDv+hvUa7pTiaingdEo6W/LvlnysYwUzNJYuX/VplRFp9GYa6MU8WRRauU8l/7tZIbVlOrQWhlQaLFzDdoEE7xolwJoRa138EhtgA1ALfYnzs82UpeeltIJaAaz5L2awTZWjqvSVBAXRcW/Db1An1g5aa6B/Y0q2SdNXdHV2afwUACYAaYONSWxTAmY6SUTEbcNKLPO7b4GGGSZR0VqdTFy3BbwRDPu38WG+2WOy5DYNOQAheVgxBLUm9/NYknlNfdq2/RchughfM6ucDfap8HeG+y8Ad8uR7MSFpnRcybPIHDgw1PYPbaT8j02th0zetqdghdMjHkgiGXMHMFspUgHRXDszOxLfyPlU3bNVV+8Lt/0L6Q9n32XrUV51YX5g/1Q63ppasVo+ZqQI8vZTfWnobYuvno64b3V583WmkODOitNy5EPGU2gp3/lzSwszucFoKZtieLUTSbh3PqD689rx8PYJPM8m4Km17dCVAxZ5J9pLPpokFfvNPueDPWEB3afHspTF1u+cASbs/fFccuttxelflJKwig11fknko4CDgWfzNpzRcl70PnzQzN+l0ZdIr49oEYbobLa8Uy4w/jw/nfcW6afa6Z3e6evrYFDZAqmTUnM=
-  app: deeprog
-  on:
-    repo: deeprog/goalify
 addons:
     code_climate:
         repo_token: 088402be444ff5c274ba18d212dfe8ea518fba07ad7c768c00feb1f1aecf9b8a

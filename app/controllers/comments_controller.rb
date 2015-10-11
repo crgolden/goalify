@@ -1,5 +1,4 @@
 class CommentsController < ApplicationController
-  include CommentsHelper
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   load_and_authorize_resource :goal
   load_and_authorize_resource :comment, through: :goal, shallow: true
@@ -19,15 +18,29 @@ class CommentsController < ApplicationController
   def create
     @comment = @goal.comments.create(comment_params)
     @comment.user = current_user
-    @comment.save ? create_success : create_errors
+    if @comment.save
+      flash[:success] = 'Comment successfully created.'
+      render :show
+    else
+      flash[:error] = 'There was a problem creating the comment.'
+      redirect_to @comment.goal
+    end
   end
 
   def update
-    @comment.update(comment_params) ? update_success : update_errors
+    if @comment.update(comment_params)
+      flash[:success] = 'Comment was successfully updated.'
+      redirect_to @comment.goal
+    else
+      flash[:error] = 'There was a problem updating the comment.'
+      render :edit
+    end
   end
 
   def destroy
-    destroy_success if @comment.destroy
+    @comment.destroy
+    flash[:success] = 'Comment was successfully deleted.'
+    redirect_to @comment.goal
   end
 
   private

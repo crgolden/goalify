@@ -16,7 +16,17 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user.save ? create_success : create_errors
+    if @user.save
+      if @user.confirmed_at.present?
+        flash[:success] = I18n.t 'devise.registrations.signed_up'
+      else
+        flash[:notice] = I18n.t 'devise.registrations.signed_up_but_unconfirmed'
+      end
+      render :show
+    else
+      flash[:error] = 'There was a problem creating the user.'
+      render :new
+    end
   end
 
   def update
@@ -29,7 +39,9 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    destroy_success if @user.soft_delete
+    @user.soft_delete
+    flash[:success] = I18n.t 'devise.registrations.destroyed'
+    redirect_to users_path
   end
 
   private
@@ -39,4 +51,5 @@ class UsersController < ApplicationController
     accessible << [:password, :password_confirmation] unless params[:user][:password].blank?
     params.require(:user).permit(accessible)
   end
+
 end

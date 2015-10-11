@@ -1,5 +1,6 @@
 json.goal do
-  json.extract! goal, :id, :title, :text
-  json.user api_v1_user_url(goal.user, format: :json)
-  json.comments api_v1_goal_comments_url(goal, format: :json)
+  json.extract! goal, :id, :title, :text, :user
+  json.comments goal.comments do |comment|
+    json.partial! 'api/v1/comments/comment', comment: comment
+  end
 end

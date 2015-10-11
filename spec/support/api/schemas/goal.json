@@ -1,0 +1,66 @@
+{
+  "definitions": {
+    "comments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/comment"
+      }
+    },
+    "id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "text": {
+      "type": "string"
+    },
+    "user": {
+      "type": "object"
+    },
+    "parent": {
+      "type": "object"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "type": "object",
+  "required": [
+    "goal"
+  ],
+  "properties": {
+    "goal": {
+      "type": "object",
+      "required": [
+        "user",
+        "id",
+        "title",
+        "text",
+        "comments"
+      ],
+      "properties": {
+        "user": {
+          "$ref": "#/definitions/user"
+        },
+        "id": {
+          "$ref": "#/definitions/id"
+        },
+        "title": {
+          "$ref": "#/definitions/title"
+        },
+        "text": {
+          "$ref": "#/definitions/text"
+        },
+        "comments": {
+          "$ref": "#/definitions/comments"
+        }
+      }
+    }
+  }
+}

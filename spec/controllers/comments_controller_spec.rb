@@ -8,29 +8,18 @@ describe CommentsController do
 
   context 'When the user is not signed in' do
 
-    it 'shows all the Comments for a Goal' do
-      post :index, goal_id: @comment.goal_id
-      expect(response.status).to eq 200
-      expect(response).to render_template 'index'
-    end
-
     it 'shows a Comment' do
-      post :show, id: @comment.id
+      get :show, id: @comment.id
+
       expect(response.status).to eq 200
       expect(response).to render_template 'show'
       expect(assigns :comment).to eq @comment
     end
+    it 'shows all the Comments for a Goal' do
+      get :index, goal_id: @comment.goal_id
 
-    it 'doesn\'t create a Comment' do
-      post :create, comment: {body: 'Body'}, goal_id: @comment.goal_id
-      expect(response.status).to eq 302
-      expect(response).to redirect_to new_user_session_path
-    end
-
-    it 'doesn\'t edit a Comment' do
-      post :edit, id: @comment.id
-      expect(response.status).to eq 302
-      expect(response).to redirect_to new_user_session_path
+      expect(response.status).to eq 200
+      expect(response).to render_template :index
     end
 
   end
@@ -38,44 +27,64 @@ describe CommentsController do
   context 'When the user is signed in' do
 
     before :each do
-      Rails.application.env_config['devise.mapping'] = Devise.mappings[:user]
       sign_in @user
     end
 
     it 'creates a Comment with valid data' do
-      post :create, comment: {body: 'Body'}, goal_id: @comment.goal_id
+      attr = {body: 'New Body'}
+      post :create, comment: attr, goal_id: @comment.goal_id
+
+
+      expect(flash[:success]).to eq 'Comment successfully created.'
+      expect(response.status).to eq 200
+      expect(response).to render_template :show
+      expect(Comment.find_by body: attr[:body]).not_to be nil
+    end
+
+    it 'doesn\'t create a Comment without a Body' do
+      attr = {body: ''}
+      post :create, comment: attr, goal_id: @comment.goal.id
+
+      expect(flash[:error]).to eq 'There was a problem creating the comment.'
       expect(response.status).to eq 302
       expect(response).to redirect_to @comment.goal
     end
 
-    it 'doesn\'t create a Comment without valid data' do
-      post :create, comment: {body: ''}, goal_id: @comment.goal_id
-      expect(response.status).to eq 302
-      expect(response).to redirect_to @comment.goal
+    it 'shows the edit page for own Comment' do
+      get :edit, id: @comment.id
+
+      expect(response.status).to eq 200
+      expect(response).to render_template :edit
+      expect(assigns :comment).to eq @comment
     end
 
-    it 'edits a Comment' do
-      post :edit, id: @comment.id
+    it 'updates own Comment with valid data' do
+      attr = {body: 'Updated Body'}
+      put :update, id: @comment.id, comment: attr
+      @comment.reload
+
+      expect(flash[:success]).to eq 'Comment was successfully updated.'
+      expect(response.status).to eq 302
+      expect(response).to redirect_to @comment.goal
+      expect(@comment.body).to eq attr[:body]
+    end
+
+    it 'doesn\'t update own Comment without a Body' do
+      attr = {body: ''}
+      put :update, id: @comment.id, comment: attr
+
+      expect(flash[:error]).to eq 'There was a problem updating the comment.'
       expect(response.status).to eq 200
       expect(response).to render_template 'edit'
+      expect(@comment.body).not_to eq attr[:body]
     end
 
-    it 'updates a Comment with valid data' do
-      post :update, id: @comment.id, comment: {body: 'Updated Body'}
+    it 'deletes own Comment' do
+      delete :destroy, id: @comment.id
+
+      expect(flash[:success]).to eq 'Comment was successfully deleted.'
       expect(response.status).to eq 302
       expect(response).to redirect_to @comment.goal
-    end
-
-    it 'doesn\'t update a Comment without valid data' do
-      post :update, id: @comment.id, comment: {body: ''}
-      expect(response.status).to eq 200
-      expect(response).to render_template 'edit'
-    end
-
-    it 'deletes a Comment' do
-      post :destroy, id: @comment.id
-      expect(response.status).to eq 302
-      expect(response).to redirect_to goal_comments_path(@comment.goal)
     end
 
   end

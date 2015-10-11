@@ -14,74 +14,74 @@
 ActiveRecord::Schema.define(version: 20150918224950) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension 'plpgsql'
   enable_extension 'uuid-ossp'
 
-  create_table "comments", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.uuid "goal_id"
-    t.uuid "user_id"
-    t.text     "body"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'comments', id: :uuid, default: 'uuid_generate_v4()', force: :cascade do |t|
+    t.uuid 'goal_id'
+    t.uuid 'user_id'
+    t.text 'body'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "goals", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.uuid "user_id"
-    t.string   "title"
-    t.text     "text"
-    t.references "parent", index: true
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'goals', id: :uuid, default: 'uuid_generate_v4()', force: :cascade do |t|
+    t.uuid 'user_id'
+    t.string 'title'
+    t.text 'text'
+    t.references 'parent', index: true
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "tokens", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.uuid "user_id"
-    t.string   "access_token"
-    t.string   "refresh_token"
-    t.string   "provider"
-    t.string   "uid"
-    t.string   "image"
-    t.datetime "expires_at"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+  create_table 'tokens', id: :uuid, default: 'uuid_generate_v4()', force: :cascade do |t|
+    t.uuid 'user_id'
+    t.string 'access_token'
+    t.string 'refresh_token'
+    t.string 'provider'
+    t.string 'uid'
+    t.string 'image'
+    t.datetime 'expires_at'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "users", id: :uuid, default: "uuid_generate_v4()", force: :cascade do |t|
-    t.integer  "role",                   default: 0,  null: false
-    t.integer  "status",                 default: 0,  null: false
-    t.string   "email",                  default: "", null: false
-    t.string   "name"
-    t.string   "authentication_token"
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.inet     "current_sign_in_ip"
-    t.inet     "last_sign_in_ip"
-    t.string   "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.string   "unconfirmed_email"
-    t.integer  "failed_attempts",        default: 0,  null: false
-    t.string   "unlock_token"
-    t.datetime "locked_at"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+  create_table 'users', id: :uuid, default: 'uuid_generate_v4()', force: :cascade do |t|
+    t.integer 'role', default: 0, null: false
+    t.integer 'status', default: 0, null: false
+    t.string 'email', default: '', null: false
+    t.string 'name'
+    t.string 'authentication_token'
+    t.string 'encrypted_password', default: '', null: false
+    t.string 'reset_password_token'
+    t.datetime 'reset_password_sent_at'
+    t.datetime 'remember_created_at'
+    t.integer 'sign_in_count', default: 0, null: false
+    t.datetime 'current_sign_in_at'
+    t.datetime 'last_sign_in_at'
+    t.inet 'current_sign_in_ip'
+    t.inet 'last_sign_in_ip'
+    t.string 'confirmation_token'
+    t.datetime 'confirmed_at'
+    t.datetime 'confirmation_sent_at'
+    t.string 'unconfirmed_email'
+    t.integer 'failed_attempts', default: 0, null: false
+    t.string 'unlock_token'
+    t.datetime 'locked_at'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "tokens", ["provider"], name: "index_users_on_provider", using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "tokens", ["uid"], name: "index_users_on_uid", using: :btree
-  add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
-  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
+  add_index 'users', ['confirmation_token'], name: 'index_users_on_confirmation_token', unique: true, using: :btree
+  add_index 'users', ['email'], name: 'index_users_on_email', unique: true, using: :btree
+  add_index 'tokens', ['provider'], name: 'index_users_on_provider', using: :btree
+  add_index 'users', ['reset_password_token'], name: 'index_users_on_reset_password_token', unique: true, using: :btree
+  add_index 'tokens', ['uid'], name: 'index_users_on_uid', using: :btree
+  add_index 'users', ['unlock_token'], name: 'index_users_on_unlock_token', unique: true, using: :btree
+  add_index 'users', ['authentication_token'], name: 'index_users_on_authentication_token', unique: true, using: :btree
 
-  add_foreign_key "comments", "goals"
-  add_foreign_key "comments", "users"
-  add_foreign_key "goals", "users"
-  add_foreign_key "tokens", "users"
+  add_foreign_key 'comments', 'goals'
+  add_foreign_key 'comments', 'users'
+  add_foreign_key 'goals', 'users'
+  add_foreign_key 'tokens', 'users'
 end

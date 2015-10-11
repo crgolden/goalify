@@ -35,6 +35,8 @@ module Goalify
       g.fixture_replacement :factory_girl, dir: 'spec/factories'
     end
 
+    config.autoload_paths += %W(#{config.root}/lib)
+
     config.before_configuration do
       env_file = File.join(Rails.root, 'config', 'local_env.yml')
       YAML.load(File.open(env_file)).each do |key, value|

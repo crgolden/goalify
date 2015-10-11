@@ -25,7 +25,7 @@ module WithinHelpers
     locator ? within(*selector_for(locator)) { yield } : yield
   end
 end
-World(WithinHelpers)
+World WithinHelpers
 
 # Single-line step scoper
 When /^(.*) within (.*[^:])$/ do |step, parent|

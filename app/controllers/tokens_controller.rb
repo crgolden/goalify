@@ -1,5 +1,4 @@
 class TokensController < ApplicationController
-  include TokensHelper
   before_action :authenticate_user!
   load_and_authorize_resource :user
   load_and_authorize_resource :token, through: :user, only: [:index]
@@ -12,7 +11,9 @@ class TokensController < ApplicationController
   end
 
   def destroy
-    destroy_success if @token.destroy
+    @token.destroy
+    flash[:success] = 'Token was successfully deleted.'
+    redirect_to @token.user
   end
 
   private

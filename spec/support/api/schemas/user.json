@@ -3,6 +3,12 @@
     "authentication_token": {
       "type": "string"
     },
+    "comments": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/comment"
+      }
+    },
     "confirmation_sent_at": {
       "type": "string",
       "format": "date-time"
@@ -33,6 +39,12 @@
     },
     "failed_attempts": {
       "type": "integer"
+    },
+    "goals": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/goal"
+      }
     },
     "id": {
       "type": "string"
@@ -71,6 +83,12 @@
     "status": {
       "type": "integer"
     },
+    "tokens": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/token"
+      }
+    },
     "unconfirmed_email": {
       "type": "string"
     },
@@ -92,7 +110,10 @@
       "required": [
         "email",
         "id",
-        "name"
+        "name",
+        "goals",
+        "comments",
+        "tokens"
       ],
       "properties": {
         "email": {
@@ -103,6 +124,15 @@
         },
         "name": {
           "$ref": "#/definitions/name"
+        },
+        "goals": {
+          "$ref": "#/definitions/goals"
+        },
+        "comments": {
+          "$ref": "#/definitions/comments"
+        },
+        "tokens": {
+          "$ref": "#/definitions/tokens"
         }
       }
     }

@@ -18,14 +18,17 @@ RSpec.configure do |config|
   config.include Devise::TestHelpers, type: :controller # sign_in, sign_out methods in controller specs
   config.include FactoryGirl::Syntax::Methods # create, build, etc. methods without FactoryGirl prefix
   config.include Omniauth::Mock
-  config.include Api::V1
+  config.include Request::JsonHelpers, type: :controller
+  config.include Request::HeadersHelpers, type: :controller
   config.include Warden::Test::Helpers # login_as, logout methods in Capybara specs
 
   config.before :suite do
     DatabaseCleaner.clean_with :truncation
     OmniAuth.config.test_mode = true
     Warden.test_mode!
+
   end
+
   config.before :each do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.start
@@ -35,9 +38,14 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :truncation
   end
 
+  config.before :each, type: :controller, namespace: :api, module: :v1 do
+    include_default_accept_headers
+  end
+
   config.append_after :each do
     DatabaseCleaner.clean
   end
+
   config.after :suite do
     OmniAuth.config.test_mode = false
     Warden.test_reset!

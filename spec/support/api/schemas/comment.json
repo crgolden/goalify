@@ -1,0 +1,53 @@
+{
+  "definitions": {
+    "id": {
+      "type": "string"
+    },
+    "goal": {
+      "type": "object"
+    },
+    "user": {
+      "type": "object"
+    },
+    "body": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "type": "object",
+  "required": [
+    "comment"
+  ],
+  "properties": {
+    "comment": {
+      "type": "object",
+      "required": [
+        "id",
+        "body",
+        "goal",
+        "user"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/id"
+        },
+        "body": {
+          "$ref": "#/definitions/body"
+        },
+        "goal": {
+          "$ref": "#/definitions/goal"
+        },
+        "user": {
+          "$ref": "#/definitions/user"
+        }
+      }
+    }
+  }
+}

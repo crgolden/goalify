@@ -1,5 +1,5 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
-  include OmniauthCallbacksHelper
+  include Users::OmniauthCallbacksHelper
 
   def self.provides_callback_for(*providers)
     providers.each do |provider|

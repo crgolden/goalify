@@ -29,6 +29,7 @@ describe Api::V1::TokensController do
 
       expect(response.status).to eq 401
       expect(token[:error]).to eq I18n.t 'devise.failure.unauthenticated'
+      expect(Token.find_by id: @token.id).not_to be nil
     end
 
   end
@@ -44,10 +45,11 @@ describe Api::V1::TokensController do
       get :show, id: @token.id, format: :json
       token = json_response[:token]
 
-      expect(token[:id]).to eq @token.id
+      expect(response.status).to eq 200
       expect(response).to render_template :show
       expect(response).to match_response_schema('token')
-      expect(response.status).to eq 200
+      expect(token[:id]).to eq @token.id
+      expect(assigns :token).to eq @token
     end
     it 'shows all tokens for User' do
       get :index, user_id: @token.user_id, format: :json
@@ -60,6 +62,7 @@ describe Api::V1::TokensController do
       delete :destroy, id: @token.id
 
       expect(response.status).to eq 204
+      expect(Token.find_by id: @token.id).to be nil
     end
 
   end

@@ -23,7 +23,7 @@ gem 'tzinfo-data' # Needed for rake to work in Windows
 gem 'uglifier' # Use Uglifier as compressor for JavaScript assets
 group :development, :test do
   gem 'byebug' # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'codeclimate-test-reporter', group: :test, require: nil
+  gem 'codeclimate-test-reporter', require: false
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'factory_girl_rails'
@@ -34,8 +34,4 @@ group :development, :test do
   gem 'spring' # Spring speeds up development by keeping your application running in the background.
   gem 'spring-commands-rspec'
   gem 'travis'
-  # gem 'web-console' # Access an IRB console on exception pages or by using <%= console %> in views
-  # gem 'guard-rspec' # Watches for saved spec files and triggers events automatically
-  # gem 'vcr' # Records HTTP interactions and replays them during future test runs
-  # gem 'webmock' # Prevents test environment from talking to the internet
 end

@@ -1,8 +1,6 @@
 class ApplicationController < ActionController::Base
   include ApplicationHelper
 
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
   if Proc.new { |c| c.request.format.json? }
     protect_from_forgery with: :null_session
   else

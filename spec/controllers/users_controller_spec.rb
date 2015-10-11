@@ -24,7 +24,7 @@ describe UsersController do
 
   context 'For a signed-in User' do
 
-    context 'in the \'user\' role' do
+    describe 'in the \'user\' role' do
 
       before :each do
         sign_in @user
@@ -60,7 +60,7 @@ describe UsersController do
       end
 
       it 'doesn\'t update own user with invalid email' do
-        attr = {email: 'bademail.com'}
+        attr = {email: 'bademail'}
         put :update, id: @user.id, user: attr
         @user.reload
 
@@ -92,7 +92,7 @@ describe UsersController do
 
     end
 
-    context 'in the \'admin\' role' do
+    describe 'in the \'admin\' role' do
 
       before :each do
         sign_in create :admin
@@ -166,8 +166,9 @@ describe UsersController do
       end
 
       it 'doesn\'t update another User with invalid email' do
-        attr = {email: 'bademail.com'}
+        attr = {email: 'bademail'}
         put :update, id: @user.id, user: attr
+        @user.reload
 
         expect(flash[:error]).to eq 'There was a problem updating the user.'
         expect(response.status).to eq 200
@@ -177,6 +178,7 @@ describe UsersController do
       it 'doesn\'t update another User without name' do
         attr = {name: ''}
         put :update, id: @user.id, user: attr
+        @user.reload
 
         expect(flash[:error]).to eq 'There was a problem updating the user.'
         expect(response.status).to eq 200
@@ -186,10 +188,12 @@ describe UsersController do
 
       it 'deletes another User' do
         delete :destroy, id: @user.id
+        @user.reload
 
         expect(flash[:success]).to eq I18n.t 'devise.registrations.destroyed'
         expect(response.status).to eq 302
         expect(response).to redirect_to users_path
+        expect(@user.status).to eq 'inactive'
       end
     end
 

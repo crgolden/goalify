@@ -1,4 +1,4 @@
-module OmniauthCallbacksHelper
+module Users::OmniauthCallbacksHelper
   def token_exists_for_uid_provider?
     Token.exists_for_uid_and_provider?(@auth)
   end

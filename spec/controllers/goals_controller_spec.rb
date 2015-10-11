@@ -78,7 +78,7 @@ describe GoalsController do
 
         expect(flash[:error]).to eq 'There was a problem updating the goal.'
         expect(response.status).to eq 200
-        expect(response).to render_template 'edit'
+        expect(response).to render_template :edit
         expect(@goal.title).not_to eq attr[:title]
         expect(@goal.text).not_to eq attr[:text]
       end

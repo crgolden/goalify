@@ -4,7 +4,7 @@ describe Api::V1::CommentsController do
   before :each do
     @user = create :user
     goal = create :goal, user: @user
-    @comment = create :comment, user: @user, goal: goal
+    @comment = create :comment, goal: goal, user: @user
   end
 
   context 'Without a valid authenticity_token' do
@@ -13,13 +13,14 @@ describe Api::V1::CommentsController do
       get :show, id: @comment.id, format: :json
       comment = json_response[:comment]
 
+      expect(response.status).to eq 200
       expect(response).to render_template :show
       expect(response).to match_response_schema('comment')
-      expect(response.status).to eq 200
       expect(comment[:id]).to eq @comment.id
       expect(comment[:body]).to eq @comment.body
       expect(comment[:user][:id]).to eq @comment.user.id
       expect(comment[:goal][:id]).to eq @comment.goal.id
+      expect(assigns :comment).to eq @comment
     end
     it 'shows all the comments' do
       get :index, goal_id: @comment.goal_id, format: :json
@@ -68,10 +69,9 @@ describe Api::V1::CommentsController do
         delete :destroy, id: @comment.id
 
         expect(response.status).to eq 204
+        expect(Comment.find_by id: @comment.id).to be nil
       end
 
     end
-
   end
-
 end

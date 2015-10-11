@@ -12,13 +12,14 @@ describe Api::V1::GoalsController do
       get :show, id: @goal.id, format: :json
       goal = json_response[:goal]
 
+      expect(response.status).to eq 200
+      expect(response).to render_template :show
+      expect(response).to match_response_schema('goal')
       expect(goal[:id]).to eq @goal.id
       expect(goal[:user][:id]).to eq @goal.user_id
       expect(goal[:title]).to eq @goal.title
       expect(goal[:text]).to eq @goal.text
-      expect(response).to render_template :show
-      expect(response).to match_response_schema('goal')
-      expect(response.status).to eq 200
+      expect(assigns :goal).to eq @goal
     end
     it 'shows all the goals' do
       get :index, format: :json
@@ -44,7 +45,9 @@ describe Api::V1::GoalsController do
 
       expect(response.status).to eq 401
       expect(goal[:error]).to eq I18n.t 'devise.failure.unauthenticated'
+      expect(Goal.find_by title: attr[:title], text: attr[:text]).to be nil
     end
+
   end
 
   context 'With a valid authenticity_token' do
@@ -92,10 +95,12 @@ describe Api::V1::GoalsController do
         expect(goal[:title]).to include 'can\'t be blank'
         expect(@goal.title).not_to eq attr[:title]
       end
+
       it 'doesn\'t delete own goal' do
         delete :destroy, id: @goal.id, format: :json
 
         expect(response.status).to eq 403
+        expect(Goal.find_by id: @goal.id).not_to be nil
       end
 
     end
@@ -109,9 +114,10 @@ describe Api::V1::GoalsController do
       end
 
       it 'deletes a goal' do
-        delete :destroy, id: @goal.id
+        delete :destroy, id: @goal.id, format: :json
 
         expect(response.status).to eq 204
+        expect(Goal.find_by id: @goal.id).to be nil
       end
 
     end

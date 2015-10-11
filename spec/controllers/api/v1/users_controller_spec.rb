@@ -11,12 +11,13 @@ describe Api::V1::UsersController do
       get :show, id: @user.id, format: :json
       user = json_response[:user]
 
+      expect(response.status).to eq 200
       expect(response).to render_template :show
       expect(response).to match_response_schema('user')
-      expect(response.status).to eq 200
       expect(user[:id]).to eq @user.id
       expect(user[:email]).to eq @user.email
       expect(user[:name]).to eq @user.name
+      expect(assigns :user).to eq @user
     end
     it 'shows all the users' do
       get :index, format: :json
@@ -35,6 +36,7 @@ describe Api::V1::UsersController do
       expect(user[:error]).to eq I18n.t 'devise.failure.unauthenticated'
       expect(@user.unconfirmed_email).not_to eq attr[:email]
     end
+
     it 'doesn\'t delete own user' do
       delete :destroy, id: @user.id, format: :json
       user = json_response
@@ -64,7 +66,7 @@ describe Api::V1::UsersController do
         @user.reload
 
         expect(response.status).to eq 200
-        expect(response).to render_template 'show'
+        expect(response).to render_template :show
         expect(response).to match_response_schema('user')
         expect(user[:name]).to eq attr[:name]
         expect(@user.name).to eq attr[:name]
@@ -76,14 +78,14 @@ describe Api::V1::UsersController do
         @user.reload
 
         expect(response.status).to eq 200
-        expect(response).to render_template 'show'
+        expect(response).to render_template :show
         expect(response).to match_response_schema('user')
         expect(user[:email]).not_to eq attr[:email]
         expect(@user.unconfirmed_email).to eq attr[:email]
       end
 
       it 'doesn\'t update own user with invalid email' do
-        attr = {email: 'bademail', name: Faker::Name.name}
+        attr = {email: 'bademail'}
         put :update, id: @user.id, user: attr
         user = json_response
         @user.reload
@@ -93,7 +95,7 @@ describe Api::V1::UsersController do
         expect(@user.unconfirmed_email).not_to eq attr[:email]
       end
       it 'doesn\'t update own user with blank name' do
-        attr = {email: Faker::Internet.email, name: ''}
+        attr = {name: ''}
         put :update, id: @user.id, user: attr
         user = json_response
         @user.reload
@@ -139,17 +141,18 @@ describe Api::V1::UsersController do
         post :create, user: attr
         user = json_response
 
-        expect(user[:email]).to include 'is invalid'
         expect(response.status).to eq 422
+        expect(user[:email]).to include 'is invalid'
         expect(User.find_by name: attr[:name], email: attr[:email]).to be nil
       end
       it 'doesn\'t create another user with blank name' do
-        attr = {name: ''}
+        attr = {name: '', email: Faker::Internet.email, password: Faker::Internet.password}
         post :create, user: attr, format: :json
         user = json_response
 
         expect(response.status).to eq 422
-        expect(user[:email]).to include 'can\'t be blank'
+        expect(user[:name]).to include 'can\'t be blank'
+        expect(User.find_by name: attr[:name]).to be nil
       end
 
       it 'updates another user with valid name (without password)' do

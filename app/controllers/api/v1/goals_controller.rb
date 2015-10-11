@@ -33,7 +33,7 @@ class Api::V1::GoalsController < Api::V1::ApiController
       @goal.destroy
       head 204
     else
-      render :show, status: 403
+      head 403
     end
   end
 

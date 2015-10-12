@@ -19,7 +19,7 @@ Rails.application.routes.draw do
 
   resources :tokens, only: [:show, :destroy]
 
-  namespace :api, defaults: {format: :json} do
+  namespace :api, defaults: {format: 'json'} do
 
     scope module: :v1, constraints: ApiConstraints.new(version: 1, default: true) do
       resources :users, concerns: :paginatable do

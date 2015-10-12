@@ -1,0 +1,14 @@
+{
+  "definitions": {
+    "user": {
+      "type": "object"
+    }
+  },
+  "type": "hash",
+  "required": [
+    "users"
+  ],
+  "items": {
+    "$ref": "#/definitions/user"
+  }
+}

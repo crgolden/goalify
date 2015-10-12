@@ -1,8 +1,11 @@
 class GoalsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   load_and_authorize_resource
+  caches_action :new, :edit, :index, :show
 
   def index
+    @goals = Goal.accessible_by(current_ability).order(:title).search(query_params)
+                 .page(params[:page]).per params[:per_page]
   end
 
   def show
@@ -46,4 +49,9 @@ class GoalsController < ApplicationController
   def goal_params
     params.require(:goal).permit(:title, :text)
   end
+
+  def query_params
+    params.permit(:id, :user_id, :title, :text)
+  end
+
 end

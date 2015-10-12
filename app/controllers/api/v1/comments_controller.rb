@@ -1,11 +1,21 @@
 class Api::V1::CommentsController < Api::V1::ApiController
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   load_resource :goal
   load_resource :comment, through: :goal, shallow: true
+  caches_action :new, :edit, :index, :show
 
   def index
+    @comments = @goal.comments.accessible_by(current_ability)
+                    .page(params[:page]).per params[:per_page]
   end
 
   def show
+  end
+
+  def new
+  end
+
+  def edit
   end
 
   def create
@@ -41,6 +51,10 @@ class Api::V1::CommentsController < Api::V1::ApiController
 
   def comment_params
     params.require(:comment).permit(:body)
+  end
+
+  def query_params
+    params.permit(:id, :user_id, :goal_id, :body,)
   end
 
 end

@@ -1,8 +1,10 @@
 class Api::V1::UsersController < Api::V1::ApiController
   include Api::V1::UsersHelper
   load_resource
+  caches_action :new, :edit, :index, :show
 
   def index
+    @users = User.accessible_by(current_ability).order(:name).page(params[:page]).per params[:per_page]
   end
 
   def show

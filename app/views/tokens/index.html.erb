@@ -1,5 +1,5 @@
-<% if @user.tokens.accessible_by(current_ability).present? %>
-    <%= render layout: 'layouts/panel', locals: {title: 'Viewing User Tokens'} do %>
+<% if @tokens.present? %>
+    <%= render layout: 'layouts/panel', locals: {title: 'Viewing User Tokens', resource: nil} do %>
         <%= render 'users/tokens' %>
     <% end %>
 <% end %>

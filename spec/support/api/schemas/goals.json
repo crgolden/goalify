@@ -1,0 +1,42 @@
+{
+  "definitions": {
+    "goal": {
+      "type": "object"
+    }
+  },
+  "links": [
+    {
+      "description": "Create a new goal.",
+      "href": "/goals",
+      "method": "POST",
+      "rel": "create",
+      "schema": {
+        "$ref": "#/definitions/goal"
+      },
+      "targetSchema": {
+        "$ref": "#/definitions/goal"
+      },
+      "title": "Create"
+    },
+    {
+      "description": "List goals.",
+      "href": "/goals",
+      "method": "GET",
+      "rel": "list",
+      "targetSchema": {
+        "items": {
+          "$ref": "#/definitions/goal"
+        },
+        "type": "array"
+      },
+      "title": "List"
+    }
+  ],
+  "type": "hash",
+  "required": [
+    "goals"
+  ],
+  "items": {
+    "$ref": "#/definitions/goal"
+  }
+}

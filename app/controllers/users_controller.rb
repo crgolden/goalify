@@ -2,8 +2,11 @@ class UsersController < ApplicationController
   include UsersHelper
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   load_and_authorize_resource
+  caches_action :new, :edit, :index, :show
 
   def index
+    @users = User.accessible_by(current_ability).order(:name)
+                 .page(params[:page]).per params[:per_page]
   end
 
   def show
@@ -50,6 +53,10 @@ class UsersController < ApplicationController
     accessible = [:name, :email]
     accessible << [:password, :password_confirmation] unless params[:user][:password].blank?
     params.require(:user).permit(accessible)
+  end
+
+  def query_params
+    params.permit(:id, :email, :name)
   end
 
 end

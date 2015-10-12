@@ -3,6 +3,7 @@ class TokensController < ApplicationController
   load_and_authorize_resource :user
   load_and_authorize_resource :token, through: :user, only: [:index]
   load_and_authorize_resource :token, only: [:show, :destroy]
+  caches_action :index, :show
 
   def index
   end

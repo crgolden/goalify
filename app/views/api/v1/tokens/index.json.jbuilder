@@ -1,3 +1,1 @@
-json.array! @user.tokens do |token|
-  json.partial! 'token', token: token
-end
+json.tokens @tokens, partial: 'token', as: :token

@@ -1,13 +1,13 @@
-<%= render layout: 'layouts/panel', locals: {title: 'Viewing Goal'} do %>
+<%= render layout: 'layouts/panel', locals: {title: 'Viewing Goal', resource: nil} do %>
     <%= render @goal %>
 <% end %>
 <% if user_signed_in? %>
-    <%= render layout: 'layouts/panel', locals: {title: 'New Goal Comment'} do %>
+    <%= render layout: 'layouts/panel', locals: {title: 'New Goal Comment', resource: nil} do %>
         <%= render 'comments/new' %>
     <% end %>
 <% end %>
 <% if @goal.comments.accessible_by(current_ability).present? %>
-    <%= render layout: 'layouts/panel', locals: {title: 'Viewing Goal Comments'} do %>
+    <%= render layout: 'layouts/panel', locals: {title: 'Viewing Goal Comments', resource: nil} do %>
         <%= render 'goals/comments' %>
     <% end %>
 <% end %>

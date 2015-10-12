@@ -27,6 +27,12 @@ describe Api::V1::CommentsController do
 
       expect(response.status).to eq 200
       expect(response).to render_template :index
+      expect(response).to match_response_schema('comments')
+      expect(json_response).to have_key(:meta)
+      expect(json_response[:meta]).to have_key(:pagination)
+      expect(json_response[:meta][:pagination]).to have_key(:per_page)
+      expect(json_response[:meta][:pagination]).to have_key(:total_pages)
+      expect(json_response[:meta][:pagination]).to have_key(:total_objects)
     end
 
   end

@@ -1,4 +1,7 @@
 <div class="panel panel-default">
   <div class="panel-heading"><%= title %></div>
   <%= yield %>
+  <% if resource.present? %>
+      <div class="panel-footer"><%= paginate resource %></div>
+  <% end %>
 </div>

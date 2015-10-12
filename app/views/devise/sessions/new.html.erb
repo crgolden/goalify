@@ -1,4 +1,4 @@
-<%= render layout: 'layouts/panel', locals: {title: 'Sign in'} do %>
+<%= render layout: 'layouts/panel', locals: {title: 'Sign in', resource: nil} do %>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name),
                  html: {role: 'form', class: 'form-horizontal'}) do |f| %>
         <%= devise_error_messages! %>

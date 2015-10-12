@@ -1,5 +1,5 @@
 <% if can? :create, User %>
-    <%= render layout: 'layouts/panel', locals: {title: 'New User'} do %>
+    <%= render layout: 'layouts/panel', locals: {title: 'New User', resource: nil} do %>
         <%= render partial: 'users/form', locals: {action: 'create'} %>
     <% end %>
 <% end %>

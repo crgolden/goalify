@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+gem 'actionpack-action_caching'
 gem 'bootstrap-sass'
 gem 'cancancan'
 gem 'coffee-rails' # Use CoffeeScript for .coffee assets and views
@@ -8,6 +9,7 @@ gem 'font-awesome-sass'
 gem 'high_voltage'
 gem 'jbuilder' # Build JSON APIs with ease
 gem 'jquery-rails' # Use jquery as the JavaScript library
+gem 'kaminari' #Pagination
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'

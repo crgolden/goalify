@@ -1,7 +1,11 @@
 class Api::V1::GoalsController < Api::V1::ApiController
-  load_resource
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
+  load_resource except: :index
+  caches_action :new, :edit, :index, :show
 
   def index
+    @goals = Goal.accessible_by(current_ability).order(:title).search(query_params)
+                 .page(params[:page]).per params[:per_page]
   end
 
   def show
@@ -44,9 +48,7 @@ class Api::V1::GoalsController < Api::V1::ApiController
   end
 
   def query_params
-    # this assumes that an album belongs to a user and has a :user_id
-    # allowing us to filter by this
-    # params.permit(:user_id, :title)
+    params.permit(:id, :user_id, :title)
   end
 
 end

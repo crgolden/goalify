@@ -56,6 +56,7 @@ describe Api::V1::TokensController do
 
       expect(response.status).to eq 200
       expect(response).to render_template :index
+      expect(response).to match_response_schema('tokens')
     end
 
     it 'deletes own token' do

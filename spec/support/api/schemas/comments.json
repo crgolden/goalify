@@ -1,0 +1,14 @@
+{
+  "definitions": {
+    "comment": {
+      "type": "object"
+    }
+  },
+  "type": "hash",
+  "required": [
+    "comments"
+  ],
+  "items": {
+    "$ref": "#/definitions/comment"
+  }
+}

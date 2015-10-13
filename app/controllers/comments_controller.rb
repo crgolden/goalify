@@ -5,8 +5,7 @@ class CommentsController < ApplicationController
   caches_action :new, :edit, :index, :show
 
   def index
-    @comments = @goal.comments.accessible_by(current_ability)
-                    .page(params[:page]).per params[:per_page]
+    @comments = @goal.comments.accessible_by(current_ability).page(params[:page]).per params[:per_page]
   end
 
   def show
@@ -52,8 +51,8 @@ class CommentsController < ApplicationController
     params.require(:comment).permit(:body)
   end
 
-  def query_params
-    params.permit(:id, :user_id, :goal_id, :body,)
-  end
+  # def query_params
+  #   params.permit(:id, :user_id, :goal_id, :body,)
+  # end
 
 end

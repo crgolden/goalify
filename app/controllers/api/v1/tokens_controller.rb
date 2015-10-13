@@ -24,8 +24,4 @@ class Api::V1::TokensController < Api::V1::ApiController
     end
   end
 
-  private
-
-  def token_params
-  end
 end

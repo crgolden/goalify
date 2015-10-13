@@ -112,8 +112,7 @@
         "id",
         "name",
         "goals",
-        "comments",
-        "tokens"
+        "comments"
       ],
       "properties": {
         "email": {
@@ -130,9 +129,6 @@
         },
         "comments": {
           "$ref": "#/definitions/comments"
-        },
-        "tokens": {
-          "$ref": "#/definitions/tokens"
         }
       }
     }

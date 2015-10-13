@@ -16,7 +16,7 @@ describe Api::V1::GoalsController do
       expect(response).to render_template :show
       expect(response).to match_response_schema('goal')
       expect(goal[:id]).to eq @goal.id
-      expect(goal[:user][:id]).to eq @goal.user_id
+      expect(goal[:user_id]).to eq @goal.user_id
       expect(goal[:title]).to eq @goal.title
       expect(goal[:text]).to eq @goal.text
       expect(assigns :goal).to eq @goal

@@ -4,11 +4,16 @@ class Api::V1::GoalsController < Api::V1::ApiController
   caches_action :new, :edit, :index, :show
 
   def index
-    @goals = Goal.accessible_by(current_ability).order(:title).search(query_params)
-                 .page(params[:page]).per params[:per_page]
+    @goals = Goal.accessible_by(current_ability).search(query_params).page(params[:page]).per params[:per_page]
   end
 
   def show
+  end
+
+  def new
+  end
+
+  def edit
   end
 
   def create

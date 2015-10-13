@@ -4,7 +4,7 @@ class Api::V1::UsersController < Api::V1::ApiController
   caches_action :new, :edit, :index, :show
 
   def index
-    @users = User.accessible_by(current_ability).order(:name).page(params[:page]).per params[:per_page]
+    @users = User.accessible_by(current_ability).page(params[:page]).per params[:per_page]
   end
 
   def show
@@ -44,13 +44,13 @@ class Api::V1::UsersController < Api::V1::ApiController
   private
 
   def user_params
-    accessible = [:name, :email]
+    accessible = [:name, :email, :role]
     accessible << [:password, :password_confirmation] unless params[:user][:password].blank?
     params.require(:user).permit(accessible)
   end
 
-  def query_params
-    # params.permit(:name)
-  end
+  # def query_params
+  #   params.permit(:id, :email, :name)
+  # end
 
 end

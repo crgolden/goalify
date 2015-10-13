@@ -3,11 +3,11 @@
     "id": {
       "type": "string"
     },
-    "goal": {
-      "type": "object"
+    "goal_id": {
+      "type": "string"
     },
-    "user": {
-      "type": "object"
+    "user_id": {
+      "type": "string"
     },
     "body": {
       "type": "string"
@@ -31,8 +31,8 @@
       "required": [
         "id",
         "body",
-        "goal",
-        "user"
+        "goal_id",
+        "user_id"
       ],
       "properties": {
         "id": {
@@ -41,11 +41,11 @@
         "body": {
           "$ref": "#/definitions/body"
         },
-        "goal": {
-          "$ref": "#/definitions/goal"
+        "goal_id": {
+          "$ref": "#/definitions/goal_id"
         },
-        "user": {
-          "$ref": "#/definitions/user"
+        "user_id": {
+          "$ref": "#/definitions/user_id"
         }
       }
     }

@@ -1,5 +1,5 @@
 <% if @comments.present? %>
-    <%= render layout: 'layouts/panel', locals: {title: 'Viewing Goal Comments', resource: nil} do %>
+    <%= render layout: 'layouts/panel', locals: {title: 'Viewing Goal Comments', resource: @comments} do %>
         <%= render 'goals/comments' %>
     <% end %>
 <% else %>

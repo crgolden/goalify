@@ -4,8 +4,7 @@ class GoalsController < ApplicationController
   caches_action :new, :edit, :index, :show
 
   def index
-    @goals = Goal.accessible_by(current_ability).order(:title).search(query_params)
-                 .page(params[:page]).per params[:per_page]
+    @goals = Goal.accessible_by(current_ability).search(query_params).page(params[:page]).per params[:per_page]
   end
 
   def show

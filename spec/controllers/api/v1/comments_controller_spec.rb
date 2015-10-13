@@ -18,8 +18,8 @@ describe Api::V1::CommentsController do
       expect(response).to match_response_schema('comment')
       expect(comment[:id]).to eq @comment.id
       expect(comment[:body]).to eq @comment.body
-      expect(comment[:user][:id]).to eq @comment.user.id
-      expect(comment[:goal][:id]).to eq @comment.goal.id
+      expect(comment[:user_id]).to eq @comment.user_id
+      expect(comment[:goal_id]).to eq @comment.goal_id
       expect(assigns :comment).to eq @comment
     end
     it 'shows all the comments' do
@@ -69,6 +69,17 @@ describe Api::V1::CommentsController do
         expect(response).to match_response_schema('comment')
         expect(comment[:body]).to eq attr[:body]
         expect(@comment.body).to eq attr[:body]
+      end
+
+      it 'doesn\'t update own comment with blank body' do
+        attr = {body: ''}
+        put :update, id: @comment.id, comment: attr, format: :json
+        comment = json_response
+        @comment.reload
+
+        expect(response.status).to eq 422
+        expect(comment[:body]).to include 'can\'t be blank'
+        expect(@comment.body).not_to eq attr[:body]
       end
 
       it 'deletes own comment' do

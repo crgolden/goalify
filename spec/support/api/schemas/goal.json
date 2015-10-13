@@ -15,8 +15,8 @@
     "text": {
       "type": "string"
     },
-    "user": {
-      "type": "object"
+    "user_id": {
+      "type": "string"
     },
     "parent": {
       "type": "object"
@@ -38,15 +38,15 @@
     "goal": {
       "type": "object",
       "required": [
-        "user",
+        "user_id",
         "id",
         "title",
         "text",
         "comments"
       ],
       "properties": {
-        "user": {
-          "$ref": "#/definitions/user"
+        "user_id": {
+          "$ref": "#/definitions/user_id"
         },
         "id": {
           "$ref": "#/definitions/id"

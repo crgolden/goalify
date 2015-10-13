@@ -17,8 +17,4 @@ class TokensController < ApplicationController
     redirect_to @token.user
   end
 
-  private
-
-  def token_params
-  end
 end

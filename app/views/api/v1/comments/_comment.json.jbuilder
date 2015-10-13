@@ -1,3 +1,3 @@
 json.comment do
-  json.extract! comment, :id, :body, :user, :goal
+  json.extract! comment, :id, :body, :user_id, :goal_id
 end

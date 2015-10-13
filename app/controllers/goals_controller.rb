@@ -1,7 +1,8 @@
 class GoalsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   load_and_authorize_resource
-  caches_action :new, :edit, :index, :show
+  caches_page :index, :show
+  caches_action :new, :edit
 
   def index
     @goals = Goal.accessible_by(current_ability).search(query_params).page(params[:page]).per params[:per_page]

@@ -2,7 +2,8 @@ class UsersController < ApplicationController
   include UsersHelper
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   load_and_authorize_resource
-  caches_action :new, :edit, :index, :show
+  caches_page :index, :show
+  caches_action :new, :edit
 
   def index
     @users = User.accessible_by(current_ability).page(params[:page]).per params[:per_page]

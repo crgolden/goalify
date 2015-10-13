@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 gem 'actionpack-action_caching'
+gem 'actionpack-page_caching'
 gem 'bootstrap-sass'
 gem 'cancancan'
 gem 'coffee-rails' # Use CoffeeScript for .coffee assets and views

@@ -1,30 +1,26 @@
-<nav class="navbar navbar-default" role="navigation">
-  <div class="container">
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse"
+              aria-expanded="false">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">deeprog</a>
-      <%= link_to 'Home', page_path('home'), class: 'navbar-brand' %>
-      <%= link_to 'New Goal', new_goal_path, class: 'navbar-brand' if user_signed_in? %>
-      <%= link_to 'Goals', goals_path, class: 'navbar-brand' %>
-      <%= link_to 'New User', new_user_path, class: 'navbar-brand' if user_signed_in? && current_user.admin? %>
-      <%= link_to 'Users', users_path, class: 'navbar-brand' %>
-      <%= link_to 'About', page_path('about'), class: 'navbar-brand' %>
+      <a class="navbar-brand" href="#">Goalify</a>
     </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-          <i class="glyphicon glyphicon-user"></i>&nbsp;
-          <%= current_user.name if user_signed_in? %>&nbsp;<span class="caret"></span></a>
-        <ul class="dropdown-menu" role="menu">
-          <%= render 'devise/menu/registration_items' %>
-          <%= render 'devise/menu/login_items' %>
-        </ul>
-      </li>
-    </ul>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+             aria-expanded="false">
+            <i class="glyphicon glyphicon-user"></i>&nbsp;
+            <%= current_user.name if user_signed_in? %>&nbsp;<span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <%= render 'devise/menu/registration_items' %>
+            <%= render 'devise/menu/login_items' %>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>

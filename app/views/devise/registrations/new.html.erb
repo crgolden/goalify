@@ -1,3 +1,4 @@
+<%= content_for :title, 'Goalify: Sign Up' %>
 <%= render layout: 'layouts/panel', locals: {title: 'Sign up', resource: nil} do %>
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name),
                  html: {role: 'form', class: 'form-horizontal'}) do |f| %>

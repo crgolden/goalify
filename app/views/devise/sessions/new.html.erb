@@ -1,3 +1,4 @@
+<%= content_for :title, 'Goalify: Sign In' %>
 <%= render layout: 'layouts/panel', locals: {title: 'Sign in', resource: nil} do %>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name),
                  html: {role: 'form', class: 'form-horizontal'}) do |f| %>

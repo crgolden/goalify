@@ -1,3 +1,4 @@
+<%= content_for :title, 'Goalify: All Tokens' %>
 <% if @tokens.present? %>
     <%= render layout: 'layouts/panel', locals: {title: 'Viewing User Tokens', resource: nil} do %>
         <%= render 'users/tokens' %>

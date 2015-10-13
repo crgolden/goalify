@@ -6,4 +6,4 @@ Feature: User index page
   Scenario: User listed on index page
     Given I am signed in
     When I am on the User index page
-    Then I see my own email address
+    Then I see my own name

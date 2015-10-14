@@ -14,7 +14,7 @@ describe Api::V1::GoalsController do
 
       expect(response.status).to eq 200
       expect(response).to render_template :show
-      expect(response).to match_response_schema('goal')
+      expect(response).to match_response_schema 'goal'
       expect(goal[:id]).to eq @goal.id
       expect(goal[:user_id]).to eq @goal.user_id
       expect(goal[:title]).to eq @goal.title
@@ -26,12 +26,12 @@ describe Api::V1::GoalsController do
 
       expect(response.status).to eq 200
       expect(response).to render_template :index
-      expect(response).to match_response_schema('goals')
-      expect(json_response).to have_key(:meta)
-      expect(json_response[:meta]).to have_key(:pagination)
-      expect(json_response[:meta][:pagination]).to have_key(:per_page)
-      expect(json_response[:meta][:pagination]).to have_key(:total_pages)
-      expect(json_response[:meta][:pagination]).to have_key(:total_objects)
+      expect(response).to match_response_schema 'goals'
+      expect(json_response).to have_key :meta
+      expect(json_response[:meta]).to have_key :pagination
+      expect(json_response[:meta][:pagination]).to have_key :per_page
+      expect(json_response[:meta][:pagination]).to have_key :total_pages
+      expect(json_response[:meta][:pagination]).to have_key :total_objects
     end
 
     it 'doesn\'t update own goal' do
@@ -72,7 +72,7 @@ describe Api::V1::GoalsController do
 
         expect(response.status).to eq 201
         expect(response).to render_template :show
-        expect(response).to match_response_schema('goal')
+        expect(response).to match_response_schema 'goal'
         expect(goal[:title]).to eq attr[:title]
         expect(goal[:text]).to eq attr[:text]
         expect(Goal.find_by title: attr[:title], text: attr[:text]).not_to be nil
@@ -86,7 +86,7 @@ describe Api::V1::GoalsController do
 
         expect(response.status).to eq 200
         expect(response).to render_template :show
-        expect(response).to match_response_schema('goal')
+        expect(response).to match_response_schema 'goal'
         expect(goal[:title]).to eq attr[:title]
         expect(@goal.title).to eq attr[:title]
       end
@@ -98,7 +98,7 @@ describe Api::V1::GoalsController do
         @goal.reload
 
         expect(response.status).to eq 422
-        expect(goal[:title]).to include 'can\'t be blank'
+        expect(goal[:title].first).to eq 'can\'t be blank'
         expect(@goal.title).not_to eq attr[:title]
       end
 

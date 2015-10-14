@@ -1,4 +1,4 @@
-<%= content_for :title, 'Goalify: All Comments' %>
+<%= content_for :title, 'Goalify > All Comments' %>
 <% if @comments.present? %>
     <%= render layout: 'layouts/panel', locals: {title: 'Viewing Goal Comments', resource: @comments} do %>
         <%= render 'goals/comments' %>

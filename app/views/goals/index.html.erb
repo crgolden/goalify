@@ -1,4 +1,4 @@
-<%= content_for :title, 'Goalify: All Goals' %>
+<%= content_for :title, 'Goalify > All Goals' %>
 <% if @goals.present? %>
     <%= render layout: 'layouts/panel', locals: {title: 'Viewing Goals', resource: @goals} do %>
         <%= render 'goals/goals' %>

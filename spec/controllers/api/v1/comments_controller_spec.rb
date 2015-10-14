@@ -15,7 +15,7 @@ describe Api::V1::CommentsController do
 
       expect(response.status).to eq 200
       expect(response).to render_template :show
-      expect(response).to match_response_schema('comment')
+      expect(response).to match_response_schema 'comment'
       expect(comment[:id]).to eq @comment.id
       expect(comment[:body]).to eq @comment.body
       expect(comment[:user_id]).to eq @comment.user_id
@@ -27,12 +27,12 @@ describe Api::V1::CommentsController do
 
       expect(response.status).to eq 200
       expect(response).to render_template :index
-      expect(response).to match_response_schema('comments')
-      expect(json_response).to have_key(:meta)
-      expect(json_response[:meta]).to have_key(:pagination)
-      expect(json_response[:meta][:pagination]).to have_key(:per_page)
-      expect(json_response[:meta][:pagination]).to have_key(:total_pages)
-      expect(json_response[:meta][:pagination]).to have_key(:total_objects)
+      expect(response).to match_response_schema 'comments'
+      expect(json_response).to have_key :meta
+      expect(json_response[:meta]).to have_key :pagination
+      expect(json_response[:meta][:pagination]).to have_key :per_page
+      expect(json_response[:meta][:pagination]).to have_key :total_pages
+      expect(json_response[:meta][:pagination]).to have_key :total_objects
     end
 
   end
@@ -53,7 +53,7 @@ describe Api::V1::CommentsController do
 
         expect(response.status).to eq 201
         expect(response).to render_template :show
-        expect(response).to match_response_schema('comment')
+        expect(response).to match_response_schema 'comment'
         expect(comment[:body]).to eq attr[:body]
         expect(Comment.find_by body: attr[:body]).not_to be nil
       end
@@ -66,7 +66,7 @@ describe Api::V1::CommentsController do
 
         expect(response.status).to eq 200
         expect(response).to render_template :show
-        expect(response).to match_response_schema('comment')
+        expect(response).to match_response_schema 'comment'
         expect(comment[:body]).to eq attr[:body]
         expect(@comment.body).to eq attr[:body]
       end
@@ -78,7 +78,7 @@ describe Api::V1::CommentsController do
         @comment.reload
 
         expect(response.status).to eq 422
-        expect(comment[:body]).to include 'can\'t be blank'
+        expect(comment[:body].first).to eq 'can\'t be blank'
         expect(@comment.body).not_to eq attr[:body]
       end
 

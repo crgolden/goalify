@@ -13,7 +13,7 @@ describe Api::V1::UsersController do
 
       expect(response.status).to eq 200
       expect(response).to render_template :show
-      expect(response).to match_response_schema('user')
+      expect(response).to match_response_schema 'user'
       expect(user[:id]).to eq @user.id
       expect(user[:email]).to eq @user.email
       expect(user[:name]).to eq @user.name
@@ -24,12 +24,12 @@ describe Api::V1::UsersController do
 
       expect(response.status).to eq 200
       expect(response).to render_template :index
-      expect(response).to match_response_schema('users')
-      expect(json_response).to have_key(:meta)
-      expect(json_response[:meta]).to have_key(:pagination)
-      expect(json_response[:meta][:pagination]).to have_key(:per_page)
-      expect(json_response[:meta][:pagination]).to have_key(:total_pages)
-      expect(json_response[:meta][:pagination]).to have_key(:total_objects)
+      expect(response).to match_response_schema 'users'
+      expect(json_response).to have_key :meta
+      expect(json_response[:meta]).to have_key :pagination
+      expect(json_response[:meta][:pagination]).to have_key :per_page
+      expect(json_response[:meta][:pagination]).to have_key :total_pages
+      expect(json_response[:meta][:pagination]).to have_key :total_objects
     end
 
     it 'doesn\'t update own user' do
@@ -73,7 +73,7 @@ describe Api::V1::UsersController do
 
         expect(response.status).to eq 200
         expect(response).to render_template :show
-        expect(response).to match_response_schema('user')
+        expect(response).to match_response_schema 'user'
         expect(user[:name]).to eq attr[:name]
         expect(@user.name).to eq attr[:name]
       end
@@ -85,7 +85,7 @@ describe Api::V1::UsersController do
 
         expect(response.status).to eq 200
         expect(response).to render_template :show
-        expect(response).to match_response_schema('user')
+        expect(response).to match_response_schema 'user'
         expect(user[:email]).not_to eq attr[:email]
         expect(@user.unconfirmed_email).to eq attr[:email]
       end
@@ -97,7 +97,7 @@ describe Api::V1::UsersController do
         @user.reload
 
         expect(response.status).to eq 422
-        expect(user[:email]).to include 'is invalid'
+        expect(user[:email].first).to eq 'is invalid'
         expect(@user.unconfirmed_email).not_to eq attr[:email]
       end
       it 'doesn\'t update own user with blank name' do
@@ -107,7 +107,7 @@ describe Api::V1::UsersController do
         @user.reload
 
         expect(response.status).to eq 422
-        expect(user[:name]).to include 'can\'t be blank'
+        expect(user[:name].first).to eq 'can\'t be blank'
         expect(@user.name).not_to eq attr[:name]
       end
 
@@ -136,7 +136,7 @@ describe Api::V1::UsersController do
 
         expect(response.status).to eq 201
         expect(response).to render_template :show
-        expect(response).to match_response_schema('user')
+        expect(response).to match_response_schema 'user'
         expect(user[:name]).to eq attr[:name]
         expect(user[:email]).to eq attr[:email]
         expect(User.find_by name: attr[:name], email: attr[:email]).not_to be nil
@@ -148,7 +148,7 @@ describe Api::V1::UsersController do
         user = json_response
 
         expect(response.status).to eq 422
-        expect(user[:email]).to include 'is invalid'
+        expect(user[:email].first).to eq 'is invalid'
         expect(User.find_by name: attr[:name], email: attr[:email]).to be nil
       end
       it 'doesn\'t create another user with blank name' do
@@ -157,7 +157,7 @@ describe Api::V1::UsersController do
         user = json_response
 
         expect(response.status).to eq 422
-        expect(user[:name]).to include 'can\'t be blank'
+        expect(user[:name].first).to eq 'can\'t be blank'
         expect(User.find_by name: attr[:name]).to be nil
       end
 
@@ -169,7 +169,7 @@ describe Api::V1::UsersController do
 
         expect(response.status).to eq 200
         expect(response).to render_template :show
-        expect(response).to match_response_schema('user')
+        expect(response).to match_response_schema 'user'
         expect(user[:user][:name]).to eq attr[:name]
         expect(@user.name).to eq attr[:name]
       end
@@ -181,7 +181,7 @@ describe Api::V1::UsersController do
 
         expect(response.status).to eq 200
         expect(response).to render_template :show
-        expect(response).to match_response_schema('user')
+        expect(response).to match_response_schema 'user'
         expect(user[:user][:unconfirmed_email]).not_to eq attr[:email]
         expect(@user.unconfirmed_email).to eq attr[:email]
       end
@@ -193,7 +193,7 @@ describe Api::V1::UsersController do
         @user.reload
 
         expect(response.status).to eq 422
-        expect(user[:email]).to include 'is invalid'
+        expect(user[:email].first).to eq 'is invalid'
         expect(@user.unconfirmed_email).not_to eq attr[:email]
       end
       it 'doesn\'t update another user with blank name' do
@@ -203,7 +203,7 @@ describe Api::V1::UsersController do
         @user.reload
 
         expect(response.status).to eq 422
-        expect(user[:name]).to include 'can\'t be blank'
+        expect(user[:name].first).to eq 'can\'t be blank'
         expect(@user.name).not_to eq attr[:name]
       end
 

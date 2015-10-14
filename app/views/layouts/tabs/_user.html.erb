@@ -17,6 +17,13 @@
         <% else %>
             <li class="active"><%= link_to 'Edit User', edit_user_registration_path %></li>
         <% end %>
+    <% elsif params[:controller] == 'users/registrations' &&
+            (params[:action] == 'edit' || params[:action] == 'update') %>
+        <% if user_signed_in? && current_user.admin? %>
+            <li class="active"><%= link_to 'Edit User', edit_user_path(@user) %></li>
+        <% else %>
+            <li class="active"><%= link_to 'Edit User', edit_user_registration_path %></li>
+        <% end %>
     <% else %>
         <% if user_signed_in? && current_user.admin? %>
             <li><%= link_to 'Edit User', edit_user_path(@user) %></li>

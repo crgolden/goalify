@@ -9,8 +9,7 @@ class User < ActiveRecord::Base
   has_many :comments
 
   validates :name, presence: true
-  validates :email, presence: true, format: {with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i},
-            uniqueness: true
+  validates :email, presence: true, uniqueness: true
   validates :authentication_token, uniqueness: true
   enum role: [:regular, :admin]
   enum status: [:active, :inactive]
@@ -37,4 +36,5 @@ class User < ActiveRecord::Base
   def soft_delete
     update_attribute :status, 1
   end
+
 end

@@ -1,3 +1,4 @@
+<%= content_for :title, 'Goalify: All Users' %>
 <% if @users %>
     <%= render layout: 'layouts/panel', locals: {title: 'Viewing Users', resource: @users} do %>
         <%= render 'users/users' %>

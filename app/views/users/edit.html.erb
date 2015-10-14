@@ -1,3 +1,4 @@
+<%= content_for :title, 'Goalify: Edit User' %>
 <%= render layout: 'layouts/panel', locals: {title: 'Editing User', resource: nil} do %>
     <%= render partial: 'users/form', locals: {action: 'update'} %>
 <% end %>

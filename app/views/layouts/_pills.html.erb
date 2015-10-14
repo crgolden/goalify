@@ -1,9 +1,9 @@
-<ul class="nav nav-tabs" role="tablist">
-  <% if current_page?(goals_path) %>
+<ul class="nav nav-pills nav-stacked">
+  <% if @goals %>
       <li class="active"><%= link_to 'All Goals', goals_path %></li>
-  <% elsif current_page?(users_path) %>
+  <% elsif @users %>
       <li class="active"><%= link_to 'All Users', users_path %></li>
-  <% elsif current_page?(page_path('home')) %>
+  <% elsif current_page?(page_path 'home') || current_page?(root_path) %>
       <li class="active"><%= link_to 'Home', page_path('home') %></li>
   <% elsif current_page?(new_goal_path) %>
       <li class="active"><%= link_to 'New Goal', new_goal_path %></li>
@@ -11,12 +11,17 @@
       <li class="active"><%= link_to 'New User', new_user_path %></li>
   <% elsif current_page?(page_path('about')) %>
       <li class="active"><%= link_to 'About', page_path('about') %></li>
-  <% elsif current_page?(new_user_session_path) %>
+  <% elsif current_page?(new_user_session_path) ||
+          (params[:controller] == 'devise/sessions' &&
+                  (params[:action] == 'create' || params[:action] == 'new')) %>
       <li class="active"><%= link_to 'Sign in', new_user_session_path %></li>
   <% elsif current_page?(new_user_registration_path) %>
       <li class="active"><%= link_to 'Sign up', new_user_registration_path %></li>
   <% elsif current_page?(edit_user_registration_path) %>
-      <li class="active"><%= render 'layouts/tabs/user' if @user %></li>
+      <%= render 'layouts/tabs/user' %>
+  <% elsif params[:controller] == 'users/registrations' &&
+          (params[:action] == 'edit' || params[:action] == 'update') %>
+      <%= render 'layouts/tabs/user' %>
   <% elsif params[:id] %>
       <%= render 'layouts/tabs/goal' if @goal %>
       <%= render 'layouts/tabs/user' if @user %>

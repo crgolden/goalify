@@ -1,61 +1,61 @@
+<%= devise_error_messages! %>
 <%= content_for :title, 'Goalify: Edit Registration' %>
 <%= render layout: 'layouts/panel', locals: {title: "Editing #{resource_name.to_s.humanize}", resource: nil} do %>
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name),
                  html: {method: :put, role: 'form', class: 'form-horizontal'}) do |f| %>
-        <%= devise_error_messages! %>
         <div class="authform">
-          <div class="field form-group">
-            <%= f.label :name, class: 'col-sm-2 control-label' %>
-            <div class="col-sm-10">
-              <%= f.text_field :name, autofocus: true, class: 'form-control' %>
+          <div class="form-group">
+            <%= f.label :name, class: 'col-sm-4 control-label' %>
+            <div class="col-sm-8">
+              <%= f.text_field :name, autofocus: true, class: 'form-control', placeholder: 'Name' %>
             </div>
           </div>
-          <div class="field form-group">
-            <%= f.label :email, class: 'col-sm-2 control-label' %>
-            <div class="col-sm-10">
-              <%= f.email_field :email, class: 'form-control' %>
+          <div class="form-group">
+            <%= f.label :email, class: 'col-sm-4 control-label' %>
+            <div class="col-sm-8">
+              <%= f.email_field :email, class: 'form-control', placeholder: 'Email' %>
               <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
                   <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
               <% end %>
             </div>
           </div>
           <fieldset>
-            <div class="field form-group">
-              <div class="col-sm-2"></div>
-              <div class="col-sm-10">
+            <div class="form-group">
+              <div class="col-sm-4"></div>
+              <div class="col-sm-8">
                 Leave these fields blank if you don't want to change your password.
               </div>
             </div>
-            <div class="field form-group">
-              <%= f.label :password, class: 'col-sm-2 control-label' %>
-              <div class="col-sm-10">
-                <%= f.password_field :password, autocomplete: 'off', class: 'form-control' %>
+            <div class="form-group">
+              <%= f.label :password, class: 'col-sm-4 control-label' %>
+              <div class="col-sm-8">
+                <%= f.password_field :password, autocomplete: 'off', class: 'form-control', placeholder: 'New Password' %>
               </div>
             </div>
-            <div class="field form-group">
-              <%= f.label :password_confirmation, class: 'col-sm-2 control-label' %>
-              <div class="col-sm-10">
-                <%= f.password_field :password_confirmation, class: 'form-control' %>
+            <div class="form-group">
+              <%= f.label :password_confirmation, class: 'col-sm-4 control-label' %>
+              <div class="col-sm-8">
+                <%= f.password_field :password_confirmation, class: 'form-control', placeholder: 'New Password' %>
               </div>
             </div>
           </fieldset>
           <fieldset>
-            <div class="field form-group">
-              <div class="col-sm-2"></div>
-              <div class="col-sm-10">
+            <div class="form-group">
+              <div class="col-sm-4"></div>
+              <div class="col-sm-8">
                 You must enter your current password to make changes.
               </div>
             </div>
-            <div class="field form-group">
-              <%= f.label :current_password, class: 'col-sm-2 control-label' %>
-              <div class="col-sm-10">
-                <%= f.password_field :current_password, class: 'form-control' %>
+            <div class="form-group">
+              <%= f.label :current_password, class: 'col-sm-4 control-label' %>
+              <div class="col-sm-8">
+                <%= f.password_field :current_password, class: 'form-control', placeholder: 'Current Password' %>
               </div>
             </div>
           </fieldset>
           <div class="actions form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-              <%= f.submit 'Update', class: 'button right' %>
+            <div class="col-sm-offset-4 col-sm-8">
+              <%= f.submit 'Update', class: 'btn btn-default' %>
             </div>
           </div>
         </div>

@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     get '(page/:page)', action: :index, on: :collection
   end
 
+  root 'high_voltage/pages#show', id: 'home'
+
   resources :goals, concerns: :paginatable do
     resources :comments, concerns: :paginatable, shallow: true
   end

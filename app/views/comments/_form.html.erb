@@ -1,23 +1,14 @@
+<%= errors_for @comment %>
 <%= form_for(@comment, html: {class: 'form-horizontal'}) do |f| %>
-    <% if @comment.errors.any? %>
-        <div id="error_explanation">
-          <h2><%= pluralize(@comment.errors.count, 'error') %> prohibited this comment from being saved:</h2>
-          <ul>
-            <% @comment.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
-            <% end %>
-          </ul>
-        </div>
-    <% end %>
-    <div class="field form-group">
-      <%= f.label :body, class: 'col-sm-2 control-label' %>
-      <div class="col-sm-10">
-        <%= f.text_area :body, class: 'form-control' %>
+    <div class="form-group">
+      <%= f.label :body, class: 'col-sm-4 control-label' %>
+      <div class="col-sm-8">
+        <%= f.text_area :body, class: 'form-control', placeholder: 'Body' %>
       </div>
     </div>
-    <div class="actions form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <%= f.submit %>
+    <div class="form-group">
+      <div class="col-sm-offset-4 col-sm-8">
+        <%= f.submit class: 'btn btn-default' %>
       </div>
     </div>
 <% end %>

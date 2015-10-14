@@ -3,7 +3,7 @@ feature 'Sign Up', :devise do
     visit new_user_registration_path
     fill_in 'Name', with: Faker::Name.name
     fill_in 'Email', with: Faker::Internet.email
-    fill_in 'Password', with: 'password'
+    fill_in 'Password', with: 'password', match: :prefer_exact
     fill_in 'Password confirmation', with: 'password'
     click_button 'Sign up'
     txts = [I18n.t('devise.registrations.signed_up'), I18n.t('devise.registrations.signed_up_but_unconfirmed')]
@@ -15,7 +15,7 @@ feature 'Sign Up', :devise do
     visit new_user_registration_path
     fill_in 'Name', with: Faker::Name.name
     fill_in 'Email', with: 'not_an_email'
-    fill_in 'Password', with: 'password'
+    fill_in 'Password', with: 'password', match: :prefer_exact
     fill_in 'Password confirmation', with: 'password'
     click_button 'Sign up'
     expect(page).to have_content 'Email is invalid'
@@ -35,7 +35,7 @@ feature 'Sign Up', :devise do
     visit new_user_registration_path
     fill_in 'Name', with: Faker::Name.name
     fill_in 'Email', with: Faker::Internet.email
-    fill_in 'Password', with: 'pass'
+    fill_in 'Password', with: 'pass', match: :prefer_exact
     fill_in 'Password confirmation', with: 'pass'
     click_button 'Sign up'
     expect(page).to have_content 'Password is too short'
@@ -46,7 +46,7 @@ feature 'Sign Up', :devise do
     visit new_user_registration_path
     fill_in 'Name', with: Faker::Name.name
     fill_in 'Email', with: Faker::Internet.email
-    fill_in 'Password', with: 'password'
+    fill_in 'Password', with: 'password', match: :prefer_exact
     click_button 'Sign up'
     expect(page).to have_content 'Password confirmation doesn\'t match'
   end
@@ -56,7 +56,7 @@ feature 'Sign Up', :devise do
     visit new_user_registration_path
     fill_in 'Name', with: Faker::Name.name
     fill_in 'Email', with: Faker::Internet.email
-    fill_in 'Password', with: Faker::Internet.password
+    fill_in 'Password', with: Faker::Internet.password, match: :prefer_exact
     fill_in 'Password confirmation', with: Faker::Internet.password
     click_button 'Sign up'
     expect(page).to have_content 'Password confirmation doesn\'t match'

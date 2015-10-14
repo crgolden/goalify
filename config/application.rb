@@ -12,7 +12,7 @@ module Goalify
     # -- all .rb files in that directory are automatically loaded.
 
     config.relative_url_root = '/goalify'
-
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance| html_tag.html_safe }
     config.action_controller.page_cache_directory = "#{Rails.root.to_s}/public"
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.

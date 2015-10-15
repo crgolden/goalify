@@ -67,7 +67,7 @@ describe CommentsController do
 
         expect(flash[:success]).to eq 'Comment was successfully updated.'
         expect(response.status).to eq 302
-        expect(response).to redirect_to @comment.goal
+        expect(response).to redirect_to @comment
         expect(@comment.body).to eq attr[:body]
       end
 

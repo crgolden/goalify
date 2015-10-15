@@ -17,3 +17,13 @@
         <%= render 'users/comments' %>
     <% end %>
 <% end %>
+<% if @user.subscriptions.accessible_by(current_ability).present? %>
+    <%= render layout: 'layouts/panel', locals: {title: 'Viewing User Subscriptions', resource: nil} do %>
+        <%= render 'users/subscriptions' %>
+    <% end %>
+<% end %>
+<% if @user.scores.accessible_by(current_ability).present? %>
+    <%= render layout: 'layouts/panel', locals: {title: 'Viewing User Scores', resource: nil} do %>
+        <%= render 'users/scores' %>
+    <% end %>
+<% end %>

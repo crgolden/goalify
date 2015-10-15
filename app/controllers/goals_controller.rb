@@ -1,4 +1,5 @@
 class GoalsController < ApplicationController
+  include GoalsHelper
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   load_and_authorize_resource
   caches_page :index, :show

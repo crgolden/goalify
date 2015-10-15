@@ -2,8 +2,7 @@ language: ruby
 script:
 - export RAILS_ENV=test
 - bundle exec rake db:create db:schema:load db:test:prepare
-- bundle exec rake cucumber
-- bundle exec rspec --color --format documentation
+- bundle exec rake
 addons:
     code_climate:
         repo_token: 088402be444ff5c274ba18d212dfe8ea518fba07ad7c768c00feb1f1aecf9b8a

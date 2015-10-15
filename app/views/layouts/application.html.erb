@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= content_for?(:title) ? yield(:title) : 'Goalify' %></title>
   <meta name="description" content="<%= content_for?(:description) ? yield(:description) : 'Goalify' %>">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,15 +13,13 @@
 <%= render 'layouts/navigation' %>
 <div class="container">
   <div class="row">
-    <div class="col-xs-12">
-      <%= flash_messages %>
-    </div>
   </div>
   <div class="row">
     <div class="col-xs-3">
       <%= render 'layouts/pills' %>
     </div>
     <div class="col-xs-9">
+      <%= flash_messages %>
       <%= yield %>
     </div>
   </div>

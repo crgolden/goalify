@@ -72,6 +72,23 @@ ActiveRecord::Schema.define(version: 20150918224950) do
     t.datetime 'updated_at', null: false
   end
 
+  create_table 'scores', id: :uuid, default: 'uuid_generate_v4()', force: :cascade do |t|
+    t.uuid 'user_id'
+    t.uuid 'goal_id'
+    t.uuid 'subscription_id'
+    t.integer 'value'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+  end
+
+  create_table 'subscriptions', id: :uuid, default: 'uuid_generate_v4()', force: :cascade do |t|
+    t.uuid 'user_id'
+    t.uuid 'goal_id'
+    t.boolean 'completed', default: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+  end
+
   add_index 'users', ['confirmation_token'], name: 'index_users_on_confirmation_token', unique: true, using: :btree
   add_index 'users', ['email'], name: 'index_users_on_email', unique: true, using: :btree
   add_index 'tokens', ['provider'], name: 'index_users_on_provider', using: :btree
@@ -80,6 +97,11 @@ ActiveRecord::Schema.define(version: 20150918224950) do
   add_index 'users', ['unlock_token'], name: 'index_users_on_unlock_token', unique: true, using: :btree
   add_index 'users', ['authentication_token'], name: 'index_users_on_authentication_token', unique: true, using: :btree
 
+  add_foreign_key 'scores', 'subscriptions'
+  add_foreign_key 'scores', 'goals'
+  add_foreign_key 'scores', 'users'
+  add_foreign_key 'subscriptions', 'goals'
+  add_foreign_key 'subscriptions', 'users'
   add_foreign_key 'comments', 'goals'
   add_foreign_key 'comments', 'users'
   add_foreign_key 'goals', 'users'

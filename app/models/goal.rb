@@ -4,6 +4,8 @@ class Goal < ActiveRecord::Base
 
   has_many :comments, dependent: :destroy
   has_many :steps, class_name: 'Goal', foreign_key: 'parent_id'
+  has_many :scores
+  has_many :subscriptions
 
   validates :title, presence: true
   validates :user, presence: true

@@ -1,4 +1,4 @@
-50.times do
+75.times do
   User.create name: Faker::Name.name, email: Faker::Internet.email, confirmed_at: Time.now,
               password: ENV['ADMIN_PASSWORD'], password_confirmation: ENV['ADMIN_PASSWORD']
 end
@@ -12,6 +12,10 @@ end
 250.times do
   Goal.create title: Faker::Lorem.word, text: Faker::Lorem.word,
               user: User.offset(rand(User.count)).first
+end
+
+500.times do
+  Subscription.create goal: Goal.offset(rand(Goal.count)).first, user: User.offset(rand(User.count)).first
 end
 
 500.times do

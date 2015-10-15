@@ -1,0 +1,9 @@
+<%= form_for([@goal, @goal.subscriptions.build], html: {class: 'form-horizontal'}) do |f| %>
+    <div class="field">
+      <%= f.label :completed %><br>
+      <%= f.check_box :completed %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+<% end %>

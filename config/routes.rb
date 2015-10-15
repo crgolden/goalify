@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   root 'high_voltage/pages#show', id: 'home'
 
   resources :goals, concerns: :paginatable do
+    resources :scores, concerns: :paginatable, shallow: true
+    resources :subscriptions, concerns: :paginatable, shallow: true
     resources :comments, concerns: :paginatable, shallow: true
   end
 
@@ -15,7 +17,7 @@ Rails.application.routes.draw do
     resources :tokens, only: [:index]
   end
 
-  scope :admin do
+  scope :admin, as: :admin do
     resources :users, concerns: :paginatable, only: [:edit, :update, :create, :new]
   end
 

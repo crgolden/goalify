@@ -19,11 +19,11 @@ class CommentsController < ApplicationController
   end
 
   def create
-    @comment = @goal.comments.create(comment_params)
+    @comment = @goal.comments.new comment_params
     @comment.user = current_user
     if @comment.save
       flash[:success] = 'Comment successfully created.'
-      render :show
+      redirect_to @comment.goal
     else
       flash[:error] = 'There was a problem creating the comment.'
       redirect_to @comment.goal
@@ -36,7 +36,7 @@ class CommentsController < ApplicationController
       redirect_to @comment.goal
     else
       flash[:error] = 'There was a problem updating the comment.'
-      render :edit
+      redirect_to @comment.goal
     end
   end
 
@@ -49,7 +49,7 @@ class CommentsController < ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:body)
+    params.require(:comment).permit :body
   end
 
   # def query_params

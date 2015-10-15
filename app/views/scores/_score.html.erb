@@ -1,0 +1,13 @@
+<table class="table table-striped">
+  <tr class="row">
+    <th colspan="3">Value:</th>
+    <th>Goal:</th>
+  </tr>
+  <tr class="row">
+    <td><%= @score.value %></td>
+    <td><%= link_to 'Edit', edit_score_path(@score) if can? :update, @score %></td>
+    <td><%= link_to 'Delete', @score, method: :delete,
+                    data: {confirm: 'Are you sure?'} if can? :destroy, @score %></td>
+    <td><%= link_to @score.goal.title, @score.goal %></td>
+  </tr>
+</table>

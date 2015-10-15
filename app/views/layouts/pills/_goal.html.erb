@@ -17,3 +17,9 @@
 <% if @goal.comments.accessible_by(current_ability).present? %>
     <li><%= link_to 'All Comments', goal_comments_path(@goal) %></li>
 <% end %>
+<% if @goal.subscriptions.accessible_by(current_ability).present? %>
+    <li><%= link_to 'All Subscriptions', goal_subscriptions_path(@goal) %></li>
+<% end %>
+<% if @goal.scores.accessible_by(current_ability).present? %>
+    <li><%= link_to 'All Scores', goal_scores_path(@goal) %></li>
+<% end %>

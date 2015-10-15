@@ -12,3 +12,13 @@
         <%= render 'goals/comments' %>
     <% end %>
 <% end %>
+<% if @goal.subscriptions.accessible_by(current_ability).present? %>
+    <%= render layout: 'layouts/panel', locals: {title: 'Viewing Goal Subscriptions', resource: nil} do %>
+        <%= render 'goals/subscriptions' %>
+    <% end %>
+<% end %>
+<% if @goal.scores.accessible_by(current_ability).present? %>
+    <%= render layout: 'layouts/panel', locals: {title: 'Viewing Goal Scores', resource: nil} do %>
+        <%= render 'goals/scores' %>
+    <% end %>
+<% end %>

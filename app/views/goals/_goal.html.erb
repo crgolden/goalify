@@ -6,10 +6,29 @@
   <tr class="row">
     <td><%= link_to @goal.title, @goal %></td>
     <td><%= link_to 'Edit', edit_goal_path(@goal) if can? :update, @goal %></td>
-    <td><%= link_to 'Delete', @goal, method: :delete, data: {confirm: 'Are you sure?'} if can? :destroy, @goal %></td>
+    <td><%= link_to 'Delete', @goal, method: :delete,
+                    data: {confirm: 'Are you sure?'} if can? :destroy, @goal %></td>
     <td><%= link_to @goal.user.name, @goal.user %></td>
   </tr>
   <tr class="row">
-    <td colspan="4"><%= @goal.text %></td>
+    <td colspan="4"><b>Text: </b><%= @goal.text %></td>
+  </tr>
+  <tr class="row">
+    <td colspan="4"><b>Score: </b><%= Score.total_for_goal @goal %></td>
+  </tr>
+  <tr class="row">
+    <td colspan="4">
+      <% if subscription_exists_for_user? %>
+          <% if @subscription.completed? %>
+              Completed
+          <% else %>
+              <%= link_to 'Unsubscribe', @subscription, method: :delete %> |
+              <%= link_to 'Complete', subscription_path(@subscription, subscription: {completed: true}),
+                          method: :put %>
+          <% end %>
+      <% else %>
+          <b><%= link_to 'Subscribe', goal_subscriptions_path(@goal, subscription: {completed: false}),
+                         method: :post %></b>
+      <% end %></td>
   </tr>
 </table>

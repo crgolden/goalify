@@ -7,12 +7,16 @@ class User < ActiveRecord::Base
   has_many :tokens, dependent: :destroy
   has_many :goals
   has_many :comments
+  has_many :scores
+  has_many :subscriptions
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
   validates :authentication_token, uniqueness: true
+
   enum role: [:regular, :admin]
   enum status: [:active, :inactive]
+
 
   # ensure user account is active
   def active_for_authentication?
@@ -34,7 +38,7 @@ class User < ActiveRecord::Base
 
   # instead of deleting, indicate the user requested a delete & timestamp it
   def soft_delete
-    update_attribute :status, 1
+    update_attribute :status, :inactive
   end
 
 end

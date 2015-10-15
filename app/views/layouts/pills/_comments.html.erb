@@ -1,0 +1,5 @@
+<% if @comments %>
+    <li class="active"><%= link_to 'All Comments', goal_comments_path(@goal) %></li>
+<% else %>
+    <li><%= link_to 'All Comments', goal_comments_path(@goal) %></li>
+<% end %>

@@ -1,0 +1,4 @@
+<%= content_for :title, 'Goalify > Show Score' %>
+<%= render layout: 'layouts/panel', locals: {title: 'Viewing Goal Score', resource: nil} do %>
+    <%= render @score %>
+<% end %>

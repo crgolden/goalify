@@ -1,0 +1,19 @@
+<li><%= link_to 'All Goals', goals_path %></li>
+<li><%= link_to 'View Goal', @subscription.goal %></li>
+<li><%= link_to 'All Subscriptions', goal_subscriptions_path(@subscription.goal) %></li>
+<% if current_page?(@subscription) %>
+    <li class="active"><%= link_to 'View Subscription', @subscription %></li>
+<% else %>
+    <li><%= link_to 'View Subscription', @subscription %></li>
+<% end %>
+<% if can? :update, @subscription %>
+    <% if current_page?(edit_subscription_path @subscription) %>
+        <li class="active"><%= link_to 'Edit Subscription', edit_subscription_path(@subscription) %></li>
+    <% else %>
+        <li><%= link_to 'Edit Subscription', edit_subscription_path(@subscription) %></li>
+    <% end %>
+<% end %>
+<% if can? :destroy, @subscription %>
+    <li><%= link_to 'Delete Subscription', @subscription, method: :delete,
+                    data: {confirm: 'Are you sure?'} %></li>
+<% end %>

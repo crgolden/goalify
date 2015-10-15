@@ -15,18 +15,23 @@
           <% end %></td>
         <td>
           <% if user_signed_in? && current_user.admin? %>
-              <%= link_to 'Edit', edit_user_path(user) %>
+              <%= link_to 'Edit', edit_admin_user_path(user) %>
           <% else %>
               <%= link_to 'Edit', edit_user_registration_path if can? :update, user %>
           <% end %></td>
         <td>
           <% if user_signed_in? && current_user.admin? %>
-              <%= link_to 'Deactivate', user, method: :delete,
-                          data: {confirm: 'Are you sure?'} %>
+              <% if user.active? %>
+                  <%= link_to 'Deactivate User', user, method: :delete,
+                              data: {confirm: 'Are you sure?'} %>
+              <% else %>
+                  <%= link_to 'Activate User', admin_user_path(user, user: {status: :active}), method: :put %>
+              <% end %>
           <% else %>
-              <%= link_to 'Deactivate', cancel_user_registration_path,
+              <%= link_to 'Deactivate User', cancel_user_registration_path,
                           data: {confirm: 'Are you sure?'} if can? :destroy, user %>
-          <% end %></td>
+
+        <% end %></td>
       </tr>
   <% end %>
 </table>

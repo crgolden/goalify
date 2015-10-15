@@ -5,9 +5,9 @@
     <li><%= link_to 'View User', @user %></li>
 <% end %>
 <% if can? :update, @user %>
-    <% if current_page?(edit_user_path(@user)) %>
+    <% if current_page?(edit_admin_user_path(@user)) %>
         <% if user_signed_in? && current_user.admin? %>
-            <li class="active"><%= link_to 'Edit User', edit_user_path(@user) %></li>
+            <li class="active"><%= link_to 'Edit User', edit_admin_user_path(@user) %></li>
         <% else %>
             <li class="active"><%= link_to 'Edit User', edit_user_registration_path %></li>
         <% end %>
@@ -26,15 +26,20 @@
         <% end %>
     <% else %>
         <% if user_signed_in? && current_user.admin? %>
-            <li><%= link_to 'Edit User', edit_user_path(@user) %></li>
+            <li><%= link_to 'Edit User', edit_admin_user_path(@user) %></li>
         <% else %>
             <li><%= link_to 'Edit User', edit_user_registration_path %></li>
         <% end %>
     <% end %>
 <% end %>
 <% if user_signed_in? && current_user.admin? %>
-    <li><%= link_to 'Deactivate User', @user, method: :delete,
-                    data: {confirm: 'Are you sure?'} %></li>
+    <% if @user.active? %>
+        <li><%= link_to 'Deactivate User', @user, method: :delete,
+                        data: {confirm: 'Are you sure?'} %></li>
+    <% else %>
+        <li><%= link_to 'Activate User', admin_user_path(@user, user: {status: :active}),
+                        method: :put %></li>
+    <% end %>
 <% else %>
     <li><%= link_to 'Deactivate User', cancel_user_registration_path,
                     data: {confirm: 'Are you sure?'} if can? :destroy, @user %></li>

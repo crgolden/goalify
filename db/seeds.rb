@@ -1,6 +1,7 @@
 75.times do
   User.create name: Faker::Name.name, email: Faker::Internet.email, confirmed_at: Time.now,
-              password: ENV['ADMIN_PASSWORD'], password_confirmation: ENV['ADMIN_PASSWORD']
+              password: Rails.application.secrets.admin_password,
+              password_confirmation: Rails.application.secrets.admin_password
 end
 
 50.times do
@@ -24,9 +25,9 @@ end
 end
 
 User.find_or_create_by! email: ENV['ADMIN_EMAIL'] do |user|
-  user.name = ENV['ADMIN_NAME']
-  user.password = ENV['ADMIN_PASSWORD']
-  user.password_confirmation = ENV['ADMIN_PASSWORD']
+  user.name = Rails.application.secrets.admin_name
+  user.password = Rails.application.secrets.admin_password
+  user.password_confirmation = Rails.application.secrets.admin_password
   user.confirmed_at = Time.now
   user.admin!
 end

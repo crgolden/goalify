@@ -12,7 +12,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'no-reply@' + ENV['DOMAIN_NAME']
+  config.mailer_sender = 'no-reply@' + Rails.application.secrets.domain_name
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
@@ -235,10 +235,18 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  config.omniauth :facebook, ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_APP_SECRET'], scope: 'email',
-                  info_fields: 'email, name', client_options: {ssl: {ca_path: '/etc/ssl/certs'}}
-  config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], name: 'google_oauth2',
-                  scope: 'email, profile, calendar, gmail.modify', access_type: 'offline'
+  config.omniauth :facebook,
+                  Rails.application.secrets.facebook_app_id,
+                  Rails.application.secrets.facebook_app_secret,
+                  scope: 'email',
+                  info_fields: 'email, name',
+                  client_options: {ssl: {ca_path: '/etc/ssl/certs'}}
+  config.omniauth :google_oauth2,
+                  Rails.application.secrets.google_client_id,
+                  Rails.application.secrets.google_client_secret,
+                  name: 'google_oauth2',
+                  scope: 'email, profile, calendar, gmail.modify',
+                  access_type: 'offline'
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

@@ -36,7 +36,7 @@ class CommentsController < ApplicationController
       redirect_to @comment.goal
     else
       flash[:error] = 'There was a problem updating the comment.'
-      redirect_to @comment.goal
+      render :edit
     end
   end
 

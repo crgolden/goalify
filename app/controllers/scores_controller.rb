@@ -32,10 +32,10 @@ class ScoresController < ApplicationController
 
   def update
     if @score.update score_params
-      flash[:success] = 'Comment was successfully updated.'
+      flash[:success] = 'Score was successfully updated.'
       redirect_to @score.goal
     else
-      flash[:error] = 'There was a problem updating the comment.'
+      flash[:error] = 'There was a problem updating the score.'
       render :edit
     end
   end

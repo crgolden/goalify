@@ -1,7 +1,9 @@
 class ApplicationController < ActionController::Base
   include ApplicationHelper
-  protect_from_forgery with: :null_session
   before_action :configure_permitted_parameters, if: :devise_controller?
+
+  caches_page :index, :show
+  caches_action :new, :edit
 
   rescue_from CanCan::AccessDenied do |_exception|
     flash[:error] = 'Access denied!'

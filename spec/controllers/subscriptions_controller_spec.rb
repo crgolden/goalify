@@ -8,17 +8,18 @@ describe SubscriptionsController do
 
   context 'For a visitor' do
 
-    it 'doesn\'t show a Subscription' do
+    it 'shows a Subscription' do
       get :show, id: @subscription.id
 
-      expect(response.status).to eq 302
-      expect(response).to redirect_to new_user_session_path
+      expect(response.status).to eq 200
+      expect(response).to render_template :show
+      expect(assigns :subscription).to eq @subscription
     end
-    it 'doesn\'t show all the Subscriptions for a Goal' do
+    it 'shows all the Subscriptions for a Goal' do
       get :index, goal_id: @subscription.goal_id
 
-      expect(response.status).to eq 302
-      expect(response).to redirect_to new_user_session_path
+      expect(response.status).to eq 200
+      expect(response).to render_template :index
     end
 
   end

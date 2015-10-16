@@ -1,27 +1,20 @@
 class Api::V1::TokensController < Api::V1::ApiController
-  load_resource :user
-  load_resource :token, through: :user, only: [:index]
-  load_resource :token, only: [:show, :destroy]
   acts_as_token_authentication_handler_for User, only: [:index, :show, :destroy], fallback: :exception
+  before_action :authenticate_user!, only: [:index, :show, :destroy]
   caches_action :index, :show
+  load_and_authorize_resource :user
+  load_and_authorize_resource :token, through: :user, only: [:index]
+  load_and_authorize_resource :token, only: [:show, :destroy]
 
   def index
-    if user_signed_in? && (current_user.admin? || current_user == @user)
-      render :index
-    end
   end
 
   def show
-    if user_signed_in? && (current_user.admin? || current_user == @token.user)
-      render :show
-    end
   end
 
   def destroy
-    if user_signed_in? && (current_user.admin? || current_user == @token.user)
-      @token.destroy
-      head 204
-    end
+    @token.destroy
+    head 204
   end
 
 end

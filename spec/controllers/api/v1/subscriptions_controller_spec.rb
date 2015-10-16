@@ -9,19 +9,30 @@ describe Api::V1::SubscriptionsController do
 
   context 'Without a valid authenticity_token' do
 
-    it 'doesn\'t show a subscription' do
+    it 'shows a Subscription' do
       get :show, id: @subscription.id, format: :json
-      subscription = json_response
+      subscription = json_response[:subscription]
 
-      expect(response.status).to eq 401
-      expect(subscription[:error]).to eq I18n.t 'devise.failure.unauthenticated'
+      expect(response.status).to eq 200
+      expect(response).to render_template :show
+      expect(response).to match_response_schema 'subscription'
+      expect(subscription[:id]).to eq @subscription.id
+      expect(subscription[:completed]).to eq @subscription.completed
+      expect(subscription[:user_id]).to eq @subscription.user_id
+      expect(subscription[:goal_id]).to eq @subscription.goal_id
+      expect(assigns :subscription).to eq @subscription
     end
-    it 'doesn\'t show all the subscriptions' do
+    it 'shows all the Subscriptions' do
       get :index, goal_id: @subscription.goal_id, format: :json
-      subscription = json_response
 
-      expect(response.status).to eq 401
-      expect(subscription[:error]).to eq I18n.t 'devise.failure.unauthenticated'
+      expect(response.status).to eq 200
+      expect(response).to render_template :index
+      expect(response).to match_response_schema 'subscriptions'
+      expect(json_response).to have_key :meta
+      expect(json_response[:meta]).to have_key :pagination
+      expect(json_response[:meta][:pagination]).to have_key :per_page
+      expect(json_response[:meta][:pagination]).to have_key :total_pages
+      expect(json_response[:meta][:pagination]).to have_key :total_objects
     end
 
   end

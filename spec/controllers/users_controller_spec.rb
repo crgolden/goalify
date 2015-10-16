@@ -98,11 +98,23 @@ describe UsersController do
         sign_in create :admin
       end
 
-      it 'creates another User with valid data' do
+      it 'creates another User with valid data (unconfirmed)' do
         attr = {name: Faker::Name.name, email: Faker::Internet.email, password: Faker::Internet.password}
         post :create, user: attr
 
         expect(flash[:notice]).to eq I18n.t 'devise.registrations.signed_up_but_unconfirmed'
+        expect(response.status).to eq 200
+        expect(response).to render_template :show
+        expect(User.find_by name: attr[:name], email: attr[:email]).not_to be nil
+      end
+
+      it 'creates another User with valid data (confirmed)' do
+        attr = {name: Faker::Name.name, email: Faker::Internet.email, password: Faker::Internet.password,
+                confirmed_at: Time.now}
+        post :create, user: attr
+
+
+        expect(flash[:success]).to eq I18n.t 'devise.registrations.signed_up'
         expect(response.status).to eq 200
         expect(response).to render_template :show
         expect(User.find_by name: attr[:name], email: attr[:email]).not_to be nil

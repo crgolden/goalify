@@ -9,7 +9,7 @@ describe Api::V1::CommentsController do
 
   context 'Without a valid authenticity_token' do
 
-    it 'shows a comment' do
+    it 'shows a Comment' do
       get :show, id: @comment.id, format: :json
       comment = json_response[:comment]
 
@@ -22,7 +22,7 @@ describe Api::V1::CommentsController do
       expect(comment[:goal_id]).to eq @comment.goal_id
       expect(assigns :comment).to eq @comment
     end
-    it 'shows all the comments' do
+    it 'shows all the Comments' do
       get :index, goal_id: @comment.goal_id, format: :json
 
       expect(response.status).to eq 200
@@ -56,6 +56,16 @@ describe Api::V1::CommentsController do
         expect(response).to match_response_schema 'comment'
         expect(comment[:body]).to eq attr[:body]
         expect(Comment.find_by body: attr[:body]).not_to be nil
+      end
+
+      it 'doesn\'t create a comment with blank body' do
+        attr = {body: ''}
+        post :create, comment: attr, goal_id: @comment.goal_id, format: :json
+        comment = json_response
+
+        expect(response.status).to eq 422
+        expect(comment[:body].first).to eq 'can\'t be blank'
+        expect(Comment.find_by body: attr[:body]).to be nil
       end
 
       it 'updates own comment with valid body' do

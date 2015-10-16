@@ -1,5 +1,7 @@
 class Api::V1::ApiController < ApplicationController
   acts_as_token_authentication_handler_for User, except: [:show, :index], fallback: :exception
+  protect_from_forgery with: :null_session
+  before_action :authenticate_user!, except: [:show, :index]
   # before_action :set_resource, only: [:destroy, :show, :update]
   respond_to :json
 #

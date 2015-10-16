@@ -34,6 +34,16 @@ describe Api::V1::GoalsController do
       expect(json_response[:meta][:pagination]).to have_key :total_objects
     end
 
+    it 'doesn\'t create new goal' do
+      attr = {title: 'New Title', text: 'New Text'}
+      post :create, goal: attr, format: :json
+      goal = json_response
+
+      expect(response.status).to eq 401
+      expect(goal[:error]).to eq I18n.t 'devise.failure.unauthenticated'
+      expect(Goal.find_by title: attr[:title], text: attr[:text]).to be nil
+    end
+
     it 'doesn\'t update own goal' do
       attr = {title: 'New Title'}
       put :update, id: @goal.id, goal: attr, format: :json
@@ -43,15 +53,6 @@ describe Api::V1::GoalsController do
       expect(response.status).to eq 401
       expect(goal[:error]).to eq I18n.t 'devise.failure.unauthenticated'
       expect(@goal.title).not_to eq attr[:title]
-    end
-    it 'doesn\'t create new goal' do
-      attr = {title: 'New Title', text: 'New Text'}
-      post :create, goal: attr, format: :json
-      goal = json_response
-
-      expect(response.status).to eq 401
-      expect(goal[:error]).to eq I18n.t 'devise.failure.unauthenticated'
-      expect(Goal.find_by title: attr[:title], text: attr[:text]).to be nil
     end
 
   end
@@ -76,6 +77,16 @@ describe Api::V1::GoalsController do
         expect(goal[:title]).to eq attr[:title]
         expect(goal[:text]).to eq attr[:text]
         expect(Goal.find_by title: attr[:title], text: attr[:text]).not_to be nil
+      end
+
+      it 'doesn\'t create a goal with blank title' do
+        attr = {title: '', text: 'New Text'}
+        post :create, goal: attr, format: :json
+        goal = json_response
+
+        expect(response.status).to eq 422
+        expect(goal[:title].first).to eq 'can\'t be blank'
+        expect(Goal.find_by title: attr[:title], text: attr[:text]).to be nil
       end
 
       it 'updates own goal with valid data' do
@@ -105,7 +116,9 @@ describe Api::V1::GoalsController do
       it 'doesn\'t delete own goal' do
         delete :destroy, id: @goal.id, format: :json
 
-        expect(response.status).to eq 403
+        expect(response.status).to eq 302
+        expect(response).to redirect_to root_path
+        expect(flash[:error]).to eq 'Access denied!'
         expect(Goal.find_by id: @goal.id).not_to be nil
       end
 

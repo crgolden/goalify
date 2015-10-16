@@ -103,8 +103,7 @@ describe UsersController do
         post :create, user: attr
 
         expect(flash[:notice]).to eq I18n.t 'devise.registrations.signed_up_but_unconfirmed'
-        expect(response.status).to eq 200
-        expect(response).to render_template :show
+        expect(response.status).to eq 302
         expect(User.find_by name: attr[:name], email: attr[:email]).not_to be nil
       end
 
@@ -115,8 +114,7 @@ describe UsersController do
 
 
         expect(flash[:success]).to eq I18n.t 'devise.registrations.signed_up'
-        expect(response.status).to eq 200
-        expect(response).to render_template :show
+        expect(response.status).to eq 302
         expect(User.find_by name: attr[:name], email: attr[:email]).not_to be nil
       end
 

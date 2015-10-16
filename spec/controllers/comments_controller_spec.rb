@@ -37,8 +37,7 @@ describe CommentsController do
         post :create, comment: attr, goal_id: @comment.goal_id
 
         expect(flash[:success]).to eq 'Comment successfully created.'
-        expect(response.status).to eq 200
-        expect(response).to render_template :show
+        expect(response.status).to eq 302
         expect(Comment.find_by body: attr[:body]).not_to be nil
       end
 

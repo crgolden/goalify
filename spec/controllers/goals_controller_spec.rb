@@ -36,8 +36,7 @@ describe GoalsController do
         post :create, goal: attr
 
         expect(flash[:success]).to eq 'Goal successfully created.'
-        expect(response.status).to eq 200
-        expect(response).to render_template :show
+        expect(response.status).to eq 302
         expect(Goal.find_by title: attr[:title], text: attr[:text]).not_to be nil
       end
 

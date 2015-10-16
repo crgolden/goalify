@@ -37,8 +37,7 @@ describe SubscriptionsController do
         post :create, subscription: attr, goal_id: @subscription.goal_id
 
         expect(flash[:success]).to eq 'Subscription successfully created.'
-        expect(response.status).to eq 200
-        expect(response).to render_template :show
+        expect(response.status).to eq 302
         expect(Subscription.find_by completed: attr[:completed]).not_to be nil
       end
 

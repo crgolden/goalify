@@ -21,7 +21,7 @@ class SubscriptionsController < ApplicationController
     @subscription.user = current_user
     if @subscription.save
       flash[:success] = 'Subscription successfully created.'
-      render :show
+      redirect_to @subscription
       # else
       #   flash[:error] = 'There was a problem creating the subscription.'
       #   redirect_to @subscription.goal

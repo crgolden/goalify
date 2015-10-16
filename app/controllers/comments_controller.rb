@@ -21,7 +21,7 @@ class CommentsController < ApplicationController
     @comment.user = current_user
     if @comment.save
       flash[:success] = 'Comment successfully created.'
-      render :show
+      redirect_to @comment
     else
       flash[:error] = 'There was a problem creating the comment.'
       redirect_to @comment.goal

@@ -23,7 +23,7 @@ class UsersController < ApplicationController
       else
         flash[:notice] = I18n.t 'devise.registrations.signed_up_but_unconfirmed'
       end
-      render :show
+      redirect_to @user
     else
       flash[:error] = 'There was a problem creating the user.'
       render :new

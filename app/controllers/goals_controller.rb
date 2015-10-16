@@ -20,7 +20,7 @@ class GoalsController < ApplicationController
     @goal.user = current_user
     if @goal.save
       flash[:success] = 'Goal successfully created.'
-      render :show
+      redirect_to @goal
     else
       flash[:error] = 'There was a problem creating the goal.'
       render :new

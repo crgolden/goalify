@@ -23,7 +23,7 @@ class CommentsController < ApplicationController
     @comment.user = current_user
     if @comment.save
       flash[:success] = 'Comment successfully created.'
-      redirect_to @comment.goal
+      render :show
     else
       flash[:error] = 'There was a problem creating the comment.'
       redirect_to @comment.goal
@@ -33,7 +33,7 @@ class CommentsController < ApplicationController
   def update
     if @comment.update(comment_params)
       flash[:success] = 'Comment was successfully updated.'
-      redirect_to @comment.goal
+      redirect_to @comment
     else
       flash[:error] = 'There was a problem updating the comment.'
       render :edit

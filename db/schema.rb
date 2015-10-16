@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(version: 20150918224950) do
     t.uuid 'user_id'
     t.uuid 'goal_id'
     t.uuid 'subscription_id'
-    t.integer 'value'
+    t.integer 'value', default: 0
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
   end

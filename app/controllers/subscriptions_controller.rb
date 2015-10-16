@@ -23,7 +23,7 @@ class SubscriptionsController < ApplicationController
     @subscription.user = current_user
     if @subscription.save
       flash[:success] = 'Subscription successfully created.'
-      redirect_to @subscription.goal
+      render :show
     else
       flash[:error] = 'There was a problem creating the subscription.'
       redirect_to @subscription.goal
@@ -33,7 +33,7 @@ class SubscriptionsController < ApplicationController
   def update
     if @subscription.update subscription_params
       flash[:success] = 'Subscription was successfully updated.'
-      redirect_to @subscription.goal
+      redirect_to @subscription
     else
       flash[:error] = 'There was a problem updating the subscription.'
       render :edit

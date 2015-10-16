@@ -46,7 +46,7 @@ describe Api::V1::CommentsController do
         request.headers['X-User-Token'] = @user.authentication_token
       end
 
-      it 'creates a comment with valid data' do
+      it 'creates a comment with valid body' do
         attr = {body: 'Body'}
         post :create, comment: attr, goal_id: @comment.goal_id, format: :json
         comment = json_response[:comment]
@@ -58,7 +58,7 @@ describe Api::V1::CommentsController do
         expect(Comment.find_by body: attr[:body]).not_to be nil
       end
 
-      it 'updates own comment with valid data' do
+      it 'updates own comment with valid body' do
         attr = {body: 'Updated Body'}
         put :update, id: @comment.id, comment: attr, format: :json
         comment = json_response[:comment]

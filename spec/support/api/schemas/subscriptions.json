@@ -1,0 +1,14 @@
+{
+  "definitions": {
+    "subscription": {
+      "type": "object"
+    }
+  },
+  "type": "hash",
+  "required": [
+    "subscriptions"
+  ],
+  "items": {
+    "$ref": "#/definitions/subscription"
+  }
+}

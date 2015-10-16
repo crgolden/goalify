@@ -23,7 +23,7 @@ class ScoresController < ApplicationController
     @score.user = current_user
     if @score.save
       flash[:success] = 'Score successfully created.'
-      redirect_to @score.goal
+      render :show
     else
       flash[:error] = 'There was a problem creating the score.'
       redirect_to @score.goal
@@ -33,7 +33,7 @@ class ScoresController < ApplicationController
   def update
     if @score.update score_params
       flash[:success] = 'Score was successfully updated.'
-      redirect_to @score.goal
+      redirect_to @score
     else
       flash[:error] = 'There was a problem updating the score.'
       render :edit

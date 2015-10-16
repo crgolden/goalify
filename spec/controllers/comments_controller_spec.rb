@@ -32,17 +32,17 @@ describe CommentsController do
         sign_in @user
       end
 
-      it 'creates a Comment with valid data' do
+      it 'creates a Comment with valid body' do
         attr = {body: 'New Body'}
         post :create, comment: attr, goal_id: @comment.goal_id
 
         expect(flash[:success]).to eq 'Comment successfully created.'
-        expect(response.status).to eq 302
-        expect(response).to redirect_to @comment.goal
+        expect(response.status).to eq 200
+        expect(response).to render_template :show
         expect(Comment.find_by body: attr[:body]).not_to be nil
       end
 
-      it 'doesn\'t create a Comment without a Body' do
+      it 'doesn\'t create a Comment with a blank body' do
         attr = {body: ''}
         post :create, comment: attr, goal_id: @comment.goal.id
 
@@ -67,11 +67,11 @@ describe CommentsController do
 
         expect(flash[:success]).to eq 'Comment was successfully updated.'
         expect(response.status).to eq 302
-        expect(response).to redirect_to @comment.goal
+        expect(response).to redirect_to @comment
         expect(@comment.body).to eq attr[:body]
       end
 
-      it 'doesn\'t update own Comment without a Body' do
+      it 'doesn\'t update own Comment without a body' do
         attr = {body: ''}
         put :update, id: @comment.id, comment: attr
         @comment.reload

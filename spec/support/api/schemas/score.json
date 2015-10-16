@@ -1,0 +1,53 @@
+{
+  "definitions": {
+    "id": {
+      "type": "string"
+    },
+    "goal_id": {
+      "type": "string"
+    },
+    "user_id": {
+      "type": "string"
+    },
+    "value": {
+      "type": "integer"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "type": "object",
+  "required": [
+    "score"
+  ],
+  "properties": {
+    "score": {
+      "type": "object",
+      "required": [
+        "id",
+        "value",
+        "goal_id",
+        "user_id"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/definitions/id"
+        },
+        "value": {
+          "$ref": "#/definitions/value"
+        },
+        "goal_id": {
+          "$ref": "#/definitions/goal_id"
+        },
+        "user_id": {
+          "$ref": "#/definitions/user_id"
+        }
+      }
+    }
+  }
+}

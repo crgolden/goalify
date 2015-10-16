@@ -18,12 +18,12 @@
   </tr>
   <tr class="row">
     <td colspan="4">
-      <% if subscription_exists_for_user? %>
-          <% if @subscription.completed? %>
+      <% if subscription = subscription_exists_for_user? %>
+          <% if subscription.completed? %>
               Completed
           <% else %>
-              <%= link_to 'Unsubscribe', @subscription, method: :delete %> |
-              <%= link_to 'Complete', subscription_path(@subscription, subscription: {completed: true}),
+              <%= link_to 'Unsubscribe', subscription, method: :delete %>&nbsp;|
+              <%= link_to 'Complete', subscription_path(subscription, subscription: {completed: true}),
                           method: :put %>
           <% end %>
       <% else %>

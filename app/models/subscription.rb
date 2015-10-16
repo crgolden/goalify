@@ -7,7 +7,7 @@ class Subscription < ActiveRecord::Base
 
   validates :goal, presence: true
   validates :user, presence: true
-  before_update { remove_score_from_goal(COMPLETED_VALUE) unless self.completed? }
+  before_save { remove_score_from_goal(COMPLETED_VALUE) unless self.completed? }
   before_save { self.completed? ? add_score_to_goal(COMPLETED_VALUE) : add_score_to_goal(CREATED_VALUE) }
   before_destroy { remove_score_from_goal COMPLETED_VALUE }
   before_destroy { remove_score_from_goal CREATED_VALUE }

@@ -30,6 +30,8 @@ Rails.application.routes.draw do
         resources :tokens, only: [:index]
       end
       resources :goals, concerns: :paginatable do
+        resources :scores, concerns: :paginatable, shallow: true
+        resources :subscriptions, concerns: :paginatable, shallow: true
         resources :comments, concerns: :paginatable, shallow: true
       end
       resources :tokens, only: [:show, :destroy]

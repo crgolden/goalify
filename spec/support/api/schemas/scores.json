@@ -1,0 +1,14 @@
+{
+  "definitions": {
+    "score": {
+      "type": "object"
+    }
+  },
+  "type": "hash",
+  "required": [
+    "scores"
+  ],
+  "items": {
+    "$ref": "#/definitions/score"
+  }
+}

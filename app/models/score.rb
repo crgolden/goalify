@@ -4,7 +4,7 @@ class Score < ActiveRecord::Base
 
   validates :goal, presence: true
   validates :user, presence: true
-
+  validates :value, presence: true
 
   def self.total_for_goal(goal)
     total = 0

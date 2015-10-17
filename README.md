@@ -9,6 +9,7 @@ I built this app to get experience with [Ruby on Rails](http://rubyonrails.org/)
 
 ####Features
 This app has the following features:
+
 1. Visitors can view all goals and users
 2. Users can create new goals, comments, and subscriptions
 3. Subscriptions add scores to their goals and creators at:
@@ -26,9 +27,9 @@ This app uses the following tools and technologies:
 5. [Cucumber](https://cucumber.io/), [Factory Girl](https://github.com/thoughtbot/factory_girl), [Faker](https://github.com/stympy/faker), [JSON Schema](http://json-schema.org/), [RSpec](http://rspec.info/) (Testing)
 6. [Devise](https://github.com/plataformatec/devise) (User authentication with [Warden](https://github.com/hassox/warden))
 7. [Heroku](https://www.heroku.com/) (Deployment)
-7. [Jbuilder](https://github.com/rails/jbuilder) (Resource rendering for API)
-8. [Kaminari](https://github.com/amatsuda/kaminari) (Resource pagination)
-9. [OAuth](http://oauth.net/) (User authentication with Facebook and Google)
-10. [PostgreSQL](http://www.postgresql.org/) (Database)
-11. [Puma](http://puma.io/) (Web Server)
-12. [Simple Token Authentication](https://github.com/gonzalo-bulnes/simple_token_authentication) (User authentication with tokens for API)
+8. [Jbuilder](https://github.com/rails/jbuilder) (Resource rendering for API)
+9. [Kaminari](https://github.com/amatsuda/kaminari) (Resource pagination)
+10. [OAuth](http://oauth.net/) (User authentication with Facebook and Google)
+11. [PostgreSQL](http://www.postgresql.org/) (Database)
+12. [Puma](http://puma.io/) (Web Server)
+13. [Simple Token Authentication](https://github.com/gonzalo-bulnes/simple_token_authentication) (User authentication with tokens for API)

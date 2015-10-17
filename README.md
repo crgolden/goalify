@@ -20,6 +20,7 @@ This app has the following features:
 
 ####Tools and Technologies
 This app uses the following tools and technologies:
+
 1. [Action Pack page caching](https://github.com/rails/actionpack-page_caching) and [Action Pack action caching](https://github.com/rails/actionpack-action_caching) (Performance)
 2. [Bootstrap](http://getbootstrap.com/), [Font Awesome](http://fortawesome.github.io/Font-Awesome/), and [Sass](http://sass-lang.com/) (CSS styling)
 3. [CanCanCan](https://github.com/CanCanCommunity/cancancan) (Resource authorization)

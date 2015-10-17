@@ -20,4 +20,109 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  about:
+    title: "Goalify: About"
+  cancan:
+    ability:
+      error: "Access denied!"
+  comments:
+    create:
+      success: "Comment successfully created."
+      errors: "There was a problem creating the comment."
+    update:
+      success: "Comment was successfully updated."
+      errors: "There was a problem updating the comment."
+    destroy:
+      success: "Comment was successfully deleted."
+    title:
+      index: "Goalify: All Comments"
+      show: "Goalify: Showing Comment"
+      edit: "Goalify: Editing Comment"
+    panel:
+      index: "All Comments"
+      show: "Showing Comment"
+      edit: "Editing Comment"
+  description: "A site to create and complete goals"
+  goals:
+    create:
+      success: "Goal successfully created."
+      errors: "There was a problem creating the goal."
+    update:
+      success: "Goal was successfully updated."
+      errors: "There was a problem updating the goal."
+    destroy:
+      success: "Goal was successfully deleted."
+    title:
+      index: "Goalify: All Goals"
+      show: "Goalify: Showing Goal"
+      edit: "Goalify: Editing Goal"
+      new: "Goalify: New Goal"
+    panel:
+      index: "All Goals"
+      show: "Showing Goal"
+      edit: "Editing Goal"
+      new: "New Goal"
+  home:
+    title: "Goalify: Home"
+  scores:
+    title:
+      index: "Goalify: All Scores"
+      show: "Goalify: Showing Score"
+      edit: "Goalify: Editing Score"
+    panel:
+      index: "All Scores"
+      show: "Showing Score"
+      edit: "Editing Score"
+  subscriptions:
+    create:
+      success: "Subscription successfully created."
+    update:
+      success: "Subscription was successfully updated."
+    destroy:
+      success: "Subscription was successfully deleted."
+    title:
+      index: "Goalify: All Subscriptions"
+      show: "Goalify: Showing Subscription"
+      edit: "Goalify: Editing Subscription"
+    panle:
+      index: "All Subscriptions"
+      show: "Showing Subscription"
+      edit: "Editing Subscription"
+  title: "Goalify"
+  tokens:
+    destroy:
+      success: "Token was successfully deleted."
+    title:
+      index: "Goalify: All Tokens"
+      show: "Goalify: Showing Token"
+    panel:
+      index: "All Tokens"
+      show: "Showing Token"
+  users:
+    create:
+      confirmed_success: "User successfully created."
+      unconfirmed_success: "User successfully created. Email sent with confirmation instructions."
+      errors: "There was a problem creating the user."
+    update:
+      confirmed_success: "User was successfully updated."
+      unconfirmed_success: "User was successfully updated. Email sent with confirmation instructions."
+      errors: "There was a problem updating the user."
+    destroy:
+      success: "User was successfully deleted."
+    registration:
+      title:
+        edit: "Goalify: Edit Registration"
+        new: "Goalify: Sign Up"
+    session:
+      title:
+        new: "Goalify: Sign In"
+    title:
+      index: "Goalify: All Users"
+      show: "Goalify: Showing User"
+      edit: "Goalify: Editing User"
+      new: "Goalify: New User"
+    panel:
+      index: "All Users"
+      show: "Showing User"
+      edit: "Editing User"
+      new: "New user"

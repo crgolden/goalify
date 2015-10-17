@@ -1,4 +1,4 @@
-<%= content_for :title, 'Goalify > All Subscriptions' %>
+<%= content_for :title, t('goals.title.index') %>
 <% if @subscriptions.present? %>
     <%= render layout: 'layouts/panel', locals: {title: 'Viewing Goal Subscriptions', resource: nil} do %>
         <%= render 'goals/subscriptions' %>

@@ -20,27 +20,27 @@ class CommentsController < ApplicationController
     @comment = @goal.comments.new comment_params
     @comment.user = current_user
     if @comment.save
-      flash[:success] = 'Comment successfully created.'
+      flash[:success] = I18n.t 'comments.create.success'
       redirect_to @comment
     else
-      flash[:error] = 'There was a problem creating the comment.'
+      flash[:error] = I18n.t 'comments.create.errors'
       redirect_to @comment.goal
     end
   end
 
   def update
     if @comment.update(comment_params)
-      flash[:success] = 'Comment was successfully updated.'
+      flash[:success] = I18n.t 'comments.update.success'
       redirect_to @comment
     else
-      flash[:error] = 'There was a problem updating the comment.'
+      flash[:error] = I18n.t 'comments.update.errors'
       render :edit
     end
   end
 
   def destroy
     @comment.destroy
-    flash[:success] = 'Comment was successfully deleted.'
+    flash[:success] = I18n.t 'comments.destroy.success'
     redirect_to @comment.goal
   end
 

@@ -35,7 +35,7 @@ describe GoalsController do
         attr = {title: 'New Title', text: 'New Text'}
         post :create, goal: attr
 
-        expect(flash[:success]).to eq 'Goal successfully created.'
+        expect(flash[:success]).to eq I18n.t 'goals.create.success'
         expect(response.status).to eq 302
         expect(Goal.find_by title: attr[:title], text: attr[:text]).not_to be nil
       end
@@ -44,7 +44,7 @@ describe GoalsController do
         attr = {title: '', text: 'New Text'}
         post :create, goal: attr
 
-        expect(flash[:error]).to eq 'There was a problem creating the goal.'
+        expect(flash[:error]).to eq I18n.t 'goals.create.errors'
         expect(response.status).to eq 200
         expect(response).to render_template :new
         expect(Goal.find_by title: attr[:title], text: attr[:text]).to be nil
@@ -63,7 +63,7 @@ describe GoalsController do
         put :update, id: @goal.id, goal: attr
         @goal.reload
 
-        expect(flash[:success]).to eq 'Goal was successfully updated.'
+        expect(flash[:success]).to eq I18n.t 'goals.update.success'
         expect(response.status).to eq 302
         expect(response).to redirect_to @goal
         expect(@goal.title).to eq attr[:title]
@@ -75,7 +75,7 @@ describe GoalsController do
         put :update, id: @goal.id, goal: attr
         @goal.reload
 
-        expect(flash[:error]).to eq 'There was a problem updating the goal.'
+        expect(flash[:error]).to eq I18n.t 'goals.update.errors'
         expect(response.status).to eq 200
         expect(response).to render_template :edit
         expect(@goal.title).not_to eq attr[:title]
@@ -93,7 +93,7 @@ describe GoalsController do
       it 'deletes a Goal' do
         delete :destroy, id: @goal.id
 
-        expect(flash[:success]).to eq 'Goal was successfully deleted.'
+        expect(flash[:success]).to eq I18n.t 'goals.destroy.success'
         expect(response.status).to eq 302
         expect(response).to redirect_to goals_path
       end

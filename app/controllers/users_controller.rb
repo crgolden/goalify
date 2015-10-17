@@ -19,13 +19,13 @@ class UsersController < ApplicationController
   def create
     if @user.save
       if @user.confirmed_at.present?
-        flash[:success] = I18n.t 'devise.registrations.signed_up'
+        flash[:success] = I18n.t 'users.create.confirmed_success'
       else
-        flash[:notice] = I18n.t 'devise.registrations.signed_up_but_unconfirmed'
+        flash[:notice] = I18n.t 'users.create.unconfirmed_success'
       end
       redirect_to @user
     else
-      flash[:error] = 'There was a problem creating the user.'
+      flash[:error] = I18n.t 'users.create.errors'
       render :new
     end
   end
@@ -41,7 +41,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user.soft_delete
-    flash[:success] = I18n.t 'devise.registrations.destroyed'
+    flash[:success] = I18n.t 'users.destroy.success'
     redirect_to users_path
   end
 

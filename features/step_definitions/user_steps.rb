@@ -261,7 +261,7 @@ Then(/^I see a 'too short password' message$/) do
 end
 
 Then /^I see an 'access denied' message$/ do
-  expect(page).to have_content 'Access denied!'
+  expect(page).to have_content I18n.t 'cancan.ability.error'
 end
 
 Then /^I see my own name$/ do

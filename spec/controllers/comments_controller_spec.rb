@@ -36,7 +36,7 @@ describe CommentsController do
         attr = {body: 'New Body'}
         post :create, comment: attr, goal_id: @comment.goal_id
 
-        expect(flash[:success]).to eq 'Comment successfully created.'
+        expect(flash[:success]).to eq I18n.t 'comments.create.success'
         expect(response.status).to eq 302
         expect(Comment.find_by body: attr[:body]).not_to be nil
       end
@@ -45,7 +45,7 @@ describe CommentsController do
         attr = {body: ''}
         post :create, comment: attr, goal_id: @comment.goal.id
 
-        expect(flash[:error]).to eq 'There was a problem creating the comment.'
+        expect(flash[:error]).to eq I18n.t 'comments.create.errors'
         expect(response.status).to eq 302
         expect(response).to redirect_to @comment.goal
         expect(Comment.find_by body: attr[:body]).to be nil
@@ -64,7 +64,7 @@ describe CommentsController do
         put :update, id: @comment.id, comment: attr
         @comment.reload
 
-        expect(flash[:success]).to eq 'Comment was successfully updated.'
+        expect(flash[:success]).to eq I18n.t 'comments.update.success'
         expect(response.status).to eq 302
         expect(response).to redirect_to @comment
         expect(@comment.body).to eq attr[:body]
@@ -75,7 +75,7 @@ describe CommentsController do
         put :update, id: @comment.id, comment: attr
         @comment.reload
 
-        expect(flash[:error]).to eq 'There was a problem updating the comment.'
+        expect(flash[:error]).to eq I18n.t 'comments.update.errors'
         expect(response.status).to eq 200
         expect(response).to render_template :edit
         expect(@comment.body).not_to eq attr[:body]
@@ -84,7 +84,7 @@ describe CommentsController do
       it 'deletes own Comment' do
         delete :destroy, id: @comment.id
 
-        expect(flash[:success]).to eq 'Comment was successfully deleted.'
+        expect(flash[:success]).to eq I18n.t 'comments.destroy.success'
         expect(response.status).to eq 302
         expect(response).to redirect_to @comment.goal
         expect(Comment.find_by id: @comment.id).to be nil

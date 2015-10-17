@@ -1,4 +1,4 @@
-<%= content_for :title, 'Goalify > Edit Comment' %>
-<%= render layout: 'layouts/panel', locals: {title: 'Editing Goal Comment', resource: nil} do %>
+<%= content_for :title, t('comments.title.edit') %>
+<%= render layout: 'layouts/panel', locals: {title: 'Editing Comment', resource: nil} do %>
     <%= render 'comments/form' %>
 <% end %>

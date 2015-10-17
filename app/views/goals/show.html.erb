@@ -1,24 +1,24 @@
-<%= content_for :title, 'Goalify > Show Goal' %>
-<%= render layout: 'layouts/panel', locals: {title: 'Viewing Goal', resource: nil} do %>
+<%= content_for :title, t('goals.title.show') %>
+<%= render layout: 'layouts/panel', locals: {title: 'Showing Goal', resource: nil} do %>
     <%= render @goal %>
 <% end %>
 <% if user_signed_in? %>
-    <%= render layout: 'layouts/panel', locals: {title: 'New Goal Comment', resource: nil} do %>
+    <%= render layout: 'layouts/panel', locals: {title: 'New Comment', resource: nil} do %>
         <%= render 'comments/new' %>
     <% end %>
 <% end %>
 <% if @goal.comments.accessible_by(current_ability).present? %>
-    <%= render layout: 'layouts/panel', locals: {title: 'Viewing Goal Comments', resource: nil} do %>
+    <%= render layout: 'layouts/panel', locals: {title: 'All Comments', resource: nil} do %>
         <%= render 'goals/comments' %>
     <% end %>
 <% end %>
 <% if @goal.subscriptions.accessible_by(current_ability).present? %>
-    <%= render layout: 'layouts/panel', locals: {title: 'Viewing Goal Subscriptions', resource: nil} do %>
+    <%= render layout: 'layouts/panel', locals: {title: 'All Subscriptions', resource: nil} do %>
         <%= render 'goals/subscriptions' %>
     <% end %>
 <% end %>
 <% if @goal.scores.accessible_by(current_ability).present? %>
-    <%= render layout: 'layouts/panel', locals: {title: 'Viewing Goal Scores', resource: nil} do %>
+    <%= render layout: 'layouts/panel', locals: {title: 'All Scores', resource: nil} do %>
         <%= render 'goals/scores' %>
     <% end %>
 <% end %>

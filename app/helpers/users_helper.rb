@@ -4,15 +4,15 @@ module UsersHelper
 
   def update_success
     if @user.unconfirmed_email.present?
-      flash[:notice] = I18n.t 'devise.registrations.update_needs_confirmation'
+      flash[:notice] = I18n.t 'users.update.unconfirmed_success'
     else
-      flash[:success] = I18n.t 'devise.registrations.updated'
+      flash[:success] = I18n.t 'users.update.confirmed_success'
     end
     redirect_to @user
   end
 
   def update_errors
-    flash[:error] = 'There was a problem updating the user.'
+    flash[:error] = I18n.t 'users.update.errors'
     render :edit
   end
 

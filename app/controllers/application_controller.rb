@@ -1,12 +1,13 @@
 class ApplicationController < ActionController::Base
   include ApplicationHelper
+  protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   caches_page :index, :show
   caches_action :new, :edit
 
   rescue_from CanCan::AccessDenied do |_exception|
-    flash[:error] = 'Access denied!'
+    flash[:error] = I18n.t 'cancan.ability.error'
     request.env['HTTP_REFERER'].present? ? redirect_to(:back) : redirect_to(root_path)
   end
 

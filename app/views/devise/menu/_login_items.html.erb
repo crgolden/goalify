@@ -1,5 +1,5 @@
 <% if user_signed_in? %>
-    <li><%= link_to(destroy_user_session_path, :method => :delete) do %>
+    <li><%= link_to(destroy_user_session_path, method: :delete) do %>
           <i class="glyphicon glyphicon-log-out"></i> Sign out
       <% end %></li>
 <% else %>

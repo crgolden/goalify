@@ -10,9 +10,6 @@ class SubscriptionsController < ApplicationController
   def show
   end
 
-  def new
-  end
-
   def edit
   end
 
@@ -20,27 +17,21 @@ class SubscriptionsController < ApplicationController
     @subscription = @goal.subscriptions.new subscription_params
     @subscription.user = current_user
     if @subscription.save
-      flash[:success] = 'Subscription successfully created.'
+      flash[:success] = I18n.t 'subscriptions.create.success'
       redirect_to @subscription
-      # else
-      #   flash[:error] = 'There was a problem creating the subscription.'
-      #   redirect_to @subscription.goal
     end
   end
 
   def update
     if @subscription.update subscription_params
-      flash[:success] = 'Subscription was successfully updated.'
+      flash[:success] = I18n.t 'subscriptions.update.success'
       redirect_to @subscription
-      # else
-      #   flash[:error] = 'There was a problem updating the subscription.'
-      #   render :edit
     end
   end
 
   def destroy
     @subscription.destroy
-    flash[:success] = 'Subscription was successfully deleted.'
+    flash[:success] = I18n.t 'subscriptions.destroy.success'
     redirect_to @subscription.goal
   end
 

@@ -36,7 +36,7 @@ describe SubscriptionsController do
         attr = {completed: false}
         post :create, subscription: attr, goal_id: @subscription.goal_id
 
-        expect(flash[:success]).to eq 'Subscription successfully created.'
+        expect(flash[:success]).to eq I18n.t 'subscriptions.create.success'
         expect(response.status).to eq 302
         expect(Subscription.find_by completed: attr[:completed]).not_to be nil
       end
@@ -54,7 +54,7 @@ describe SubscriptionsController do
         put :update, id: @subscription.id, subscription: attr
         @subscription.reload
 
-        expect(flash[:success]).to eq 'Subscription was successfully updated.'
+        expect(flash[:success]).to eq I18n.t 'subscriptions.update.success'
         expect(response.status).to eq 302
         expect(response).to redirect_to @subscription
         expect(@subscription.completed).to eq attr[:completed]
@@ -63,7 +63,7 @@ describe SubscriptionsController do
       it 'deletes own Subscription' do
         delete :destroy, id: @subscription.id
 
-        expect(flash[:success]).to eq 'Subscription was successfully deleted.'
+        expect(flash[:success]).to eq I18n.t 'subscriptions.destroy.success'
         expect(response.status).to eq 302
         expect(response).to redirect_to @subscription.goal
         expect(Subscription.find_by id: @subscription.id).to be nil

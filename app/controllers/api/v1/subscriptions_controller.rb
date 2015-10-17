@@ -9,9 +9,6 @@ class Api::V1::SubscriptionsController < Api::V1::ApiController
   def show
   end
 
-  def new
-  end
-
   def edit
   end
 
@@ -20,16 +17,12 @@ class Api::V1::SubscriptionsController < Api::V1::ApiController
     @subscription.user = current_user
     if @subscription.save
       render :show, status: :created, location: [:api, @subscription]
-      # else
-      #   render json: @subscription.errors, status: :unprocessable_entity
     end
   end
 
   def update
     if @subscription.update subscription_params
       render :show, status: :ok, location: [:api, @subscription]
-      # else
-      #   render json: @subscription.errors, status: :unprocessable_entity
     end
   end
 

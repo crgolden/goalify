@@ -118,7 +118,7 @@ describe Api::V1::GoalsController do
 
         expect(response.status).to eq 302
         expect(response).to redirect_to root_path
-        expect(flash[:error]).to eq 'Access denied!'
+        expect(flash[:error]).to eq I18n.t 'cancan.ability.error'
         expect(Goal.find_by id: @goal.id).not_to be nil
       end
 

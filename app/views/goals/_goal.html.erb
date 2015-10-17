@@ -18,7 +18,7 @@
   </tr>
   <tr class="row">
     <td colspan="4">
-      <% if subscription = subscription_exists_for_user? %>
+      <% if subscription = Subscription.exists_for_goal_and_user?(@goal, current_user) %>
           <% if subscription.completed? %>
               Completed
           <% else %>

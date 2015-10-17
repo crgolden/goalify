@@ -1,4 +1,4 @@
-<%= content_for :title, 'Goalify > New User' %>
+<%= content_for :title, t('users.title.new') %>
 <% if can? :create, User %>
     <%= render layout: 'layouts/panel', locals: {title: 'New User', resource: nil} do %>
         <%= render partial: 'users/form', locals: {action: 'create'} %>

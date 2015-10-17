@@ -22,6 +22,6 @@ feature 'User profile page', :devise do
     login_as(me, scope: :user)
     Capybara.current_session.driver.header 'Referer', root_path
     visit token_path token
-    expect(page).to have_content 'Access denied!'
+    expect(page).to have_content I18n.t 'cancan.ability.error'
   end
 end

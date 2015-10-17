@@ -43,7 +43,7 @@ describe UsersController do
         put :update, id: @user.id, user: attr
         @user.reload
 
-        expect(flash[:notice]).to eq I18n.t 'devise.registrations.update_needs_confirmation'
+        expect(flash[:notice]).to eq I18n.t 'users.update.unconfirmed_success'
         expect(response.status).to eq 302
         expect(response).to redirect_to @user
         expect(@user.unconfirmed_email).to eq attr[:email]
@@ -53,7 +53,7 @@ describe UsersController do
         put :update, id: @user.id, user: attr
         @user.reload
 
-        expect(flash[:success]).to eq I18n.t 'devise.registrations.updated'
+        expect(flash[:success]).to eq I18n.t 'users.update.confirmed_success'
         expect(response.status).to eq 302
         expect(response).to redirect_to @user
         expect(@user.name).to eq attr[:name]
@@ -64,7 +64,7 @@ describe UsersController do
         put :update, id: @user.id, user: attr
         @user.reload
 
-        expect(flash[:error]).to eq 'There was a problem updating the user.'
+        expect(flash[:error]).to eq I18n.t 'users.update.errors'
         expect(response.status).to eq 200
         expect(response).to render_template :edit
         expect(@user.unconfirmed_email).not_to eq attr[:email]
@@ -74,7 +74,7 @@ describe UsersController do
         put :update, id: @user.id, user: attr
         @user.reload
 
-        expect(flash[:error]).to eq 'There was a problem updating the user.'
+        expect(flash[:error]).to eq I18n.t 'users.update.errors'
         expect(response.status).to eq 200
         expect(response).to render_template :edit
         expect(@user.name).not_to eq attr[:name]
@@ -84,7 +84,7 @@ describe UsersController do
         delete :destroy, id: @user.id
         @user.reload
 
-        expect(flash[:success]).to eq I18n.t 'devise.registrations.destroyed'
+        expect(flash[:success]).to eq I18n.t 'users.destroy.success'
         expect(response.status).to eq 302
         expect(response).to redirect_to users_path
         expect(@user.status).to eq 'inactive'
@@ -102,7 +102,7 @@ describe UsersController do
         attr = {name: Faker::Name.name, email: Faker::Internet.email, password: Faker::Internet.password}
         post :create, user: attr
 
-        expect(flash[:notice]).to eq I18n.t 'devise.registrations.signed_up_but_unconfirmed'
+        expect(flash[:notice]).to eq I18n.t 'users.create.unconfirmed_success'
         expect(response.status).to eq 302
         expect(User.find_by name: attr[:name], email: attr[:email]).not_to be nil
       end
@@ -113,7 +113,7 @@ describe UsersController do
         post :create, user: attr
 
 
-        expect(flash[:success]).to eq I18n.t 'devise.registrations.signed_up'
+        expect(flash[:success]).to eq I18n.t 'users.create.confirmed_success'
         expect(response.status).to eq 302
         expect(User.find_by name: attr[:name], email: attr[:email]).not_to be nil
       end
@@ -122,7 +122,7 @@ describe UsersController do
         attr = {name: Faker::Name.name, email: 'bad_email', password: Faker::Internet.password}
         post :create, user: attr
 
-        expect(flash[:error]).to eq 'There was a problem creating the user.'
+        expect(flash[:error]).to eq I18n.t 'users.create.errors'
         expect(response.status).to eq 200
         expect(response).to render_template :new
         expect(User.find_by name: attr[:name], email: attr[:email]).to be nil
@@ -131,7 +131,7 @@ describe UsersController do
         attr = {name: '', email: Faker::Internet.email, password: Faker::Internet.password}
         post :create, user: attr
 
-        expect(flash[:error]).to eq 'There was a problem creating the user.'
+        expect(flash[:error]).to eq I18n.t 'users.create.errors'
         expect(response.status).to eq 200
         expect(response).to render_template :new
         expect(User.find_by name: attr[:name], email: attr[:email]).to be nil
@@ -140,7 +140,7 @@ describe UsersController do
         attr = {name: Faker::Name.name, email: Faker::Internet.email, password: ''}
         post :create, user: attr
 
-        expect(flash[:error]).to eq 'There was a problem creating the user.'
+        expect(flash[:error]).to eq I18n.t 'users.create.errors'
         expect(response.status).to eq 200
         expect(response).to render_template :new
         expect(User.find_by name: attr[:name], email: attr[:email]).to be nil
@@ -159,7 +159,7 @@ describe UsersController do
         put :update, id: @user.id, user: attr
         @user.reload
 
-        expect(flash[:notice]).to eq I18n.t 'devise.registrations.update_needs_confirmation'
+        expect(flash[:notice]).to eq I18n.t 'users.update.unconfirmed_success'
         expect(response.status).to eq 302
         expect(response).to redirect_to @user
         expect(@user.unconfirmed_email).to eq attr[:email]
@@ -169,7 +169,7 @@ describe UsersController do
         put :update, id: @user.id, user: attr
         @user.reload
 
-        expect(flash[:success]).to eq I18n.t 'devise.registrations.updated'
+        expect(flash[:success]).to eq I18n.t 'users.update.confirmed_success'
         expect(response.status).to eq 302
         expect(response).to redirect_to @user
         expect(@user.name).to eq attr[:name]
@@ -180,7 +180,7 @@ describe UsersController do
         put :update, id: @user.id, user: attr
         @user.reload
 
-        expect(flash[:error]).to eq 'There was a problem updating the user.'
+        expect(flash[:error]).to eq I18n.t 'users.update.errors'
         expect(response.status).to eq 200
         expect(response).to render_template :edit
         expect(@user.unconfirmed_email).not_to eq attr[:email]
@@ -190,7 +190,7 @@ describe UsersController do
         put :update, id: @user.id, user: attr
         @user.reload
 
-        expect(flash[:error]).to eq 'There was a problem updating the user.'
+        expect(flash[:error]).to eq I18n.t 'users.update.errors'
         expect(response.status).to eq 200
         expect(response).to render_template :edit
         expect(@user.name).not_to eq attr[:name]
@@ -200,7 +200,7 @@ describe UsersController do
         delete :destroy, id: @user.id
         @user.reload
 
-        expect(flash[:success]).to eq I18n.t 'devise.registrations.destroyed'
+        expect(flash[:success]).to eq I18n.t 'users.destroy.success'
         expect(response.status).to eq 302
         expect(response).to redirect_to users_path
         expect(@user.status).to eq 'inactive'

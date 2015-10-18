@@ -4,6 +4,7 @@ describe CommentsController do
     @user = create :user
     goal = create :goal, user: @user
     @comment = create :comment, goal: goal, user: @user
+    request.env['HTTP_REFERER'] = user_path(@user)
   end
 
   context 'For a visitor' do
@@ -87,7 +88,7 @@ describe CommentsController do
 
         expect(flash[:success]).to eq I18n.t 'comments.destroy.success'
         expect(response.status).to eq 302
-        expect(response).to redirect_to comments_path
+        expect(response).to redirect_to user_path(@user)
         expect(Comment.find_by id: @comment.id).to be nil
       end
 

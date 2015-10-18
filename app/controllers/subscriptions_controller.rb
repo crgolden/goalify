@@ -3,8 +3,9 @@ class SubscriptionsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @subscriptions = Subscription.accessible_by(current_ability).search(query_params)
-                         .page(params[:page]).per params[:per_page]
+    @subscriptions = Subscription.accessible_by(current_ability)
+                         .page(params[:page]).per(params[:per_page])
+                         .filter(params.slice :goal_id, :user_id)
   end
 
   def edit
@@ -28,7 +29,7 @@ class SubscriptionsController < ApplicationController
   def destroy
     @subscription.destroy
     flash[:success] = I18n.t 'subscriptions.destroy.success'
-    redirect_to subscriptions_path
+    redirect_to :back
   end
 
   private

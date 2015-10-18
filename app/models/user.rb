@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include Filterable
+
   acts_as_token_authenticatable
   devise :database_authenticatable, :registerable, :recoverable, :confirmable,
          :rememberable, :trackable, :validatable, :lockable, :timeoutable,
@@ -16,10 +18,6 @@ class User < ActiveRecord::Base
 
   enum role: [:regular, :admin]
   enum status: [:active, :inactive]
-
-  scope :filter_by_email, lambda { |keyword| where 'lower(email) LIKE ?', "%#{keyword.downcase}%" }
-  scope :filter_by_name, lambda { |keyword| where 'lower(name) LIKE ?', "%#{keyword.downcase}%" }
-  scope :recent, -> { order :updated_at }
 
   # ensure user account is active
   def active_for_authentication?

@@ -4,8 +4,8 @@ class Api::V1::GoalsController < Api::V1::ApiController
   load_and_authorize_resource
 
   def index
-    @goals = Goal.accessible_by(current_ability).search(query_params)
-                 .page(params[:page]).per params[:per_page]
+    @goals = Goal.accessible_by(current_ability).page(params[:page]).per(params[:per_page])
+                 .filter(params.slice :user_id, :filter_title, :recent)
   end
 
   def show

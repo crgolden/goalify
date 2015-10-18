@@ -1,4 +1,6 @@
 class Goal < ActiveRecord::Base
+  include Filterable
+
   belongs_to :user
   belongs_to :parent, class_name: 'Goal'
 
@@ -12,18 +14,8 @@ class Goal < ActiveRecord::Base
   validates :title, presence: true
   validates :user, presence: true
 
-  scope :filter_by_title, lambda { |keyword| where 'lower(title) LIKE ?', "%#{keyword.downcase}%" }
-  scope :filter_by_text, lambda { |keyword| where 'lower(text) LIKE ?', "%#{keyword.downcase}%" }
-  scope :filter_by_user_id, lambda { |id| where user_id: id }
+  scope :filter_title, -> (title) { where 'lower(title) like ?', "%#{title.downcase}%" }
+  scope :user_id, -> (user_id) { where user_id: user_id }
   scope :recent, -> { order :updated_at }
-
-  def self.search(params = {})
-    goals = params[:id].present? ? Goal.where(id: params[:id]) : Goal.all
-    goals = goals.filter_by_title(params[:title]) if params[:title].present?
-    goals = goals.filter_by_text(params[:text]) if params[:text].present?
-    goals = goals.filter_by_user_id(params[:user_id]) if params[:user_id].present?
-    goals = goals.recent(params[:recent]) if params[:recent].present?
-    goals
-  end
 
 end

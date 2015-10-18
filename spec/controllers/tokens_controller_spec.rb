@@ -3,6 +3,7 @@ describe TokensController do
   before :each do
     @user = create :user
     @token = create :token, user: @user
+    request.env['HTTP_REFERER'] = user_path(@user)
   end
 
   context 'For a signed-in User' do

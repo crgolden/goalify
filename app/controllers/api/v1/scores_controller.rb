@@ -4,8 +4,8 @@ class Api::V1::ScoresController < Api::V1::ApiController
   load_and_authorize_resource
 
   def index
-    @scores = Score.accessible_by(current_ability).search(query_params)
-                  .page(params[:page]).per params[:per_page]
+    @scores = Score.accessible_by(current_ability).page(params[:page]).per(params[:per_page])
+                  .filter(params.slice :goal_id, :user_id)
   end
 
   def show

@@ -15,7 +15,7 @@ class TokensController < ApplicationController
   def destroy
     @token.destroy
     flash[:success] = I18n.t 'tokens.destroy.success'
-    redirect_to @token.user
+    redirect_to :back
   end
 
 end

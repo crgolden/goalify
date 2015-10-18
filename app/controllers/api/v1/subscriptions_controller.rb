@@ -4,8 +4,9 @@ class Api::V1::SubscriptionsController < Api::V1::ApiController
   load_and_authorize_resource
 
   def index
-    @subscriptions = Subscription.accessible_by(current_ability).search(query_params)
-                         .page(params[:page]).per params[:per_page]
+    @subscriptions = Subscription.accessible_by(current_ability)
+                         .page(params[:page]).per(params[:per_page])
+                         .filter(params.slice :goal_id, :user_id)
   end
 
   def edit

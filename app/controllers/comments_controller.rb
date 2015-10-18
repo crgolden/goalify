@@ -3,8 +3,8 @@ class CommentsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @comments = Comment.accessible_by(current_ability).search(query_params)
-                    .page(params[:page]).per params[:per_page]
+    @comments = Comment.accessible_by(current_ability).page(params[:page]).per(params[:per_page])
+                    .filter(params.slice :goal_id, :user_id)
   end
 
   def show
@@ -40,7 +40,7 @@ class CommentsController < ApplicationController
   def destroy
     @comment.destroy
     flash[:success] = I18n.t 'comments.destroy.success'
-    redirect_to comments_path
+    redirect_to :back
   end
 
   private

@@ -1,11 +1,11 @@
 class Api::V1::GoalsController < Api::V1::ApiController
+  include GoalsHelper
   acts_as_token_authentication_handler_for User, except: [:show, :index], fallback: :exception
   before_action :authenticate_user!, except: [:show, :index]
   load_and_authorize_resource
 
   def index
-    @goals = Goal.accessible_by(current_ability).page(params[:page]).per(params[:per_page])
-                 .filter(params.slice :user_id, :filter_title, :recent)
+    filter
   end
 
   def show
@@ -44,10 +44,6 @@ class Api::V1::GoalsController < Api::V1::ApiController
 
   def goal_params
     params.require(:goal).permit :title, :text, comments_attributes: [:id, :body]
-  end
-
-  def query_params
-    params.permit :id, :user_id, :title, :text
   end
 
 end

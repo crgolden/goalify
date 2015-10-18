@@ -1,12 +1,11 @@
 class Api::V1::SubscriptionsController < Api::V1::ApiController
+  include SubscriptionsHelper
   acts_as_token_authentication_handler_for User, except: [:show, :index], fallback: :exception
   before_action :authenticate_user!, except: [:show, :index]
   load_and_authorize_resource
 
   def index
-    @subscriptions = Subscription.accessible_by(current_ability)
-                         .page(params[:page]).per(params[:per_page])
-                         .filter(params.slice :goal_id, :user_id)
+    filter
   end
 
   def edit
@@ -36,10 +35,6 @@ class Api::V1::SubscriptionsController < Api::V1::ApiController
 
   def subscription_params
     params.require(:subscription).permit :completed, :user_id, :goal_id
-  end
-
-  def query_params
-    params.permit :id, :user_id, :goal_id, :completed
   end
 
 end

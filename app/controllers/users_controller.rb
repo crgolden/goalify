@@ -4,8 +4,7 @@ class UsersController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @users = User.accessible_by(current_ability)
-                 .page(params[:page]).per(params[:per_page])
+    @users = User.accessible_by(current_ability).page(params[:page]).per(params[:per_page])
   end
 
   def show
@@ -52,10 +51,6 @@ class UsersController < ApplicationController
     accessible = [:name, :email, :role, :status, :confirmed_at]
     accessible << [:password, :password_confirmation] unless params[:user][:password].blank?
     params.require(:user).permit(accessible)
-  end
-
-  def query_params
-    params.permit :id, :email, :name
   end
 
 end

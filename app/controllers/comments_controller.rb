@@ -1,10 +1,10 @@
 class CommentsController < ApplicationController
+  include CommentsHelper
   before_action :authenticate_user!, except: [:show, :index]
   load_and_authorize_resource
 
   def index
-    @comments = Comment.accessible_by(current_ability).page(params[:page]).per(params[:per_page])
-                    .filter(params.slice :goal_id, :user_id)
+    filter
   end
 
   def show
@@ -47,10 +47,6 @@ class CommentsController < ApplicationController
 
   def comment_params
     params.require(:comment).permit :goal_id, :user_id, :body
-  end
-
-  def query_params
-    params.permit :id, :user_id, :goal_id, :body
   end
 
 end

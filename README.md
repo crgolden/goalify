@@ -9,7 +9,7 @@ I built this app to get experience with [Ruby on Rails](http://rubyonrails.org/)
 ####Features
 
 1. Visitors can view all goals, comments, subscriptions, scores, and users
-2. Visitors can sign-up/sign-in with Facebook/Google
+2. Visitors can sign-up/sign-in with email/Facebook/Google
 3. Users can access the API with their authentication token
 4. Users can create new goals, comments, and subscriptions
 5. Subscriptions add scores to their goals and creators at:

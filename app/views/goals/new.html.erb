@@ -1,4 +1,4 @@
 <%= content_for :title, t('goals.title.new') %>
 <%= render layout: 'layouts/panel', locals: {title: 'New Goal', resource: nil} do %>
-    <%= render 'goals/form' %>
+    <%= render partial: 'form', locals: {action: :create, goal: Goal.new} %>
 <% end %>

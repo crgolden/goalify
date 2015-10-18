@@ -17,6 +17,9 @@ class User < ActiveRecord::Base
   enum role: [:regular, :admin]
   enum status: [:active, :inactive]
 
+  scope :filter_by_email, lambda { |keyword| where 'lower(email) LIKE ?', "%#{keyword.downcase}%" }
+  scope :filter_by_name, lambda { |keyword| where 'lower(name) LIKE ?', "%#{keyword.downcase}%" }
+  scope :recent, -> { order :updated_at }
 
   # ensure user account is active
   def active_for_authentication?
@@ -39,6 +42,14 @@ class User < ActiveRecord::Base
   # instead of deleting, indicate the user requested a delete & timestamp it
   def soft_delete
     update_attribute :status, :inactive
+  end
+
+  def self.search(params = {})
+    users = params[:id].present? ? User.where(id: params[:id]) : User.all
+    users = users.filter_by_email(params[:email]) if params[:email].present?
+    users = users.filter_by_name(params[:name]) if params[:name].present?
+    users = users.recent(params[:recent]) if params[:recent].present?
+    users
   end
 
 end

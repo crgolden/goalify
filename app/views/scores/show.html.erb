@@ -1,4 +1,4 @@
 <%= content_for :title, t('scores.title.show') %>
-<%= render layout: 'layouts/panel', locals: {title: 'Viewing Goal Score', resource: nil} do %>
-    <%= render @score %>
+<%= render layout: 'layouts/panel', locals: {title: 'Showing Score', resource: nil} do %>
+    <%= render partial: 'score', locals: {action: :show, score: @score} %>
 <% end %>

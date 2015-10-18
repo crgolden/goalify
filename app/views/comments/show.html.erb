@@ -1,4 +1,4 @@
 <%= content_for :title, t('comments.title.show') %>
 <%= render layout: 'layouts/panel', locals: {title: 'Showing Comment', resource: nil} do %>
-    <%= render @comment %>
+    <%= render partial: 'comment', locals: {action: :show, comment: @comment} %>
 <% end %>

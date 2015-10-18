@@ -8,13 +8,6 @@ describe SubscriptionsController do
 
   context 'For a visitor' do
 
-    it 'shows a Subscription' do
-      get :show, id: @subscription.id
-
-      expect(response.status).to eq 200
-      expect(response).to render_template :show
-      expect(assigns :subscription).to eq @subscription
-    end
     it 'shows all the Subscriptions for a Goal' do
       get :index, goal_id: @subscription.goal_id
 
@@ -33,12 +26,13 @@ describe SubscriptionsController do
       end
 
       it 'creates a Subscription' do
-        attr = {completed: false}
-        post :create, subscription: attr, goal_id: @subscription.goal_id
+        attr = {goal_id: @subscription.goal_id, user_id: @user.id}
+        post :create, subscription: attr
 
         expect(flash[:success]).to eq I18n.t 'subscriptions.create.success'
         expect(response.status).to eq 302
-        expect(Subscription.find_by completed: attr[:completed]).not_to be nil
+        expect(response).to redirect_to @subscription.goal
+        expect(Subscription.find_by goal_id: attr[:goal_id], user_id: attr[:user_id]).not_to be nil
       end
 
       it 'shows the edit page for own Subscription' do
@@ -56,7 +50,7 @@ describe SubscriptionsController do
 
         expect(flash[:success]).to eq I18n.t 'subscriptions.update.success'
         expect(response.status).to eq 302
-        expect(response).to redirect_to @subscription
+        expect(response).to redirect_to @subscription.goal
         expect(@subscription.completed).to eq attr[:completed]
       end
 
@@ -65,7 +59,7 @@ describe SubscriptionsController do
 
         expect(flash[:success]).to eq I18n.t 'subscriptions.destroy.success'
         expect(response.status).to eq 302
-        expect(response).to redirect_to @subscription.goal
+        expect(response).to redirect_to subscriptions_path
         expect(Subscription.find_by id: @subscription.id).to be nil
       end
 

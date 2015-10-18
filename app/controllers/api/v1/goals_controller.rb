@@ -1,11 +1,15 @@
 class Api::V1::GoalsController < Api::V1::ApiController
+  acts_as_token_authentication_handler_for User, except: [:show, :index], fallback: :exception
+  before_action :authenticate_user!, except: [:show, :index]
   load_and_authorize_resource
 
   def index
-    @goals = Goal.accessible_by(current_ability).search(query_params).page(params[:page]).per params[:per_page]
+    @goals = Goal.accessible_by(current_ability).search(query_params)
+                 .page(params[:page]).per params[:per_page]
   end
 
   def show
+    render :show, locals: {goal: @goal}, status: :ok, location: [:api, @goal]
   end
 
   def new
@@ -17,7 +21,7 @@ class Api::V1::GoalsController < Api::V1::ApiController
   def create
     @goal.user = current_user
     if @goal.save
-      render :show, status: :created, location: @goal
+      render :show, locals: {goal: @goal}, status: :created, location: [:api, @goal]
     else
       render json: @goal.errors, status: :unprocessable_entity
     end
@@ -25,7 +29,7 @@ class Api::V1::GoalsController < Api::V1::ApiController
 
   def update
     if @goal.update goal_params
-      render :show, status: :ok, location: @goal
+      render :show, locals: {goal: @goal}, status: :ok, location: [:api, @goal]
     else
       render json: @goal.errors, status: :unprocessable_entity
     end
@@ -39,11 +43,11 @@ class Api::V1::GoalsController < Api::V1::ApiController
   private
 
   def goal_params
-    params.require(:goal).permit :title, :text
+    params.require(:goal).permit :title, :text, comments_attributes: [:id, :body]
   end
 
   def query_params
-    params.permit :id, :user_id, :title
+    params.permit :id, :user_id, :title, :text
   end
 
 end

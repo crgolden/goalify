@@ -1,9 +1,11 @@
 class Api::V1::CommentsController < Api::V1::ApiController
-  load_and_authorize_resource :goal
-  load_and_authorize_resource :comment, through: :goal, shallow: true
+  acts_as_token_authentication_handler_for User, except: [:show, :index], fallback: :exception
+  before_action :authenticate_user!, except: [:show, :index]
+  load_and_authorize_resource
 
   def index
-    @comments = @goal.comments.accessible_by(current_ability).page(params[:page]).per params[:per_page]
+    @comments = Comment.accessible_by(current_ability).search(query_params)
+                    .page(params[:page]).per params[:per_page]
   end
 
   def show
@@ -16,7 +18,6 @@ class Api::V1::CommentsController < Api::V1::ApiController
   end
 
   def create
-    @comment = @goal.comments.create comment_params
     @comment.user = current_user
     if @comment.save
       render :show, status: :created, location: [:api, @comment]
@@ -41,11 +42,11 @@ class Api::V1::CommentsController < Api::V1::ApiController
   private
 
   def comment_params
-    params.require(:comment).permit :body
+    params.require(:comment).permit :body, :goal_id, :user_id
   end
 
-  # def query_params
-  #   params.permit(:id, :user_id, :goal_id, :body,)
-  # end
+  def query_params
+    params.permit :id, :user_id, :goal_id, :body
+  end
 
 end

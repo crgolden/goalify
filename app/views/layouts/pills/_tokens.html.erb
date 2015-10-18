@@ -1,5 +1,6 @@
-<% if @tokens %>
-    <li class="active"><%= link_to 'All Tokens', user_tokens_path(@user) %></li>
+<% if params[:user_id] %>
+    <li><%= link_to 'Show User', user_path(params[:user_id]) %></li>
+    <li class="active"><%= link_to 'User Tokens', user_tokens_path(user_id: params[:user_id]) %></li>
 <% else %>
-    <li><%= link_to 'All Tokens', user_tokens_path(@user) %></li>
+    <li class="active"><%= link_to 'All Tokens', tokens_path %></li>
 <% end %>

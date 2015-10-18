@@ -1,44 +1,44 @@
 class SubscriptionsController < ApplicationController
   before_action :authenticate_user!, except: [:show, :index]
-  load_and_authorize_resource :goal
-  load_and_authorize_resource :subscription, through: :user, shallow: true
+  load_and_authorize_resource
 
   def index
-    @subscriptions = @goal.subscriptions.accessible_by(current_ability).page(params[:page]).per params[:per_page]
-  end
-
-  def show
+    @subscriptions = Subscription.accessible_by(current_ability).search(query_params)
+                         .page(params[:page]).per params[:per_page]
   end
 
   def edit
   end
 
   def create
-    @subscription = @goal.subscriptions.new subscription_params
     @subscription.user = current_user
     if @subscription.save
       flash[:success] = I18n.t 'subscriptions.create.success'
-      redirect_to @subscription
+      redirect_to @subscription.goal
     end
   end
 
   def update
     if @subscription.update subscription_params
       flash[:success] = I18n.t 'subscriptions.update.success'
-      redirect_to @subscription
+      redirect_to @subscription.goal
     end
   end
 
   def destroy
     @subscription.destroy
     flash[:success] = I18n.t 'subscriptions.destroy.success'
-    redirect_to @subscription.goal
+    redirect_to subscriptions_path
   end
 
   private
 
   def subscription_params
-    @subscription_params = params.require(:subscription).permit :completed
+    @subscription_params = params.require(:subscription).permit :completed, :user_id, :goal_id
+  end
+
+  def query_params
+    params.permit :id, :user_id, :goal_id, :completed
   end
 
 end

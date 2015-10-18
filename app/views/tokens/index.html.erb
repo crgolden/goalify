@@ -1,6 +1,5 @@
 <%= content_for :title, t('tokens.title.index') %>
-<% if @tokens.present? %>
-    <%= render layout: 'layouts/panel', locals: {title: 'Viewing User Tokens', resource: nil} do %>
-        <%= render 'users/tokens' %>
-    <% end %>
+<%= render layout: 'layouts/panel', locals: {title: 'All Tokens', resource: nil} do %>
+    <%= render partial: 'tokens', locals: {action: :index} %>
 <% end %>
+

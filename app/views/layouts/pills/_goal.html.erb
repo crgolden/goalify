@@ -1,25 +1,28 @@
-<li><%= link_to 'All Goals', goals_path %></li>
-<% if current_page?(@goal) %>
-    <li class="active"><%= link_to 'View Goal', @goal %></li>
-<% else %>
-    <li><%= link_to 'View Goal', @goal %></li>
-<% end %>
-<% if can? :update, @goal %>
-    <% if current_page?(edit_goal_path @goal) %>
-        <li class="active"><%= link_to 'Edit Goal', edit_goal_path(@goal) %></li>
+<% if @goal.id %>
+    <li><%= link_to 'All Goals', goals_path %></li>
+    <% if current_page?(@goal) %>
+        <li class="active"><%= link_to 'Show Goal', @goal %></li>
     <% else %>
-        <li><%= link_to 'Edit Goal', edit_goal_path(@goal) %></li>
+        <li><%= link_to 'Show Goal', @goal %></li>
     <% end %>
-<% end %>
-<% if can? :destroy, @goal %>
-    <li><%= link_to 'Delete Goal', @goal, method: :delete, data: {confirm: 'Are you sure?'} %></li>
-<% end %>
-<% if @goal.comments.accessible_by(current_ability).present? %>
-    <li><%= link_to 'All Comments', goal_comments_path(@goal) %></li>
-<% end %>
-<% if @goal.subscriptions.accessible_by(current_ability).present? %>
-    <li><%= link_to 'All Subscriptions', goal_subscriptions_path(@goal) %></li>
-<% end %>
-<% if @goal.scores.accessible_by(current_ability).present? %>
-    <li><%= link_to 'All Scores', goal_scores_path(@goal) %></li>
+    <% if can? :update, @goal %>
+        <% if current_page?(edit_goal_path @goal) %>
+            <li class="active"><%= link_to 'Edit Goal', edit_goal_path(@goal) %></li>
+        <% else %>
+            <li><%= link_to 'Edit Goal', edit_goal_path(@goal) %></li>
+        <% end %>
+    <% end %>
+    <% if can? :destroy, @goal %>
+        <li><%= link_to 'Delete Goal', @goal, method: :delete, data: {confirm: 'Are you sure?'} %></li>
+    <% end %>
+    <% if @goal.comments.accessible_by(current_ability).present? %>
+        <li><%= link_to 'Goal Comments', comments_path(goal_id: @goal.id) %></li>
+    <% end %>
+    <% if @goal.scores.accessible_by(current_ability).present? %>
+        <li><%= link_to 'Goal Scores', scores_path(goal_id: @goal.id) %></li>
+    <% end %>
+    <% if @goal.subscriptions.accessible_by(current_ability).present? %>
+        <li><%= link_to 'Goal Subscriptions', subscriptions_path(goal_id: @goal.id) %></li>
+    <% end %>
+    <li><%= link_to 'Goal User', @goal.user %></li>
 <% end %>

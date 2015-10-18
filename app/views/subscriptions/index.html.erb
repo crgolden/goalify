@@ -1,8 +1,4 @@
-<%= content_for :title, t('goals.title.index') %>
-<% if @subscriptions.present? %>
-    <%= render layout: 'layouts/panel', locals: {title: 'Viewing Goal Subscriptions', resource: nil} do %>
-        <%= render 'goals/subscriptions' %>
-    <% end %>
-<% else %>
-    <% flash[:notice] = 'Create a subscription for this Goal!' %>
+<%= content_for :title, t('subscriptions.title.index') %>
+<%= render layout: 'layouts/panel', locals: {title: 'All Subscriptions', resource: @subscriptions} do %>
+    <%= render partial: 'subscriptions', locals: {action: :index} %>
 <% end %>

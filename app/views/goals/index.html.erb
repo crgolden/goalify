@@ -1,6 +1,4 @@
 <%= content_for :title, t('goals.title.index') %>
-<% if @goals.present? %>
-    <%= render layout: 'layouts/panel', locals: {title: 'All Goals', resource: @goals} do %>
-        <%= render 'goals/goals' %>
-    <% end %>
+<%= render layout: 'layouts/panel', locals: {title: 'All Goals', resource: @goals} do %>
+    <%= render partial: 'goals', locals: {action: :index} %>
 <% end %>

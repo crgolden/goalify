@@ -14,4 +14,5 @@ class Token < ActiveRecord::Base
   def self.exists_for_uid_and_provider?(auth)
     find_by uid: auth.uid, provider: auth.provider
   end
+
 end

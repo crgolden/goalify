@@ -4,5 +4,12 @@ script:
 - bundle exec rake db:create db:schema:load db:test:prepare
 - bundle exec rake
 addons:
-    code_climate:
-        repo_token: 088402be444ff5c274ba18d212dfe8ea518fba07ad7c768c00feb1f1aecf9b8a
+  code_climate:
+    repo_token: 088402be444ff5c274ba18d212dfe8ea518fba07ad7c768c00feb1f1aecf9b8a
+deploy:
+  provider: heroku
+  api_key:
+    secure: UQVh9jfEYYpgQagUuREEy3w+nsjAzlW6E2myo4oqL4aJ6Rgv4DXWxjP3NMtPu9iFwmiiR4PSbjwOcQHl2by8lAVq5mFXsBDAGGkm6JqsF11dPv9UAwyh5FlcowH7xGpWcGpEbCD86AZKuCCw6/2KjqssBFds7QmqoF6tZ5OdyhIMufKvgHUSAsah8rZ0IopdS2FfHjEPE+Q0ayGnzjV3hvggWOk0tG4nn603c+J7c+bh80+PxUTF2eAxJYAOICKDSz+AgUa58tqlmOhhDvkO76RjEAxU5FdqXUwDC6f8QvnTM5oS1Ub5Ayg2wWbSnn8NCDI1pYGaLEKOLG4v0GoqkBkny+vr2bNcIT5tIqm/BybAbYWqtivs9JEE+U3+R/D+s55t3YvcMpm+VZNPR9/K8iuCDOWrOGs0eeY1zfn8ii2eeERBoIE6oKbSg/1+WMd9LwvMzzMteAggaSmbhsqKzdxo/KT+bPo0+3bOlDBGWMCxQ8K5imEOnsX3jNOvjJDuX+pJgTcKph9wf5IBCXxvqdXh5y+vUO2edYGxbvgJr2HWi0htZ3NNpz2Bq3jtSsvF4LClqm5qO9kdY1jV3rv4Qx1vOJR/GQzPUNCZ3bB03mIGx1TQs9us0VP+ToKL/6Lu0SG8NkcKayC7No7kEYQXU9+V2GRx+7VCBKmPqo8YFuU=
+  app: deeprog
+  on:
+    repo: deeprog/goalify

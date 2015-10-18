@@ -9,19 +9,6 @@ describe Api::V1::SubscriptionsController do
 
   context 'Without a valid authenticity_token' do
 
-    it 'shows a Subscription' do
-      get :show, id: @subscription.id, format: :json
-      subscription = json_response[:subscription]
-
-      expect(response.status).to eq 200
-      expect(response).to render_template :show
-      expect(response).to match_response_schema 'subscription'
-      expect(subscription[:id]).to eq @subscription.id
-      expect(subscription[:completed]).to eq @subscription.completed
-      expect(subscription[:user_id]).to eq @subscription.user_id
-      expect(subscription[:goal_id]).to eq @subscription.goal_id
-      expect(assigns :subscription).to eq @subscription
-    end
     it 'shows all the Subscriptions' do
       get :index, goal_id: @subscription.goal_id, format: :json
 
@@ -46,28 +33,24 @@ describe Api::V1::SubscriptionsController do
         request.headers['X-User-Token'] = @user.authentication_token
       end
 
-      it 'creates a subscription with valid completed' do
-        attr = {completed: false}
-        post :create, subscription: attr, goal_id: @subscription.goal_id, format: :json
-        subscription = json_response[:subscription]
+      it 'creates a subscription' do
+        attr = {goal_id: @subscription.goal_id, user_id: @user.id}
+        post :create, subscription: attr, format: :json
 
         expect(response.status).to eq 201
-        expect(response).to render_template :show
-        expect(response).to match_response_schema 'subscription'
-        expect(subscription[:completed]).to eq attr[:completed]
-        expect(Subscription.find_by completed: attr[:completed]).not_to be nil
+        expect(response).to render_template 'api/v1/goals/_goal'
+        expect(response).to match_response_schema 'goal'
+        expect(Subscription.find_by goal_id: attr[:goal_id], user_id: attr[:user_id]).not_to be nil
       end
 
-      it 'updates own subscription with valid completed' do
+      it 'updates own subscription' do
         attr = {completed: true}
         put :update, id: @subscription.id, subscription: attr, format: :json
-        subscription = json_response[:subscription]
         @subscription.reload
 
         expect(response.status).to eq 200
-        expect(response).to render_template :show
-        expect(response).to match_response_schema 'subscription'
-        expect(subscription[:completed]).to eq attr[:completed]
+        expect(response).to render_template 'api/v1/goals/_goal'
+        expect(response).to match_response_schema 'goal'
         expect(@subscription.completed).to eq attr[:completed]
       end
 

@@ -1,4 +1,4 @@
 <%= content_for :title, t('tokens.title.show') %>
-<%= render layout: 'layouts/panel', locals: {title: 'Viewing User Token', resource: nil} do %>
-    <%= render 'tokens/token' %>
+<%= render layout: 'layouts/panel', locals: {title: 'Showing Token', resource: nil} do %>
+    <%= render partial: 'token', locals: {action: :show, token: @token} %>
 <% end %>

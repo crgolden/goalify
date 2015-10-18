@@ -47,8 +47,8 @@ describe Api::V1::CommentsController do
       end
 
       it 'creates a comment with valid body' do
-        attr = {body: 'Body'}
-        post :create, comment: attr, goal_id: @comment.goal_id, format: :json
+        attr = {body: 'New Body', goal_id: @comment.goal_id, user_id: @user.id}
+        post :create, comment: attr, format: :json
         comment = json_response[:comment]
 
         expect(response.status).to eq 201
@@ -59,8 +59,8 @@ describe Api::V1::CommentsController do
       end
 
       it 'doesn\'t create a comment with blank body' do
-        attr = {body: ''}
-        post :create, comment: attr, goal_id: @comment.goal_id, format: :json
+        attr = {body: '', goal_id: @comment.goal_id, user_id: @user.id}
+        post :create, comment: attr, format: :json
         comment = json_response
 
         expect(response.status).to eq 422

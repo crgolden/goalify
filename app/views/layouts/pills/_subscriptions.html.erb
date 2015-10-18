@@ -1,5 +1,9 @@
-<% if @subscriptions %>
-    <li class="active"><%= link_to 'All Subscriptions', goal_subscriptions_path(@goal) %></li>
+<% if params[:user_id] %>
+    <li><%= link_to 'Show User', user_path(params[:user_id]) %></li>
+    <li class="active"><%= link_to 'User Subscriptions', subscriptions_path %></li>
+<% elsif params[:goal_id] %>
+    <li><%= link_to 'Show Goal', goal_path(params[:goal_id]) %></li>
+    <li class="active"><%= link_to 'Goal Subscriptions', subscriptions_path %></li>
 <% else %>
-    <li><%= link_to 'All Subscriptions', goal_subscriptions_path(@goal) %></li>
+    <li class="active"><%= link_to 'All Subscriptions', subscriptions_path %></li>
 <% end %>

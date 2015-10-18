@@ -1,6 +1,4 @@
 <%= content_for :title, t('users.title.index') %>
-<% if @users %>
-    <%= render layout: 'layouts/panel', locals: {title: 'Viewing Users', resource: @users} do %>
-        <%= render 'users/users' %>
-    <% end %>
+<%= render layout: 'layouts/panel', locals: {title: 'All Users', resource: @users} do %>
+    <%= render 'users', locals: {action: :index} %>
 <% end %>

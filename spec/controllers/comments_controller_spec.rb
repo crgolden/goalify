@@ -33,22 +33,23 @@ describe CommentsController do
       end
 
       it 'creates a Comment with valid body' do
-        attr = {body: 'New Body'}
-        post :create, comment: attr, goal_id: @comment.goal_id
+        attr = {body: 'New Body', goal_id: @comment.goal_id, user_id: @user.id}
+        post :create, comment: attr
 
         expect(flash[:success]).to eq I18n.t 'comments.create.success'
         expect(response.status).to eq 302
-        expect(Comment.find_by body: attr[:body]).not_to be nil
+        expect(response).to redirect_to comments_path(goal_id: @comment.goal_id)
+        expect(Comment.find_by user_id: attr[:user_id], goal_id: attr[:goal_id]).not_to be nil
       end
 
       it 'doesn\'t create a Comment with a blank body' do
-        attr = {body: ''}
-        post :create, comment: attr, goal_id: @comment.goal.id
+        attr = {body: '', goal_id: @comment.goal_id, user_id: @user.id}
+        post :create, comment: attr
 
         expect(flash[:error]).to eq I18n.t 'comments.create.errors'
         expect(response.status).to eq 302
         expect(response).to redirect_to @comment.goal
-        expect(Comment.find_by body: attr[:body]).to be nil
+        expect(Comment.find_by user_id: attr[:user_id], goal_id: attr[:goal_id]).not_to be nil
       end
 
       it 'shows the edit page for own Comment' do
@@ -86,7 +87,7 @@ describe CommentsController do
 
         expect(flash[:success]).to eq I18n.t 'comments.destroy.success'
         expect(response.status).to eq 302
-        expect(response).to redirect_to @comment.goal
+        expect(response).to redirect_to comments_path
         expect(Comment.find_by id: @comment.id).to be nil
       end
 

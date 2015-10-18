@@ -1,9 +1,5 @@
 <ul class="nav nav-pills nav-stacked">
-  <% if @goals %>
-      <li class="active"><%= link_to 'All Goals', goals_path %></li>
-  <% elsif @users %>
-      <li class="active"><%= link_to 'All Users', users_path %></li>
-  <% elsif current_page?(page_path 'home') || current_page?(root_path) %>
+  <% if current_page?(page_path('home')) || current_page?(root_path) %>
       <li class="active"><%= link_to 'Home', page_path('home') %></li>
   <% elsif current_page?(new_goal_path) %>
       <li class="active"><%= link_to 'New Goal', new_goal_path %></li>
@@ -12,32 +8,36 @@
   <% elsif current_page?(page_path('about')) %>
       <li class="active"><%= link_to 'About', page_path('about') %></li>
   <% elsif current_page?(new_user_session_path) ||
-          (params[:controller] == 'devise/sessions' &&
-                  (params[:action] == 'create' || params[:action] == 'new')) %>
+          current_page?(controller: 'devise/sessions', action: (:create || :new)) %>
       <li class="active"><%= link_to 'Sign in', new_user_session_path %></li>
   <% elsif current_page?(new_user_registration_path) %>
       <li class="active"><%= link_to 'Sign up', new_user_registration_path %></li>
-  <% elsif current_page?(edit_user_registration_path) %>
+  <% elsif current_page?(edit_user_registration_path) ||
+          current_page?(controller: 'users/registrations', action: (:edit || :update)) %>
       <%= render 'layouts/pills/user' %>
-  <% elsif params[:controller] == 'users/registrations' &&
-          (params[:action] == 'edit' || params[:action] == 'update') %>
+  <% elsif @comment %>
+      <%= render 'layouts/pills/comment' %>
+  <% elsif @comments %>
+      <%= render 'layouts/pills/comments' %>
+  <% elsif @goal %>
+      <%= render 'layouts/pills/goal' %>
+  <% elsif @goals %>
+      <%= render 'layouts/pills/goals' %>
+  <% elsif @score %>
+      <%= render 'layouts/pills/score' %>
+  <% elsif @scores %>
+      <%= render 'layouts/pills/scores' %>
+  <% elsif @subscription %>
+      <%= render 'layouts/pills/subscription' %>
+  <% elsif @subscriptions %>
+      <%= render 'layouts/pills/subscriptions' %>
+  <% elsif @token %>
+      <%= render 'layouts/pills/token' %>
+  <% elsif @tokens %>
+      <%= render 'layouts/pills/tokens' %>
+  <% elsif @users %>
+      <%= render 'layouts/pills/users' %>
+  <% elsif @user %>
       <%= render 'layouts/pills/user' %>
-  <% elsif params[:id] %>
-      <%= render 'layouts/pills/goal' if @goal %>
-      <%= render 'layouts/pills/user' if @user %>
-      <%= render 'layouts/pills/comment' if @comment %>
-      <%= render 'layouts/pills/token' if @token %>
-      <%= render 'layouts/pills/subscription' if @subscription %>
-      <%= render 'layouts/pills/score' if @score %>
-  <% elsif params[:goal_id] %>
-      <li><%= link_to 'All Goals', goals_path %></li>
-      <li><%= link_to 'View Goal', @goal %></li>
-      <%= render 'layouts/pills/comments' if @goal.comments.accessible_by(current_ability).present? %>
-      <%= render 'layouts/pills/subscriptions' if @goal.subscriptions.accessible_by(current_ability).present? %>
-      <%= render 'layouts/pills/scores' if @goal.scores.accessible_by(current_ability).present? %>
-  <% elsif params[:user_id] %>
-      <li><%= link_to 'All Users', users_path %></li>
-      <li><%= link_to 'View User', @user %></li>
-      <%= render 'layouts/pills/tokens' if @user.tokens.accessible_by(current_ability).present? %>
   <% end %>
 </ul>

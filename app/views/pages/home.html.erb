@@ -1,6 +1,8 @@
 <%= content_for :title, t('home.title') %>
 <h3>Welcome</h3>
-<p><%= link_to 'Users:', users_path %> <%= User.count %> registered</p>
-<p><%= link_to 'Goals', goals_path %> <%= Goal.count %> created</p>
-<p>Comments <%= Comment.count %> created</p>
-<p>Tokens <%= Token.count %> created</p>
+<p><%= link_to 'Users', users_path %>: <%= User.count %> registered</p>
+<p><%= link_to 'Goals', goals_path %>: <%= Goal.count %> created</p>
+<p>Comments: <%= Comment.count %> created</p>
+<p>Tokens: <%= Token.count %> created</p>
+<p>Subscriptions: <%= Subscription.count %> created</p>
+<p>Scores: <%= Score.count %> created</p>

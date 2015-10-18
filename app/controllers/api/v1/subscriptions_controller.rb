@@ -1,28 +1,28 @@
 class Api::V1::SubscriptionsController < Api::V1::ApiController
-  load_and_authorize_resource :goal
-  load_and_authorize_resource :subscription, through: :goal, shallow: true
+  acts_as_token_authentication_handler_for User, except: [:show, :index], fallback: :exception
+  before_action :authenticate_user!, except: [:show, :index]
+  load_and_authorize_resource
 
   def index
-    @subscriptions = @goal.subscriptions.accessible_by(current_ability).page(params[:page]).per params[:per_page]
-  end
-
-  def show
+    @subscriptions = Subscription.accessible_by(current_ability).search(query_params)
+                         .page(params[:page]).per params[:per_page]
   end
 
   def edit
   end
 
   def create
-    @subscription = @goal.subscriptions.create subscription_params
     @subscription.user = current_user
     if @subscription.save
-      render :show, status: :created, location: [:api, @subscription]
+      render @subscription.goal, status: :created, location: [:api, @subscription.goal],
+             locals: {goal: @subscription.goal}
     end
   end
 
   def update
     if @subscription.update subscription_params
-      render :show, status: :ok, location: [:api, @subscription]
+      render @subscription.goal, status: :ok, location: [:api, @subscription.goal],
+             locals: {goal: @subscription.goal}
     end
   end
 
@@ -34,7 +34,11 @@ class Api::V1::SubscriptionsController < Api::V1::ApiController
   private
 
   def subscription_params
-    params.require(:subscription).permit :completed
+    params.require(:subscription).permit :completed, :user_id, :goal_id
+  end
+
+  def query_params
+    params.permit :id, :user_id, :goal_id, :completed
   end
 
 end

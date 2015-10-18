@@ -1,19 +1,7 @@
-<li><%= link_to 'All Goals', goals_path %></li>
-<li><%= link_to 'View Goal', @score.goal %></li>
-<li><%= link_to 'All Scores', goal_scores_path(@score.goal) %></li>
+<li><%= link_to 'Show Goal', @score.goal %></li>
+<li><%= link_to 'Show User', @score.user %></li>
 <% if current_page?(@score) %>
-    <li class="active"><%= link_to 'View Score', @score %></li>
+    <li class="active"><%= link_to 'Show Score', @score %></li>
 <% else %>
-    <li><%= link_to 'View Score', @score %></li>
-<% end %>
-<% if can? :update, @score %>
-    <% if current_page?(edit_score_path @score) %>
-        <li class="active"><%= link_to 'Edit Score', edit_score_path(@score) %></li>
-    <% else %>
-        <li><%= link_to 'Edit Score', edit_score_path(@score) %></li>
-    <% end %>
-<% end %>
-<% if can? :destroy, @score %>
-    <li><%= link_to 'Delete Score', @score, method: :delete,
-                    data: {confirm: 'Are you sure?'} %></li>
+    <li><%= link_to 'Show Score', @score %></li>
 <% end %>

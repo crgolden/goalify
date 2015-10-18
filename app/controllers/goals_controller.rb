@@ -3,7 +3,8 @@ class GoalsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @goals = Goal.accessible_by(current_ability).search(query_params).page(params[:page]).per params[:per_page]
+    @goals = Goal.accessible_by(current_ability).search(query_params)
+                 .page(params[:page]).per params[:per_page]
   end
 
   def show
@@ -27,7 +28,7 @@ class GoalsController < ApplicationController
   end
 
   def update
-    if @goal.update(goal_params)
+    if @goal.update goal_params
       flash[:success] = I18n.t 'goals.update.success'
       redirect_to @goal
     else
@@ -45,11 +46,11 @@ class GoalsController < ApplicationController
   private
 
   def goal_params
-    params.require(:goal).permit(:title, :text)
+    params.require(:goal).permit :title, :text, comments_attributes: [:id, :body]
   end
 
   def query_params
-    params.permit(:id, :user_id, :title, :text)
+    params.permit :id, :user_id, :title, :text
   end
 
 end

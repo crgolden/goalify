@@ -1,5 +1,5 @@
-<%= errors_for @user %>
-<%= form_for(@user, url: {action: action}, html: {class: 'form-horizontal'}) do |f| %>
+<%= errors_for user %>
+<%= form_for(user, url: {controller: :users, action: action}, html: {class: 'form-horizontal'}) do |f| %>
     <div class="form-group">
       <%= f.label :name, class: 'col-sm-4 control-label' %>
       <div class="col-sm-8">

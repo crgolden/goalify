@@ -23,13 +23,14 @@ module ApplicationHelper
 
   def flash_messages(_opts = {})
     flash.each do |msg_type, message|
-      concat content_tag(:div, message, class: "alert #{bootstrap_class_for msg_type} alert-dismissible", role: 'alert') do
-               concat content_tag(:button, class: 'close', data: {dismiss: 'alert'}) do
-                 concat content_tag(:span, '&times;'.html_safe)
-               end
+      concat(content_tag(:div, message, class: "alert #{bootstrap_class_for msg_type} alert-dismissible", role: 'alert') do
+               concat(content_tag(:button, class: 'close', data: {dismiss: 'alert'}) do
+                        concat content_tag(:span, '&times;'.html_safe, 'aria-hidden' => true)
+                        concat content_tag(:span, 'Close', class: 'sr-only')
+                      end)
                concat content_tag(:i, '&nbsp;'.html_safe, class: "glyphicon glyphicon-#{bootstrap_icon_for msg_type}")
                concat message
-             end
+             end)
       flash.clear
     end
     nil
@@ -38,18 +39,18 @@ module ApplicationHelper
   def errors_for(object)
     if object.errors.any?
       content_tag(:div, class: 'panel panel-danger') do
-        concat content_tag(:div, class: 'panel-heading') do
-          concat content_tag(:div, class: 'panel-title') do
-            concat "#{pluralize object.errors.count, 'error'} prohibited this #{object.class.name.downcase} from being saved:"
-          end
-        end
-        concat content_tag(:div, class: 'panel-body') do
-          concat content_tag(:ul) do
-            object.errors.full_messages.each do |msg|
-              concat content_tag(:li, msg)
-            end
-          end
-        end
+        concat(content_tag(:div, class: 'panel-heading') do
+                 concat(content_tag(:h4, class: 'panel-title') do
+                          concat "#{pluralize(object.errors.count, 'error')} prohibited this #{object.class.name.downcase} from being saved:"
+                        end)
+               end)
+        concat(content_tag(:div, class: 'panel-body') do
+                 concat(content_tag(:ul) do
+                          object.errors.full_messages.each do |msg|
+                            concat content_tag(:li, msg)
+                          end
+                        end)
+               end)
       end
     end
   end

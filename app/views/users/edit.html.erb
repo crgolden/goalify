@@ -1,4 +1,4 @@
 <%= content_for :title, t('users.title.edit') %>
 <%= render layout: 'layouts/panel', locals: {title: 'Editing User', resource: nil} do %>
-    <%= render partial: 'users/form', locals: {action: 'update'} %>
+    <%= render partial: 'form', locals: {action: :update, user: @user} %>
 <% end %>

@@ -1,0 +1,20 @@
+<table class="table table-hover">
+  <tr class="row">
+    <th colspan="3">Value:</th>
+    <% if params[:user_id] %>
+        <th>Goal:</th>
+    <% elsif params[:goal_id] %>
+        <th>User:</th>
+    <% end %>
+  </tr>
+  <% @scores.each do |score| %>
+      <tr class="row">
+        <td colspan="3"><%= link_to score.value, score %></td>
+        <% if params[:user_id] %>
+            <td><%= link_to score.goal.title, score.goal %></td>
+        <% elsif params[:goal_id] %>
+            <td><%= link_to score.user.name, score.user %></td>
+        <% end %>
+      </tr>
+  <% end %>
+</table>

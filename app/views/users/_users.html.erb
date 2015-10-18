@@ -1,4 +1,4 @@
-<table class="table table-striped">
+<table class="table table-hover">
   <tr class="row">
     <th>Name:</th>
     <th colspan="3">
@@ -22,7 +22,7 @@
         <td>
           <% if user_signed_in? && current_user.admin? %>
               <% if user.active? %>
-                  <%= link_to 'Deactivate User', user, method: :delete,
+                  <%= link_to 'Deactivate User', admin_user_path(user), method: :delete,
                               data: {confirm: 'Are you sure?'} %>
               <% else %>
                   <%= link_to 'Activate User', admin_user_path(user, user: {status: :active}), method: :put %>

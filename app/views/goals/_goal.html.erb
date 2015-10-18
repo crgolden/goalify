@@ -1,34 +1,35 @@
-<table class="table table-striped">
+<table class="table table-hover">
   <tr class="row">
-    <th colspan="3">Title:</th>
-    <th>User:</th>
+    <td>Title: <b><%= goal.title %></b></td>
+    <td><%= link_to 'Edit', edit_goal_path(goal) if can? :update, goal %></td>
+    <td><%= link_to 'Delete', goal, method: :delete,
+                    data: {confirm: 'Are you sure?'} if can? :destroy, goal %></td>
+    <td></td>
   </tr>
   <tr class="row">
-    <td><%= link_to @goal.title, @goal %></td>
-    <td><%= link_to 'Edit', edit_goal_path(@goal) if can? :update, @goal %></td>
-    <td><%= link_to 'Delete', @goal, method: :delete,
-                    data: {confirm: 'Are you sure?'} if can? :destroy, @goal %></td>
-    <td><%= link_to @goal.user.name, @goal.user %></td>
+    <td colspan="4">Text: <b><%= goal.text %></b></td>
   </tr>
   <tr class="row">
-    <td colspan="4"><b>Text: </b><%= @goal.text %></td>
+    <td colspan="4">Score: <b><%= Score.total_for_goal goal %></b></td>
   </tr>
   <tr class="row">
-    <td colspan="4"><b>Score: </b><%= Score.total_for_goal @goal %></td>
+    <td colspan="4">User: <b><%= link_to goal.user.name, goal.user %></b></td>
   </tr>
-  <tr class="row">
-    <td colspan="4">
-      <% if subscription = Subscription.exists_for_goal_and_user?(@goal, current_user) %>
-          <% if subscription.completed? %>
-              Completed
+  <% if user_signed_in? %>
+      <tr class="row">
+        <td colspan="4">
+          <% if subscription = Subscription.exists_for_goal_and_user?(goal, current_user) %>
+              <% if subscription.completed? %>
+                  Completed
+              <% else %>
+                  <%= link_to 'Unsubscribe', subscription, method: :delete %>&nbsp;|
+                  <%= link_to 'Complete', subscription_path(subscription, subscription: {completed: true}),
+                              method: :put %>
+              <% end %>
           <% else %>
-              <%= link_to 'Unsubscribe', subscription, method: :delete %>&nbsp;|
-              <%= link_to 'Complete', subscription_path(subscription, subscription: {completed: true}),
-                          method: :put %>
-          <% end %>
-      <% else %>
-          <b><%= link_to 'Subscribe', goal_subscriptions_path(@goal, subscription: {completed: false}),
-                         method: :post %></b>
-      <% end %></td>
-  </tr>
+              <b><%= link_to 'Subscribe', subscriptions_path(subscription: {goal_id: goal.id, user_id: current_user.id}),
+                             method: :post %></b>
+          <% end %></td>
+      </tr>
+  <% end %>
 </table>

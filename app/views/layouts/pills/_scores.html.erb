@@ -1,5 +1,9 @@
-<% if @scores %>
-    <li class="active"><%= link_to 'All Scores', goal_scores_path(@goal) %></li>
+<% if params[:user_id] %>
+    <li><%= link_to 'Show User', user_path(params[:user_id]) %></li>
+    <li class="active"><%= link_to 'User Scores', scores_path(user_id: params[:user_id]) %></li>
+<% elsif params[:goal_id] %>
+    <li><%= link_to 'Show Goal', goal_path(params[:goal_id]) %></li>
+    <li class="active"><%= link_to 'Goal Scores', scores_path(goal_id: params[:goal_id]) %></li>
 <% else %>
-    <li><%= link_to 'All Scores', goal_scores_path(@goal) %></li>
+    <li class="active"><%= link_to 'All Scores', scores_path %></li>
 <% end %>

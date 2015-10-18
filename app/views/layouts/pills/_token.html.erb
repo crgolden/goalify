@@ -1,10 +1,8 @@
-<li><%= link_to 'All Users', users_path %></li>
-<li><%= link_to 'View User', @token.user %></li>
-<li><%= link_to 'All Tokens', user_tokens_path(@token.user) %></li>
+<li><%= link_to 'Show User', @token.user %></li>
 <% if current_page?(@token) %>
-    <li class="active"><%= link_to 'View Token', @token %></li>
+    <li class="active"><%= link_to 'Show Token', @token %></li>
 <% else %>
-    <li><%= link_to 'View Token', @token %></li>
+    <li><%= link_to 'Show Token', @token %></li>
 <% end %>
 <% if can? :destroy, @token %>
     <li><%= link_to 'Delete Token', @token, method: :delete, data: {confirm: 'Are you sure?'} %></li>

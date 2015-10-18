@@ -1,13 +1,13 @@
-<table class="table table-striped">
+<table class="table table-hover">
   <tr class="row">
-    <th colspan="3">Body:</th>
-    <th>User:</th>
+    <th colspan="4">Body:</th>
   </tr>
   <tr class="row">
-    <td><%= @comment.body %></td>
-    <td><%= link_to 'Edit', edit_comment_path(@comment) if can? :update, @comment %></td>
-    <td><%= link_to 'Delete', @comment, method: :delete,
-                    data: {confirm: 'Are you sure?'} if can? :destroy, @comment %></td>
-    <td><%= link_to @comment.user.name, @comment.user %></td>
+    <td><%= comment.body %></td>
+    <td></td>
+    <td><%= link_to 'Edit', edit_comment_path(comment) if can? :update, comment %></td>
+    <td><%= link_to 'Delete', comment, method: :delete,
+                    data: {confirm: 'Are you sure?'} if can? :destroy, comment %></td>
+    <td></td>
   </tr>
 </table>

@@ -25,13 +25,14 @@
                   <%= link_to 'Deactivate User', admin_user_path(user), method: :delete,
                               data: {confirm: 'Are you sure?'} %>
               <% else %>
-                  <%= link_to 'Activate User', admin_user_path(user, user: {status: :active}), method: :put %>
+                  <%= link_to 'Activate User', admin_user_path(user, user: {status: :active}),
+                              method: :put %>
               <% end %>
           <% else %>
               <%= link_to 'Deactivate User', cancel_user_registration_path,
                           data: {confirm: 'Are you sure?'} if can? :destroy, user %>
 
-        <% end %></td>
+          <% end %></td>
       </tr>
   <% end %>
 </table>

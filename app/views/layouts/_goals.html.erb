@@ -1,0 +1,7 @@
+<% if params[:user_id] %>
+    <li><%= link_to 'Goals', goals_path %></li>
+    <li><%= link_to 'User', user_path(params[:user_id]) %></li>
+    <li class="active"><%= link_to 'User Goals', goals_path(user_id: params[:user_id]) %></li>
+<% else %>
+    <li class="active"><%= link_to 'Goals', goals_path %></li>
+<% end %>

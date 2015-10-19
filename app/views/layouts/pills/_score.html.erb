@@ -1,7 +1,0 @@
-<li><%= link_to 'Show Goal', @score.goal %></li>
-<li><%= link_to 'Show User', @score.user %></li>
-<% if current_page?(@score) %>
-    <li class="active"><%= link_to 'Show Score', @score %></li>
-<% else %>
-    <li><%= link_to 'Show Score', @score %></li>
-<% end %>

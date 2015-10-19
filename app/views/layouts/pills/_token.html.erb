@@ -1,9 +1,0 @@
-<li><%= link_to 'Show User', @token.user %></li>
-<% if current_page?(@token) %>
-    <li class="active"><%= link_to 'Show Token', @token %></li>
-<% else %>
-    <li><%= link_to 'Show Token', @token %></li>
-<% end %>
-<% if can? :destroy, @token %>
-    <li><%= link_to 'Delete Token', @token, method: :delete, data: {confirm: 'Are you sure?'} %></li>
-<% end %>

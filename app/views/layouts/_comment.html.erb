@@ -1,0 +1,24 @@
+<li><%= link_to 'Goal', @comment.goal %></li>
+<li><%= link_to 'User', @comment.user %></li>
+<li class="active dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+    Comment&nbsp;<span class="caret"></span></a>
+  <ul class="dropdown-menu" role="menu">
+    <% if current_page?(@comment) %>
+        <li class="active"><%= link_to 'Show Comment', @comment %></li>
+    <% else %>
+        <li><%= link_to 'Show Comment', @comment %></li>
+    <% end %>
+    <% if can? :update, @comment %>
+        <% if current_page?(edit_comment_path @comment) %>
+            <li class="active"><%= link_to 'Edit Comment', edit_comment_path(@comment) %></li>
+        <% else %>
+            <li><%= link_to 'Edit Comment', edit_comment_path(@comment) %></li>
+        <% end %>
+    <% end %>
+    <% if can? :destroy, @comment %>
+        <li><%= link_to 'Delete Comment', @comment, method: :delete,
+                        data: {confirm: 'Are you sure?'} %></li>
+    <% end %>
+  </ul>
+</li>

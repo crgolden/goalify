@@ -1,4 +1,11 @@
 <%= content_for :title, t('subscriptions.title.index') %>
-<%= render layout: 'layouts/panel', locals: {title: 'All Subscriptions', resource: @subscriptions} do %>
-    <%= render partial: 'subscriptions', locals: {action: :index} %>
+<% if params[:user_id] %>
+    <% title = 'User Subscriptions' %>
+<% elsif params[:goal_id] %>
+    <% title = 'Goal Subscriptions' %>
+<% else %>
+    <% title = 'Subscriptions' %>
+<% end %>
+<%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: @subscriptions} do %>
+    <%= render 'subscriptions' %>
 <% end %>

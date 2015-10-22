@@ -1,8 +1,2 @@
-<table class="table table-hover">
-  <tr class="row">
-    <th colspan="4">Value:</th>
-  </tr>
-  <tr class="row">
-    <td colspan="4"><%= score.value %></td>
-  </tr>
-</table>
+<h4>Goal: <%= link_to score.goal.title, score.goal %></h4>
+<h4>User: <%= link_to score.user.name, score.user %></h4>

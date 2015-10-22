@@ -1,7 +1,5 @@
-<li><%= link_to 'User', @token.user %></li>
 <li class="active dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
-    Token&nbsp;<span class="caret"></span></a>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Token&nbsp;<span class="caret"></span></a>
   <ul class="dropdown-menu" role="menu">
     <% if current_page?(@token) %>
         <li class="active"><%= link_to 'Show Token', @token %></li>
@@ -11,5 +9,7 @@
     <% if can? :destroy, @token %>
         <li><%= link_to 'Delete Token', @token, method: :delete, data: {confirm: 'Are you sure?'} %></li>
     <% end %>
+    <li class="divider"></li>
+    <li><%= link_to 'Token User', @token.user %></li>
   </ul>
 </li>

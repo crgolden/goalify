@@ -28,7 +28,7 @@ class SubscriptionsController < ApplicationController
   def destroy
     @subscription.destroy
     flash[:success] = I18n.t 'subscriptions.destroy.success'
-    redirect_to :back
+    session[:referrer] ? redirect_to(session[:referrer]) : redirect_to(:back)
   end
 
   private

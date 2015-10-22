@@ -1,16 +1,12 @@
-<table class="table table-hover">
-  <tr class="row">
-    <th>Image:</th>
-    <th>Provider:</th>
-    <th colspan="2">Expires at:</th>
-  </tr>
-  <% @tokens.each do |token| %>
-      <tr class="row">
-        <td><%= image_tag token.image, size: '50x50' %></td>
-        <td><%= link_to token.provider, token %></td>
-        <td><%= token.expires_at.to_formatted_s(:short) %></td>
-        <td><%= link_to 'Delete', token, method: :delete,
-                        data: {confirm: 'Are you sure?'} if can? :destroy, token %></td>
-      </tr>
-  <% end %>
-</table>
+<% @tokens.each do |token| %>
+    <div class="row">
+      <div class="col-xs-12">
+        <h4><%= link_to token.provider, token %></h4>
+        User: <%= link_to token.user.name, token.user %>
+        <br>
+        <%= link_to 'Show', token %>
+        <%= link_to 'Delete', token, method: :delete, data: {confirm: 'Are you sure?'} if can? :destroy, token %>
+      </div>
+    </div>
+    <hr>
+<% end %>

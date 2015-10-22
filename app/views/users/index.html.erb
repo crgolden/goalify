@@ -1,4 +1,4 @@
 <%= content_for :title, t('users.title.index') %>
-<%= render layout: 'layouts/panel', locals: {title: 'All Users', resource: @users} do %>
-    <%= render 'users', locals: {action: :index} %>
+<%= render layout: 'layouts/jumbotron', locals: {title: 'Users', paginatable: @users} do %>
+    <%= render 'users' %>
 <% end %>

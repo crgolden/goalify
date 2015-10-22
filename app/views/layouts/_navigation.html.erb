@@ -1,5 +1,5 @@
 <nav class="navbar navbar-default">
-  <div class="container-fluid">
+  <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
               data-target=".navbar-collapse">
@@ -12,6 +12,7 @@
     </div>
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
+
         <% if user_signed_in? %>
             <% if current_page?(new_goal_path) %>
                 <li class="active"><%= link_to 'New Goal', new_goal_path %></li>
@@ -26,38 +27,45 @@
                 <% end %>
             <% end %>
         <% end %>
-        <% if @goals %>
-            <%= render 'layouts/goals' %>
+
+        <% if @goals and not params[:user_id] %>
+            <li class="active"><%= link_to 'Goals', goals_path %></li>
         <% else %>
             <li><%= link_to 'Goals', goals_path %></li>
         <% end %>
+
         <% if @users %>
             <%= render 'layouts/users' %>
         <% else %>
             <li><%= link_to 'Users', users_path %></li>
         <% end %>
+
+        <%= render 'layouts/goals' if @goals %>
         <%= render 'layouts/goal' if @goal %>
-        <% if current_page?(new_user_session_path) ||
-                current_page?(controller: 'devise/sessions', action: (:create || :new)) %>
+
+        <% if current_page?(new_user_session_path) || current_page?(controller: 'devise/sessions', action: :new) %>
             <li class="active"><%= link_to 'Sign in', new_user_session_path %></li>
         <% elsif current_page?(new_user_registration_path) %>
             <li class="active"><%= link_to 'Sign up', new_user_registration_path %></li>
-        <% elsif @user || current_page?(edit_user_registration_path) ||
-                current_page?(controller: 'users/registrations', action: (:edit || :update)) %>
+        <% elsif (@user and not @tokens) || current_page?(edit_user_registration_path) || current_page?(controller: 'users/registrations', action: :edit) %>
             <%= render 'layouts/user' %>
         <% end %>
+
         <%= render 'layouts/comment' if @comment %>
         <%= render 'layouts/comments' if @comments %>
         <%= render 'layouts/score' if @score %>
         <%= render 'layouts/scores' if @scores %>
+        <%= render 'layouts/subscription' if @subscription %>
         <%= render 'layouts/subscriptions' if @subscriptions %>
         <%= render 'layouts/token' if @token %>
         <%= render 'layouts/tokens' if @tokens %>
+
         <% if current_page?(page_path('about')) %>
             <li class="active"><%= link_to 'About', page_path('about') %></li>
         <% else %>
             <li><%= link_to 'About', page_path('about') %></li>
         <% end %>
+
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">

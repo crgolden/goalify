@@ -1,5 +1,5 @@
 <%= content_for :title, t('tokens.title.index') %>
-<%= render layout: 'layouts/panel', locals: {title: 'All Tokens', resource: nil} do %>
-    <%= render partial: 'tokens', locals: {action: :index} %>
+<%= render layout: 'layouts/jumbotron', locals: {title: 'User Tokens', paginatable: nil} do %>
+    <%= render 'tokens' %>
 <% end %>
 

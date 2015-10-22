@@ -6,4 +6,4 @@ Feature: Home page
   Scenario: Visit the home page
     Given I am signed out
     When I am on the Home page
-    Then I see "Welcome"
+    Then I see "Home"

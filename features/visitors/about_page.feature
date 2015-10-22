@@ -6,4 +6,4 @@ Feature: 'About' page
   Scenario: Visit the 'about' page
     Given I am signed out
     When I am on the About page
-    Then I see "About the Website"
+    Then I see "About"

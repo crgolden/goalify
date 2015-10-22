@@ -1,4 +1,11 @@
 <%= content_for :title, t('comments.title.index') %>
-<%= render layout: 'layouts/panel', locals: {title: 'All Comments', resource: @comments} do %>
-    <%= render partial: 'comments', locals: {action: :index} %>
+<% if params[:user_id] %>
+    <% title = 'User Comments' %>
+<% elsif params[:goal_id] %>
+    <% title = 'Goal Comments' %>
+<% else %>
+    <% title = 'Comments' %>
+<% end %>
+<%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: @comments} do %>
+    <%= render 'comments' %>
 <% end %>

@@ -1,9 +1,63 @@
 <% if params[:user_id] %>
-    <li><%= link_to 'User', user_path(params[:user_id]) %></li>
-    <li class="active"><%= link_to 'User Scores', scores_path(user_id: params[:user_id]) %></li>
+
+    <% user = User.find_by(id: params[:user_id]) %>
+    <li class="active dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">User&nbsp;<span class="caret"></span></a>
+      <ul class="dropdown-menu" role="menu">
+        <li><%= link_to 'Show User', user %></li>
+        <% if can? :update, user %>
+            <li><%= link_to 'Edit User', edit_admin_user_path(user) %></li>
+        <% end %>
+        <% if user_signed_in? && current_user.admin? %>
+            <% if user.active? %>
+                <li><%= link_to 'Deactivate User', admin_user_path(user), method: :delete, data: {confirm: 'Are you sure?'} %></li>
+            <% else %>
+                <li><%= link_to 'Activate User', admin_user_path(user, user: {status: :active}), method: :put %></li>
+            <% end %>
+        <% elsif can? :destroy, user %>
+            <li><%= link_to 'Deactivate User', cancel_user_registration_path, data: {confirm: 'Are you sure?'} %></li>
+        <% end %>
+        <li class="divider"></li>
+        <% if user.comments.accessible_by(current_ability).present? %>
+            <li><%= link_to 'User Comments', comments_path(user_id: user.id) %></li>
+        <% end %>
+        <% if user.goals.accessible_by(current_ability).present? %>
+            <li><%= link_to 'User Goals', goals_path(user_id: user.id) %></li>
+        <% end %>
+        <li class="active"><%= link_to 'User Scores', scores_path(user_id: user.id) %></li>
+        <% if user.subscriptions.accessible_by(current_ability).present? %>
+            <li><%= link_to 'User Subscriptions', subscriptions_path(user_id: user.id) %></li>
+        <% end %>
+        <% if user.tokens.accessible_by(current_ability).present? %>
+            <li><%= link_to 'User Tokens', user_tokens_path(user_id: user.id) %></li>
+        <% end %>
+      </ul>
+    </li>
+
 <% elsif params[:goal_id] %>
-    <li><%= link_to 'Goal', goal_path(params[:goal_id]) %></li>
-    <li class="active"><%= link_to 'Goal Scores', scores_path(goal_id: params[:goal_id]) %></li>
+
+    <% goal = Goal.find_by(id: params[:goal_id]) %>
+    <li class="active dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Goal&nbsp;<span class="caret"></span></a>
+      <ul class="dropdown-menu" role="menu">
+        <li><%= link_to 'Show Goal', goal %></li>
+        <% if can? :update, goal %>
+            <li><%= link_to 'Edit Goal', edit_goal_path(goal) %></li>
+        <% end %>
+        <% if can? :destroy, goal %>
+            <li><%= link_to 'Delete Goal', goal, method: :delete, data: {confirm: 'Are you sure?'} %></li>
+        <% end %>
+        <li class="divider"></li>
+        <% if goal.comments.accessible_by(current_ability).present? %>
+            <li><%= link_to 'Goal Comments', comments_path(goal_id: goal.id) %></li>
+        <% end %>
+        <li class="active"><%= link_to 'Goal Scores', scores_path(goal_id: goal.id) %></li>
+        <% if goal.subscriptions.accessible_by(current_ability).present? %>
+            <li><%= link_to 'Goal Subscriptions', subscriptions_path(goal_id: goal.id) %></li>
+        <% end %>
+      </ul>
+    </li>
+
 <% else %>
-    <li class="active"><%= link_to 'All Scores', scores_path %></li>
+    <li class="active"><%= link_to 'Scores', scores_path %></li>
 <% end %>

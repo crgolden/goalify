@@ -1,13 +1,19 @@
-<li><%= link_to 'Goal', goal_path(@subscription.goal) %></li>
-<li><%= link_to 'User', user_path(@subscription.user) %></li>
-<% if can? :update, @subscription %>
-    <% if current_page?(edit_subscription_path @subscription) %>
-        <li class="active"><%= link_to 'Edit Subscription', edit_subscription_path(@subscription, action: :edit) %></li>
-    <% else %>
-        <li><%= link_to 'Edit Subscription', edit_subscription_path(@subscription, action: :edit) %></li>
+<li class="active dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Subscription&nbsp;<span class="caret"></span></a>
+  <ul class="dropdown-menu" role="menu">
+    <% if can? :update, @subscription %>
+        <% if current_page?(edit_subscription_path @subscription) %>
+            <li class="active"><%= link_to 'Edit Subscription', edit_subscription_path(@subscription, action: :edit) %></li>
+        <% else %>
+            <li><%= link_to 'Edit Subscription', edit_subscription_path(@subscription, action: :edit) %></li>
+        <% end %>
     <% end %>
-<% end %>
-<% if can? :destroy, @subscription %>
-    <li><%= link_to 'Delete Subscription', @subscription, method: :delete,
-                    data: {confirm: 'Are you sure?'} %></li>
-<% end %>
+    <% if can? :destroy, @subscription %>
+        <li><%= link_to 'Delete Subscription', @subscription, method: :delete,
+                        data: {confirm: 'Are you sure?'} %></li>
+    <% end %>
+    <li class="divider">
+    <li><%= link_to 'Subscription Goal', @subscription.goal %></li>
+    <li><%= link_to 'Subscription User', @subscription.user %></li>
+  </ul>
+</li>

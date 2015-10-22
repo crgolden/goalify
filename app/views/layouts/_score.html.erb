@@ -1,13 +1,13 @@
-<li><%= link_to 'Goal', @score.goal %></li>
-<li><%= link_to 'User', @score.user %></li>
 <li class="active dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
-    Score&nbsp;<span class="caret"></span></a>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Score&nbsp;<span class="caret"></span></a>
   <ul class="dropdown-menu" role="menu">
     <% if current_page?(@score) %>
         <li class="active"><%= link_to 'Show Score', @score %></li>
     <% else %>
         <li><%= link_to 'Show Score', @score %></li>
     <% end %>
+    <li class="divider"></li>
+    <li><%= link_to 'Score Goal', @score.goal %></li>
+    <li><%= link_to 'Score User', @score.user %></li>
   </ul>
 </li>

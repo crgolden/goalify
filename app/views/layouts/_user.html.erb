@@ -1,7 +1,6 @@
 <% if @user.id %>
     <li class="active dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
-        User&nbsp;<span class="caret"></span></a>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">User&nbsp;<span class="caret"></span></a>
       <ul class="dropdown-menu" role="menu">
         <% if current_page?(@user) %>
             <li class="active"><%= link_to 'Show User', @user %></li>

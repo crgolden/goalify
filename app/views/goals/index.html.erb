@@ -1,4 +1,11 @@
 <%= content_for :title, t('goals.title.index') %>
-<%= render layout: 'layouts/panel', locals: {title: 'All Goals', resource: @goals} do %>
-    <%= render partial: 'goals', locals: {action: :index} %>
+<% if params[:filter_title] %>
+    <% title = "#{@goals.count} Goals found for \"#{params[:filter_title]}\"" %>
+<% elsif params[:user_id] %>
+    <% title = 'User Goals' %>
+<% else %>
+    <% title = 'Goals' %>
+<% end %>
+<%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: @goals} do %>
+    <%= render 'goals' %>
 <% end %>

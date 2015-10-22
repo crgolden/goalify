@@ -1,23 +1,13 @@
-<table class="table table-hover">
-  <tr class="row">
-    <th colspan="3">Completed:</th>
-    <% if params[:user_id] %>
-        <th>Goal:</th>
-    <% elsif params[:goal_id] %>
-        <th>User:</th>
-    <% end %>
-  </tr>
-  <% @subscriptions.each do |subscription| %>
-      <tr class="row">
-        <td><%= subscription.completed? %></td>
+<% @subscriptions.each do |subscription| %>
+    <div class="row">
+      <div class="col-xs-12">
+        <h4><%= subscription.completed? %></h4>
+        Goal: <%= link_to subscription.goal.title, subscription.goal %>,
+        User: <%= link_to subscription.user.name, subscription.user %>
+        <br>
         <td><%= link_to 'Edit', edit_subscription_path(subscription) if can? :update, subscription %></td>
-        <td><%= link_to 'Delete', subscription, method: :delete,
-                        data: {confirm: 'Are you sure?'} if can? :destroy, subscription %></td>
-        <% if params[:user_id] %>
-            <td><%= link_to subscription.goal.title, subscription.goal %></td>
-        <% elsif params[:goal_id] %>
-            <td><%= link_to subscription.user.name, subscription.user %></td>
-        <% end %>
-      </tr>
-  <% end %>
-</table>
+        <td><%= link_to 'Delete', subscription, method: :delete, data: {confirm: 'Are you sure?'} if can? :destroy, subscription %></td>
+      </div>
+    </div>
+    <hr>
+<% end %>

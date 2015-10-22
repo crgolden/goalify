@@ -1,8 +1,30 @@
 <%= content_for :title, t('home.title') %>
-<h3>Welcome</h3>
-<p><%= link_to 'Users', users_path %>: <%= User.count %> registered</p>
-<p><%= link_to 'Goals', goals_path %>: <%= Goal.count %> created</p>
-<p>Comments: <%= Comment.count %> created</p>
-<p>Tokens: <%= Token.count %> created</p>
-<p>Subscriptions: <%= Subscription.count %> created</p>
-<p>Scores: <%= Score.count %> created</p>
+<%= render layout: 'layouts/jumbotron', locals: {title: 'Home', paginatable: nil} do %>
+    <div class="row">
+      <div class="col-xs-12">
+        <p><%= link_to 'Goals', goals_path %>: <%= Goal.count %> created</p>
+        <%= form_tag goals_path, method: :get, class: 'form-inline' do %>
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-addon">Goals:</div>
+                <%= search_field_tag :filter_title, nil, class: 'form-control' %>
+              </div>
+            </div>
+            <div class="form-group">
+              <%= submit_tag 'Search', class: 'btn btn-default' %>
+            </div>
+        <% end %>
+        <p>&nbsp;</p>
+
+        <p><%= link_to 'Users', users_path %>: <%= User.where(status: 'active').count %> registered</p>
+
+        <p>Comments: <%= Comment.count %> created</p>
+
+        <p>Tokens: <%= Token.count %> created</p>
+
+        <p>Subscriptions: <%= Subscription.count %> created</p>
+
+        <p>Scores: <%= Score.count %> created</p>
+      </div>
+    </div>
+<% end %>

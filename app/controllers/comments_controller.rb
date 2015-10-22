@@ -40,7 +40,7 @@ class CommentsController < ApplicationController
   def destroy
     @comment.destroy
     flash[:success] = I18n.t 'comments.destroy.success'
-    redirect_to :back
+    session[:referrer] ? redirect_to(session[:referrer]) : redirect_to(:back)
   end
 
   private

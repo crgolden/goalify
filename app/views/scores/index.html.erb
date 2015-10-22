@@ -1,4 +1,11 @@
 <%= content_for :title, t('scores.title.index') %>
-<%= render layout: 'layouts/panel', locals: {title: 'All Scores', resource: @scores} do %>
-    <%= render partial: 'scores', locals: {action: :index} %>
+<% if params[:user_id] %>
+    <% title = 'User Scores' %>
+<% elsif params[:goal_id] %>
+    <% title = 'Goal Scores' %>
+<% else %>
+    <% title = 'Scores' %>
+<% end %>
+<%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: @scores} do %>
+    <%= render 'scores' %>
 <% end %>

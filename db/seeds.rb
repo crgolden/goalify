@@ -11,7 +11,7 @@ end
 end
 
 250.times do
-  Goal.create title: Faker::Lorem.word, text: Faker::Lorem.word,
+  Goal.create title: Faker::Lorem.word, text: Faker::Lorem.paragraphs,
               user: User.offset(rand(User.count)).first
 end
 

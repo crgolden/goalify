@@ -1,5 +1,10 @@
 <%= content_for :title, t('about.title') %>
-<h3>About the Website</h3>
-<p>
-  This web application was created by
-</p>
+<%= render layout: 'layouts/jumbotron', locals: {title: 'About', paginatable: nil} do %>
+    <div class="row">
+      <div class="col-xs-12">
+        <p>
+          This web application was created by
+        </p>
+      </div>
+    </div>
+<% end %>

@@ -41,8 +41,8 @@ class UsersController < ApplicationController
 
   def destroy
     @user.soft_delete
-    flash[:success] = I18n.t 'users.destroy.success'
-    redirect_to users_path
+    flash[:success] = I18n.t 'users.update.success'
+    redirect_to @user
   end
 
   private

@@ -1,4 +1,0 @@
-<%= content_for :title, t('subscriptions.title.show') %>
-<%= render layout: 'layouts/panel', locals: {title: 'Showing Subscription', resource: nil} do %>
-    <%= render partial: 'subscription', locals: {action: :show, subscription: @subscription} %>
-<% end %>

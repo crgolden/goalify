@@ -15,7 +15,7 @@ class TokensController < ApplicationController
   def destroy
     @token.destroy
     flash[:success] = I18n.t 'tokens.destroy.success'
-    redirect_to :back
+    session[:referrer] ? redirect_to(session[:referrer]) : redirect_to(:back)
   end
 
 end

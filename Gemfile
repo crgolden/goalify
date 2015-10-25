@@ -12,6 +12,7 @@ gem 'jbuilder' # Build JSON APIs with ease
 gem 'jquery-rails' # Use jquery as the JavaScript library
 gem 'kaminari' #Pagination
 gem 'omniauth'
+gem 'omniauth-oauth2', '~> 1.3.1' # https://github.com/intridea/omniauth-oauth2/issues/81
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 gem 'pg' # Use postgresql as the database for Active Record

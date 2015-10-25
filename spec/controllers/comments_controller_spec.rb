@@ -38,7 +38,7 @@ describe CommentsController do
 
         expect(flash[:success]).to eq I18n.t 'comments.create.success'
         expect(response.status).to eq 302
-        expect(response).to redirect_to comments_path(goal: @comment.goal)
+        expect(response).to redirect_to comments_path
         expect(Comment.find_by user_id: attr[:user_id], goal_id: attr[:goal_id]).not_to be nil
       end
 

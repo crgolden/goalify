@@ -3,10 +3,7 @@
     "id": {
       "type": "string"
     },
-    "goal_id": {
-      "type": "string"
-    },
-    "user_id": {
+    "subscription_id": {
       "type": "string"
     },
     "value": {
@@ -31,8 +28,7 @@
       "required": [
         "id",
         "value",
-        "goal_id",
-        "user_id"
+        "subscription_id"
       ],
       "properties": {
         "id": {
@@ -41,11 +37,8 @@
         "value": {
           "$ref": "#/definitions/value"
         },
-        "goal_id": {
-          "$ref": "#/definitions/goal_id"
-        },
-        "user_id": {
-          "$ref": "#/definitions/user_id"
+        "subscription_id": {
+          "$ref": "#/definitions/subscription_id"
         }
       }
     }

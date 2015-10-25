@@ -1,3 +1,5 @@
-<h4>Goal: <%= link_to comment.goal.title, comment.goal %></h4>
-<h4>User: <%= link_to comment.user.name, comment.user %></h4>
-
+<p><%= comment.body %></p>
+Comment Goal: <%= link_to comment.goal.title, comment.goal %> <%= link_to comment.goal.score, scores_path(goal: comment.goal), class: 'badge' %>
+<br>
+Comment User: <%= link_to comment.user.name, comment.user %> <%= link_to comment.user.score, scores_path(user: comment.user), class: 'badge' %>
+<br>

@@ -5,6 +5,11 @@ class SubscriptionsController < ApplicationController
 
   def index
     filter
+    if params[:goal]
+      @goal = Goal.find params[:goal]
+    elsif params[:user]
+      @user = User.find params[:user]
+    end
   end
 
   def edit
@@ -28,13 +33,13 @@ class SubscriptionsController < ApplicationController
   def destroy
     @subscription.destroy
     flash[:success] = I18n.t 'subscriptions.destroy.success'
-    session[:referrer] ? redirect_to(session[:referrer]) : redirect_to(:back)
+    redirect_to subscriptions_path
   end
 
   private
 
   def subscription_params
-    @subscription_params = params.require(:subscription).permit :completed, :user_id, :goal_id
+    params.require(:subscription).permit :completed, :user_id, :goal_id
   end
 
 end

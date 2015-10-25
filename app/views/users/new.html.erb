@@ -1,9 +1,7 @@
 <%= content_for :title, t('users.title.new') %>
-<%= render layout: 'layouts/jumbotron', locals: {title: 'New User', paginatable: nil} do %>
-    <div class="row">
-      <div class="col-md-6 col-xs-12"></div>
-      <div class="col-md-6 col-xs-12">
-        <%= render partial: 'form', locals: {action: :create, user: User.new} %>
-      </div>
-    </div>
+
+<% title = 'New User' %>
+
+<%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: nil} do %>
+    <%= render partial: 'form', locals: {action: :create, user: User.new} %>
 <% end %>

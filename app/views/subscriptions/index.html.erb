@@ -1,11 +1,20 @@
 <%= content_for :title, t('subscriptions.title.index') %>
-<% if params[:user_id] %>
+
+<% if params[:user] %>
     <% title = 'User Subscriptions' %>
-<% elsif params[:goal_id] %>
+<% elsif params[:goal] %>
     <% title = 'Goal Subscriptions' %>
 <% else %>
     <% title = 'Subscriptions' %>
 <% end %>
+
 <%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: @subscriptions} do %>
-    <%= render 'subscriptions' %>
+    <% @subscriptions.each do |subscription| %>
+        <%= render partial: 'controls', locals: {subscription: subscription} %>
+        Subscription completed: <b><%= subscription.completed? %></b><br>
+        Subscription Goal: <%= link_to subscription.goal.title, subscription.goal %>
+        <%= link_to subscription.goal.score, scores_path(goal: subscription.goal), class: 'badge' %><br>
+        Subscription User: <%= link_to subscription.user.name, subscription.user %>
+        <%= link_to subscription.user.score, scores_path(user: subscription.user), class: 'badge' %><br>
+    <% end %>
 <% end %>

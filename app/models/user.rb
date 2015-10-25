@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+
   include Filterable
 
   acts_as_token_authenticatable
@@ -9,7 +10,6 @@ class User < ActiveRecord::Base
   has_many :tokens, dependent: :destroy
   has_many :goals
   has_many :comments
-  has_many :scores
   has_many :subscriptions
 
   validates :name, presence: true
@@ -42,12 +42,20 @@ class User < ActiveRecord::Base
     update_attribute :status, :inactive
   end
 
-  def self.search(params = {})
-    users = params[:id].present? ? User.where(id: params[:id]) : User.all
-    users = users.filter_by_email(params[:email]) if params[:email].present?
-    users = users.filter_by_name(params[:name]) if params[:name].present?
-    users = users.recent(params[:recent]) if params[:recent].present?
-    users
+  def self.with_highest_score
+    find_by score: maximum(:score)
+  end
+
+  def scores
+    user_scores = []
+    self.goals.each do |goal|
+      goal.subscriptions.each do |subscription|
+        subscription.scores.each do |score|
+          user_scores << score
+        end
+      end
+    end
+    Kaminari.paginate_array user_scores
   end
 
 end

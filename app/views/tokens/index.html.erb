@@ -1,5 +1,11 @@
 <%= content_for :title, t('tokens.title.index') %>
-<%= render layout: 'layouts/jumbotron', locals: {title: 'User Tokens', paginatable: nil} do %>
-    <%= render 'tokens' %>
+
+<% title = 'User Tokens' %>
+
+<%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: nil} do %>
+    <% @tokens.each do |token| %>
+        <%= render partial: 'controls', locals: {token: token} %>
+        <%= render token, locals: {token: token} %>
+    <% end %>
 <% end %>
 

@@ -1,7 +1,7 @@
-<%= content_for :title, t('goals.title.index') %>
+<%= content_for :title, t('goals.title.search') %>
 
-<% if params[:user] %>
-    <% title = 'User Goals' %>
+<% if params[:q] %>
+    <% title = @results.count.to_s + ' Goals found for "' + params[:q] + '"' %>
 <% else %>
     <% title = 'Goals' %>
 <% end %>

@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   root 'high_voltage/pages#show', id: 'home'
 
+  get '/goals/search', to: 'goals#search', as: 'search_goals'
+
   resources :goals, concerns: :paginatable
   resources :scores, concerns: :paginatable, only: [:show, :index]
   resources :subscriptions, concerns: :paginatable, except: [:show, :new]

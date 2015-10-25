@@ -4,7 +4,6 @@ describe SubscriptionsController do
     @user = create :user
     goal = create :goal, user: @user
     @subscription = create :subscription, goal: goal, user: @user
-    request.env['HTTP_REFERER'] = user_path(@user)
   end
 
   context 'For a visitor' do
@@ -60,7 +59,7 @@ describe SubscriptionsController do
 
         expect(flash[:success]).to eq I18n.t 'subscriptions.destroy.success'
         expect(response.status).to eq 302
-        expect(response).to redirect_to user_path(@user)
+        expect(response).to redirect_to subscriptions_path
         expect(Subscription.find_by id: @subscription.id).to be nil
       end
 

@@ -84,7 +84,7 @@ describe UsersController do
         delete :destroy, id: @user.id
         @user.reload
 
-        expect(flash[:success]).to eq I18n.t 'users.update.success'
+        expect(flash[:success]).to eq I18n.t 'users.update.confirmed_success'
         expect(response.status).to eq 302
         expect(response).to redirect_to @user
         expect(@user.status).to eq 'inactive'
@@ -200,7 +200,7 @@ describe UsersController do
         delete :destroy, id: @user.id
         @user.reload
 
-        expect(flash[:success]).to eq I18n.t 'users.update.success'
+        expect(flash[:success]).to eq I18n.t 'users.update.confirmed_success'
         expect(response.status).to eq 302
         expect(response).to redirect_to @user
         expect(@user.status).to eq 'inactive'

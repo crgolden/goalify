@@ -4,7 +4,8 @@ describe Api::V1::ScoresController do
   before :each do
     @user = create :user
     goal = create :goal, user: @user
-    @score = create :score, goal: goal, user: @user
+    subscription = create :subscription, goal: goal, user: @user
+    @score = create :score, subscription: subscription
   end
 
   context 'Without a valid authenticity_token' do
@@ -18,12 +19,11 @@ describe Api::V1::ScoresController do
       expect(response).to match_response_schema 'score'
       expect(score[:id]).to eq @score.id
       expect(score[:value]).to eq @score.value
-      expect(score[:user_id]).to eq @score.user_id
-      expect(score[:goal_id]).to eq @score.goal_id
+      expect(score[:subscription_id]).to eq @score.subscription_id
       expect(assigns :score).to eq @score
     end
     it 'shows all the scores' do
-      get :index, goal_id: @score.goal_id, format: :json
+      get :index, subscription: @score.subscription, format: :json
 
       expect(response.status).to eq 200
       expect(response).to render_template :index

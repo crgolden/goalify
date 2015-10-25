@@ -1,0 +1,4 @@
+<h5><%= link_to 'Show', token unless current_page?(token) %></h5>
+<% if can? :destroy, token %>
+    <h5><%= link_to 'Delete', token, method: :delete, data: {confirm: 'Are you sure?'} %></h5>
+<% end %>

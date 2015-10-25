@@ -1,14 +1,15 @@
-<h4>Score: <b><%= Score.total_for_user user %></b></h4>
-<% if user_signed_in? && (current_user.admin? || current_user == user) %>
-    <h4>Email: <b><%= user.email %></b></h4>
-    <h4>Authentication Token: <b><%= user.authentication_token %></b></h4>
+User name: <b><%= user.name %><br></b>
+User score: <%= link_to user.score, scores_path(user: user), class: 'badge' %><br>
+<% if user_signed_in? and (current_user.admin? or current_user == user) %>
+    User email: <%= mail_to user.email %><br>
+    User authentication token: <b><%= user.authentication_token %></b><br>
 <% end %>
-<h4>Status: <b><%= user.status %></b></h4>
-<h4>Role: <b><%= user.role %></b></h4>
-<h4>Joined on: <b><%= user.created_at.to_formatted_s(:short) %></b></h4>
-<h4>No. times logged in: <b><%= user.sign_in_count %></b></h4>
+User status: <b><%= user.status %></b><br>
+User role: <b><%= user.role %></b><br>
+User joined on: <b><%= user.created_at.to_formatted_s :short %></b><br>
 <% if user.current_sign_in_at %>
-    <h4>Last logged in on: <b><%= user.current_sign_in_at.to_formatted_s(:short) %></b></h4>
+    User last logged in: <b><%= user.current_sign_in_at.to_formatted_s :short %></b>.<br>
+    User has logged in: <b><%= user.sign_in_count %></b> times.<br>
 <% else %>
-    <h4>Never logged in.</h4>
+    User has never logged in.<br>
 <% end %>

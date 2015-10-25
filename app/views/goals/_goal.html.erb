@@ -1,21 +1,4 @@
-<h4>User: <%= link_to goal.user.name, goal.user %></h4>
-<h4>Score: <b><%= Score.total_for_goal goal %></b></h4>
-<h4>Text: <b><%= goal.text %></b></h4>
-<% if user_signed_in? %>
-    <% if subscription = Subscription.exists_for_goal_and_user?(goal, current_user) %>
-        <hr>
-        <% if subscription.completed? %>
-            <h4>Completed</h4>
-        <% else %>
-            <h4>
-              <%= link_to 'Unsubscribe', subscription, method: :delete %>,
-              <%= link_to 'Complete', subscription_path(subscription, subscription: {completed: true}), method: :put %>
-            </h4>
-        <% end %>
-    <% else %>
-        <hr>
-        <h4><%= link_to 'Subscribe', subscriptions_path(subscription: {goal_id: goal.id, user_id: current_user.id}), method: :post %></h4>
-    <% end %>
-<% end %>
-<hr>
-<%= render partial: 'comments/form', locals: {action: :create, comment: goal.comments.new, goal: goal} %>
+<p><%= goal.text %></p>
+Goal title: <b><%= goal.title %><br></b>
+Goal score: <%= link_to goal.score, scores_path(goal: goal), class: 'badge' %><br>
+Goal User: <%= link_to goal.user.name, goal.user %> <%= link_to goal.user.score, scores_path(user: goal.user), class: 'badge' %>

@@ -1,30 +1,29 @@
 class Score < ActiveRecord::Base
+
   include Filterable
 
-  belongs_to :goal
-  belongs_to :user
+  belongs_to :subscription
 
-  validates :goal, presence: true
-  validates :user, presence: true
+  CREATED_VALUE = 50
+  COMPLETED_VALUE = 100
+
   validates :value, presence: true
 
-  scope :goal_id, -> (goal_id) { where goal_id: goal_id }
-  scope :user_id, -> (user_id) { where user_id: user_id }
+  after_save { increase_totals }
+  before_destroy { decrease_totals }
 
-  def self.total_for_goal(goal)
-    total = 0
-    where(goal: goal).each do |score|
-      total += score.value
-    end
-    total
+  scope :subscription, -> (subscription) { where subscription: subscription }
+  scope :user, -> (user) { User.find(user).scores }
+  scope :goal, -> (goal) { Goal.find(goal).scores }
+
+  def increase_totals
+    self.subscription.goal.update score: (self.subscription.goal.score += self.value)
+    self.subscription.goal.user.update score: (self.subscription.goal.user.score += self.value)
   end
 
-  def self.total_for_user(user)
-    total = 0
-    Goal.where(user: user).each do |goal|
-      total += total_for_goal goal
-    end
-    total
+  def decrease_totals
+    self.subscription.goal.update score: (self.subscription.goal.score -= self.value)
+    self.subscription.goal.user.update score: (self.subscription.goal.user.score -= self.value)
   end
 
 end

@@ -1,25 +1,9 @@
 <%= content_for :title, t('users.title.edit') %>
-<%= render layout: 'layouts/jumbotron', locals: {title: @user.name, paginatable: nil} do %>
-    <div class="row">
-      <div class="col-md-6 col-xs-12">
-        <h4><%= link_to 'Show', @user %></h4>
-        <% if user_signed_in? && current_user.admin? %>
-            <% if @user.active? %>
-                <h4><%= link_to 'Deactivate', admin_user_path(@user), method: :delete, data: {confirm: 'Are you sure?'} %></h4>
-            <% else %>
-                <h4><%= link_to 'Activate', admin_user_path(@user, user: {status: :active}), method: :put %></h4>
-            <% end %>
-        <% else %>
-            <h4><%= link_to 'Deactivate', cancel_user_registration_path, data: {confirm: 'Are you sure?'} if can? :destroy, @user %></h4>
-        <% end %>
-        <h4><%= link_to 'User Comments', comments_path(user_id: @user.id) if @user.comments.accessible_by(current_ability).present? %></h4>
-        <h4><%= link_to 'User Goals', goals_path(user_id: @user.id) if @user.goals.accessible_by(current_ability).present? %></h4>
-        <h4><%= link_to 'User Scores', scores_path(user_id: @user.id) if @user.scores.accessible_by(current_ability).present? %></h4>
-        <h4><%= link_to 'User Subscriptions', subscriptions_path(user_id: @user.id) if @user.subscriptions.accessible_by(current_ability).present? %></h4>
-        <h4><%= link_to 'User Tokens', user_tokens_path(user_id: @user.id) if @user.tokens.accessible_by(current_ability).present? %></h4>
-      </div>
-      <div class="col-md-6 col-xs-12">
-        <%= render partial: 'form', locals: {action: :update, user: @user} %>
-      </div>
-    </div>
+
+<% title = 'Edit User' %>
+
+<%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: nil} do %>
+    <%= render partial: 'controls', locals: {user: @user} %>
+    <%= render partial: 'form', locals: {action: :update, user: @user} %>
+    <%= render partial: 'items', locals: {user: @user} %>
 <% end %>

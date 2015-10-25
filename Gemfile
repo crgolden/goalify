@@ -15,6 +15,7 @@ gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 gem 'pg' # Use postgresql as the database for Active Record
+gem 'pg_search'
 gem 'puma'
 gem 'rails'
 gem 'rails_12factor', group: :production

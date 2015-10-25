@@ -5,6 +5,11 @@ class CommentsController < ApplicationController
 
   def index
     filter
+    if params[:goal]
+      @goal = Goal.find params[:goal]
+    elsif params[:user]
+      @user = User.find params[:user]
+    end
   end
 
   def show
@@ -20,7 +25,7 @@ class CommentsController < ApplicationController
     @comment.user = current_user
     if @comment.save
       flash[:success] = I18n.t 'comments.create.success'
-      redirect_to comments_path(goal_id: @comment.goal_id)
+      redirect_to comments_path
     else
       flash[:error] = I18n.t 'comments.create.errors'
       redirect_to @comment.goal
@@ -40,7 +45,7 @@ class CommentsController < ApplicationController
   def destroy
     @comment.destroy
     flash[:success] = I18n.t 'comments.destroy.success'
-    session[:referrer] ? redirect_to(session[:referrer]) : redirect_to(:back)
+    redirect_to comments_path
   end
 
   private

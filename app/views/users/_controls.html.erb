@@ -1,0 +1,17 @@
+<h5><%= link_to 'Show', user unless current_page?(user) %></h5>
+<% unless current_page?(edit_admin_user_path(user)) %>
+    <% if user_signed_in? and current_user.admin? %>
+        <h5><%= link_to 'Edit', edit_admin_user_path(user) %></h5>
+    <% elsif can? :update, user %>
+        <h5><%= link_to 'Edit', edit_user_registration_path %></h5>
+    <% end %>
+<% end %>
+<% if user_signed_in? and current_user.admin? %>
+    <% if user.active? %>
+        <h5><%= link_to 'Deactivate', admin_user_path(user), method: :delete, data: {confirm: 'Are you sure?'} %></h5>
+    <% else %>
+        <h5><%= link_to 'Activate', admin_user_path(user, user: {status: :active}), method: :put %></h5>
+    <% end %>
+<% elsif can? :destroy, user %>
+    <h5><%= link_to 'Deactivate', cancel_user_registration_path, data: {confirm: 'Are you sure?'} %></h5>
+<% end %>

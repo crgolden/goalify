@@ -1,4 +1,5 @@
 class Token < ActiveRecord::Base
+
   belongs_to :user
 
   validates_presence_of :user, :uid, :provider
@@ -7,8 +8,7 @@ class Token < ActiveRecord::Base
   def self.from_omniauth(auth, user)
     user.tokens.create access_token: auth.credentials.token, image: auth.info.image,
                        refresh_token: auth.credentials.refresh_token, uid: auth.uid,
-                       expires_at: Time.at(auth.credentials.expires_at).to_datetime,
-                       provider: auth.provider
+                       expires_at: auth.credentials.expires_at, provider: auth.provider
   end
 
   def self.exists_for_uid_and_provider?(auth)

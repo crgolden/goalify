@@ -1,19 +1,24 @@
 class UsersController < ApplicationController
   include UsersHelper
   before_action :authenticate_user!, except: [:show, :index]
-  load_and_authorize_resource
+  authorize_resource only: [:index, :show, :edit]
+  load_and_authorize_resource only: [:new, :create, :update, :destroy]
 
   def index
-    @users = User.accessible_by(current_ability).page(params[:page]).per(params[:per_page])
+    @users = User.accessible_by(current_ability)
+                 .page(params[:page])
+                 .per(params[:per_page])
   end
 
   def show
+    @user = User.includes(:comments, :goals, :subscriptions, :tokens).find params[:id]
   end
 
   def new
   end
 
   def edit
+    @user = User.includes(:comments, :goals, :subscriptions, :tokens).find params[:id]
   end
 
   def create
@@ -41,16 +46,16 @@ class UsersController < ApplicationController
 
   def destroy
     @user.soft_delete
-    flash[:success] = I18n.t 'users.update.success'
+    flash[:success] = I18n.t 'users.update.confirmed_success'
     redirect_to @user
   end
 
   private
 
   def user_params
-    accessible = [:name, :email, :role, :status, :confirmed_at]
+    accessible = [:name, :email, :role, :status, :confirmed_at, :score]
     accessible << [:password, :password_confirmation] unless params[:user][:password].blank?
-    params.require(:user).permit(accessible)
+    params.require(:user).permit accessible
   end
 
 end

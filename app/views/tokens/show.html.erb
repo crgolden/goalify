@@ -1,12 +1,8 @@
-<% session[:referrer] = request.referrer %>
 <%= content_for :title, t('tokens.title.show') %>
-<%= render layout: 'layouts/jumbotron', locals: {title: @token.provider, paginatable: nil} do %>
-    <div class="row">
-      <div class="col-md-6 col-xs-12">
-        <h4><%= link_to 'Delete', @token, method: :delete, data: {confirm: 'Are you sure?'} if can? :destroy, @token %></h4>
-      </div>
-      <div class="col-md-6 col-xs-12">
-        <%= render @token, locals: {token: @token} %>
-      </div>
-    </div>
+
+<% title = 'Show Token' %>
+
+<%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: nil} do %>
+    <%= render partial: 'controls', locals: {token: @token} %>
+    <%= render @token, locals: {token: @token} %>
 <% end %>

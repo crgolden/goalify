@@ -9,10 +9,11 @@ I built this app to get experience with [Ruby on Rails](http://rubyonrails.org/)
 ####Features
 
 1. Visitors can view all goals, comments, subscriptions, scores, and users
-2. Visitors can sign-up/sign-in with email/Facebook/Google
-3. Users can access the API with their authentication token
-4. Users can create new goals, comments, and subscriptions
-5. Subscriptions add scores to their goals and creators at:
+2. Visitors can search goals (results ranked by Goal title, then text)
+3. Visitors can sign-up/sign-in with email/Facebook/Google
+4. Users can access the API with their authentication token
+5. Users can create new goals, comments, and subscriptions
+6. Subscriptions add scores to their goals and creators at:
   * Creation: 50 points
   * Completion: 100 points
 
@@ -26,5 +27,5 @@ I built this app to get experience with [Ruby on Rails](http://rubyonrails.org/)
 6. [Devise](https://github.com/plataformatec/devise) (User authentication)
 7. [Heroku](https://www.heroku.com/) (Deployment)
 9. [OAuth](http://oauth.net/) (User authentication with Facebook/Google)
-10. [PostgreSQL](http://www.postgresql.org/) (Database)
+10. [PostgreSQL](http://www.postgresql.org/) with [full-text search](https://github.com/Casecommons/pg_search) (Database)
 11. [Puma](http://puma.io/) (Web Server)

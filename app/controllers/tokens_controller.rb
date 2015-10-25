@@ -5,7 +5,6 @@ class TokensController < ApplicationController
   load_and_authorize_resource :token, only: [:show, :destroy]
   caches_action :index, :show
 
-
   def index
   end
 
@@ -15,7 +14,7 @@ class TokensController < ApplicationController
   def destroy
     @token.destroy
     flash[:success] = I18n.t 'tokens.destroy.success'
-    session[:referrer] ? redirect_to(session[:referrer]) : redirect_to(:back)
+    redirect_to user_tokens_path(@token.user)
   end
 
 end

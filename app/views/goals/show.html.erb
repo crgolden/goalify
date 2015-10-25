@@ -1,15 +1,10 @@
 <%= content_for :title, t('goals.title.show') %>
-<%= render layout: 'layouts/jumbotron', locals: {title: @goal.title, paginatable: nil} do %>
-    <div class="row">
-      <div class="col-md-6 col-xs-12">
-        <h4><%= link_to 'Edit', edit_goal_path(@goal) if can? :update, @goal %></h4>
-        <h4><%= link_to 'Delete', @goal, method: :delete, data: {confirm: 'Are you sure?'} if can? :destroy, @goal %></h4>
-        <h4><%= link_to 'Goal Comments', comments_path(goal_id: @goal.id) if @goal.comments.accessible_by(current_ability).present? %></h4>
-        <h4><%= link_to 'Goal Scores', scores_path(goal_id: @goal.id) if @goal.scores.accessible_by(current_ability).present? %></h4>
-        <h4><%= link_to 'Goal Subscriptions', subscriptions_path(goal_id: @goal.id) if @goal.subscriptions.accessible_by(current_ability).present? %></h4>
-      </div>
-      <div class="col-md-6 col-xs-12">
-        <%= render @goal, locals: {goal: @goal} %>
-      </div>
-    </div>
+
+<% title = 'Show Goal' %>
+
+<%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: nil} do %>
+    <%= render partial: 'controls', locals: {goal: @goal} %>
+    <%= render @goal, locals: {goal: @goal} %>
+    <%= render partial: 'items', locals: {goal: @goal} %>
+    <%= render partial: 'comments/form', locals: {action: :create, comment: @goal.comments.new, goal: @goal} %>
 <% end %>

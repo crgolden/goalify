@@ -57,6 +57,7 @@ en:
       show: "Goalify: Showing Goal"
       edit: "Goalify: Editing Goal"
       new: "Goalify: New Goal"
+      search: "Goalify: Search Goals"
     panel:
       index: "All Goals"
       show: "Showing Goal"

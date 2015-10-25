@@ -3,7 +3,6 @@ describe TokensController do
   before :each do
     @user = create :user
     @token = create :token, user: @user
-    request.env['HTTP_REFERER'] = user_path(@user)
   end
 
   context 'For a signed-in User' do
@@ -33,7 +32,7 @@ describe TokensController do
 
         expect(flash[:success]).to eq I18n.t 'tokens.destroy.success'
         expect(response.status).to eq 302
-        expect(response).to redirect_to @token.user
+        expect(response).to redirect_to user_tokens_path(@token.user)
         expect(Token.find_by id: @token.id).to be nil
       end
 

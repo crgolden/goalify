@@ -1,12 +1,8 @@
-<% session[:referrer] = request.referrer %>
 <%= content_for :title, t('scores.title.show') %>
-<%= render layout: 'layouts/jumbotron', locals: {title: @score.value, paginatable: nil} do %>
-    <div class="row">
-      <div class="col-md-6 col-xs-12">
-        <h4><%= link_to 'Delete', @score, method: :delete, data: {confirm: 'Are you sure?'} if can? :destroy, @score %></h4>
-      </div>
-      <div class="col-md-6 col-xs-12">
-        <%= render @score, locals: {score: @score} %>
-      </div>
-    </div>
+
+<% title = 'Show Score' %>
+
+<%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: nil} do %>
+    <%= render partial: 'controls', locals: {score: @score} %>
+    <%= render @score, locals: {score: @score} %>
 <% end %>

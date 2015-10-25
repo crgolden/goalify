@@ -1,6 +1,8 @@
-<h4>User: <%= link_to token.user.name, token.user %></h4>
-<h4><%= image_tag token.image, width: '50', height: '50' %></h4>
-<h4>UID: <b><%= token.uid %></b></h4>
-<h4>Expires At: <b><%= token.expires_at.to_formatted_s(:short) %></b></h4>
-<h4>Access token: <b><%= token.access_token %></b></h4>
-<h4>Refresh token: <b><%= token.refresh_token %></b></h4>
+<%= image_tag token.image, width: '50', height: '50' %><br>
+Token provider: <b><%= token.provider %></b><br>
+Token uid: <b><%= token.uid %></b><br>
+Token expires at: <b><%= token.expires_at.to_formatted_s :short %></b><br>
+Token access token: <b><%= token.access_token %></b><br>
+Token refresh token: <b><%= token.refresh_token %></b><br>
+Token User: <%= link_to token.user.name, token.user %> <%= link_to token.user.score, scores_path(user: token.user), class: 'badge' %>
+<br>

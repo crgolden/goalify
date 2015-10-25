@@ -2,47 +2,54 @@
 <%= form_for(user, url: {controller: :users, action: action}, html: {class: 'form-horizontal'}) do |f| %>
     <div class="form-group">
       <%= f.label :name, class: 'col-sm-2 control-label' %>
-      <div class="col-sm-10">
+      <div class="col-sm-8">
         <%= f.text_field :name, autofocus: true, class: 'form-control', placeholder: 'Name' %>
       </div>
+      <div class="col-sm-2"></div>
     </div>
     <div class="form-group">
       <%= f.label :email, class: 'col-sm-2 control-label' %>
-      <div class="col-sm-10">
+      <div class="col-sm-8">
         <%= f.text_field :email, class: 'form-control', placeholder: 'Email' %>
       </div>
+      <div class="col-sm-2"></div>
     </div>
     <% if user_signed_in? && current_user.admin? %>
         <div class="form-group">
           <%= f.label :status, class: 'col-sm-2 control-label' %>
-          <div class="col-sm-10">
+          <div class="col-sm-8">
             <%= f.select(:status, User.statuses.keys, {}, class: 'form-control') %>
           </div>
+          <div class="col-sm-2"></div>
         </div>
         <div class="form-group">
           <%= f.label :role, class: 'col-sm-2 control-label' %>
-          <div class="col-sm-10">
+          <div class="col-sm-8">
             <%= f.select(:role, User.roles.keys, {}, class: 'form-control') %>
           </div>
+          <div class="col-sm-2"></div>
         </div>
     <% end %>
     <fieldset>
       <div class="form-group">
         <%= f.label :password, class: 'col-sm-2 control-label' %>
-        <div class="col-sm-10">
+        <div class="col-sm-8">
           <%= f.password_field :password, class: 'form-control', placeholder: 'Password' %>
         </div>
+        <div class="col-sm-2"></div>
       </div>
       <div class="form-group">
         <%= f.label :password_confirmation, class: 'col-sm-2 control-label' %>
-        <div class="col-sm-10">
+        <div class="col-sm-8">
           <%= f.password_field :password_confirmation, class: 'form-control', placeholder: 'Password' %>
         </div>
+        <div class="col-sm-2"></div>
       </div>
     </fieldset>
     <div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
+      <div class="col-sm-offset-2 col-sm-8">
         <%= f.submit class: 'btn btn-default' %>
       </div>
+      <div class="col-sm-2"></div>
     </div>
 <% end %>

@@ -1,0 +1,8 @@
+<% unless current_page?(edit_subscription_path(subscription)) %>
+    <% if can? :update, subscription %>
+        <h5><%= link_to 'Edit', edit_subscription_path(subscription) %></h5>
+    <% end %>
+<% end %>
+<% if can? :destroy, subscription %>
+    <h5><%= link_to 'Delete', subscription, method: :delete, data: {confirm: 'Are you sure?'} %></h5>
+<% end %>

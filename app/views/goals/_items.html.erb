@@ -1,0 +1,2 @@
+<h5><%= link_to 'Goal Comments', comments_path(goal: goal) if goal.comments.accessible_by(current_ability).present? %></h5>
+<h5><%= link_to 'Goal Subscriptions', subscriptions_path(goal: goal) if goal.subscriptions.accessible_by(current_ability).present? %></h5>

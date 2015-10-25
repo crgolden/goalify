@@ -1,15 +1,8 @@
-<% session[:referrer] = request.referrer %>
 <%= content_for :title, t('subscriptions.title.edit') %>
-<%= render layout: 'layouts/jumbotron', locals: {title: @subscription.completed, paginatable: nil} do %>
-    <div class="row">
-      <div class="col-md-6 col-xs-12">
-        <h4><%= link_to 'Delete', @subscription, method: :delete, data: {confirm: 'Are you sure?'} if can? :destroy, @subscription %></h4>
-      </div>
-      <div class="col-md-6 col-xs-12">
-        <h4>Goal: <%= link_to @subscription.goal.title, goal_path(@subscription.goal) %></h4>
-        <h4>User: <%= link_to @subscription.user.name, user_path(@subscription.user) %></h4>
-        <hr>
-        <%= render partial: 'form', locals: {action: :update, subscription: @subscription} %>
-      </div>
-    </div>
+
+<% title = 'Edit Subscription' %>
+
+<%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: nil} do %>
+    <%= render partial: 'controls', locals: {subscription: @subscription} %>
+    <%= render partial: 'form', locals: {action: :update, subscription: @subscription} %>
 <% end %>

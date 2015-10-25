@@ -1,11 +1,16 @@
 <%= content_for :title, t('scores.title.index') %>
-<% if params[:user_id] %>
-    <% title = 'User Scores' %>
-<% elsif params[:goal_id] %>
-    <% title = 'Goal Scores' %>
+
+<% if params[:goal] %>
+    <% title = link_to('Goal', goal_path(params[:goal])) + ' Scores' %>
+<% elsif params[:user] %>
+    <% title = link_to('User', user_path(params[:user])) + ' Scores' %>
 <% else %>
     <% title = 'Scores' %>
 <% end %>
+
 <%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: @scores} do %>
-    <%= render 'scores' %>
+    <% @scores.each do |score| %>
+        <%= render partial: 'controls', locals: {score: score} %>
+        <%= render score, locals: {score: score} %>
+    <% end %>
 <% end %>

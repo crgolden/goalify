@@ -3,8 +3,12 @@ module CommentsHelper
   protected
 
   def filter
-    @comments = Comment.accessible_by(current_ability).page(params[:page]).per(params[:per_page])
-                    .filter(params.slice :goal_id, :user_id)
+    @comments = Comment
+                    .accessible_by(current_ability)
+                    .includes(:goal, :user)
+                    .filter(params.slice :goal, :user)
+                    .page(params[:page])
+                    .per(params[:per_page])
   end
 
 end

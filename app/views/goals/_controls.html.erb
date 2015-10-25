@@ -1,0 +1,19 @@
+<% if user_signed_in? %>
+    <% if @subscription %>
+        <% if @subscription.completed? %>
+            Completed
+        <% else %>
+            <h5><%= link_to 'Unsubscribe', @subscription, method: :delete %></h5>
+            <h5><%= link_to 'Complete', subscription_path(@subscription, subscription: {completed: true}), method: :put %></h5>
+        <% end %>
+    <% else %>
+        <h5><%= link_to 'Subscribe', subscriptions_path(subscription: {goal_id: goal.id, user_id: current_user.id}), method: :post %></h5>
+    <% end %>
+<% end %>
+<% unless current_page?(goal) %>
+    <h5><%= link_to 'Show', goal %></h5>
+<% end %>
+<% unless current_page?(edit_goal_path(goal)) %>
+    <h5><%= link_to 'Edit', edit_goal_path(goal) if can? :update, goal %></h5>
+<% end %>
+<h5><%= link_to 'Delete', goal, method: :delete, data: {confirm: 'Are you sure?'} if can? :destroy, goal %></h5>

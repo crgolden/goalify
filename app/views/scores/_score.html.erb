@@ -1,2 +1,5 @@
-<h4>Goal: <%= link_to score.goal.title, score.goal %></h4>
-<h4>User: <%= link_to score.user.name, score.user %></h4>
+Score value: <b><%= score.value %></b><br>
+Score Subscription Goal: <%= link_to score.subscription.goal.title, score.subscription.goal %> <%= link_to score.subscription.goal.score, scores_path(goal: score.subscription.goal), class: 'badge' %>
+<br>
+Score Subscription Goal User: <%= link_to score.subscription.goal.user.name, score.subscription.goal.user %> <%= link_to score.subscription.goal.user.score, scores_path(user: score.subscription.goal.user), class: 'badge' %>
+<br>

@@ -59,7 +59,7 @@
       when /^Sign Up$/ then
         visit new_user_registration_path
       when /^Deactivate User$/ then
-        visit cancel_user_registration_path
+        visit registration_path(@user), data: {confirm: 'Are you sure?'}, method: :delete
     end
   end
 end

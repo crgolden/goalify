@@ -5,11 +5,6 @@ class CommentsController < ApplicationController
 
   def index
     filter
-    if params[:goal]
-      @goal = Goal.find params[:goal]
-    elsif params[:user]
-      @user = User.find params[:user]
-    end
   end
 
   def show
@@ -23,29 +18,16 @@ class CommentsController < ApplicationController
 
   def create
     @comment.user = current_user
-    if @comment.save
-      flash[:success] = I18n.t 'comments.create.success'
-      redirect_to comments_path
-    else
-      flash[:error] = I18n.t 'comments.create.errors'
-      redirect_to @comment.goal
-    end
+    @comment.save ? create_success : create_errors
   end
 
   def update
-    if @comment.update comment_params
-      flash[:success] = I18n.t 'comments.update.success'
-      redirect_to @comment
-    else
-      flash[:error] = I18n.t 'comments.update.errors'
-      render :edit
-    end
+    @comment.update(comment_params) ? update_success : update_errors
   end
 
   def destroy
     @comment.destroy
-    flash[:success] = I18n.t 'comments.destroy.success'
-    redirect_to comments_path
+    destroy_success
   end
 
   private

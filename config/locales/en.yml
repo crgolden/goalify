@@ -22,6 +22,8 @@
 en:
   about:
     title: "Goalify: About"
+  api:
+    title: "Goalify: API"
   cancan:
     ability:
       error: "Access denied!"
@@ -76,12 +78,11 @@ en:
       edit: "Editing Score"
   subscriptions:
     create:
-      success: "Subscription successfully created."
-      errors: "There was a problem creating the subscription."
+      success: "Successfully subscribed to this goal."
     update:
-      success: "Subscription was successfully updated."
+      success: "Successfully completed this goal."
     destroy:
-      success: "Subscription was successfully deleted."
+      success: "Successfully unsubscribed from this goal."
     title:
       index: "Goalify: All Subscriptions"
       show: "Goalify: Showing Subscription"

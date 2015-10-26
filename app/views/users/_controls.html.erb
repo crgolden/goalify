@@ -1,17 +1,40 @@
-<h5><%= link_to 'Show', user unless current_page?(user) %></h5>
-<% unless current_page?(edit_admin_user_path(user)) %>
-    <% if user_signed_in? and current_user.admin? %>
-        <h5><%= link_to 'Edit', edit_admin_user_path(user) %></h5>
-    <% elsif can? :update, user %>
-        <h5><%= link_to 'Edit', edit_user_registration_path %></h5>
-    <% end %>
-<% end %>
-<% if user_signed_in? and current_user.admin? %>
-    <% if user.active? %>
-        <h5><%= link_to 'Deactivate', admin_user_path(user), method: :delete, data: {confirm: 'Are you sure?'} %></h5>
-    <% else %>
-        <h5><%= link_to 'Activate', admin_user_path(user, user: {status: :active}), method: :put %></h5>
-    <% end %>
-<% elsif can? :destroy, user %>
-    <h5><%= link_to 'Deactivate', cancel_user_registration_path, data: {confirm: 'Are you sure?'} %></h5>
-<% end %>
+<h5>
+  <% if current_page?(user) %>
+      <i class="glyphicon glyphicon-search"></i> Show
+  <% else %>
+      <%= link_to user do %>
+          <i class="glyphicon glyphicon-search"></i> Show
+      <% end %>
+  <% end %>
+  <% if user_signed_in? %>
+      <% if user == current_user %>
+          <% if current_page?(edit_user_registration_path) %>
+              | <i class="glyphicon glyphicon-pencil"></i> Edit
+          <% else %>
+              | <%= link_to edit_user_registration_path do %>
+                  <i class="glyphicon glyphicon-pencil"></i> Edit
+              <% end %>
+          <% end %>
+          | <%= link_to registration_path(user), data: {confirm: 'Are you sure?'}, method: :delete do %>
+              <i class="glyphicon glyphicon-trash"></i> Deactivate
+          <% end %>
+      <% elsif current_user.admin? %>
+          <% if current_page?(edit_admin_user_path user) %>
+              | <i class="glyphicon glyphicon-pencil"></i> Edit
+          <% else %>
+              | <%= link_to edit_admin_user_path(user) do %>
+                  <i class="glyphicon glyphicon-pencil"></i> Edit
+              <% end %>
+          <% end %>
+          <% if user.active? %>
+              | <%= link_to admin_user_path(user), method: :delete do %>
+                  <i class="glyphicon glyphicon-trash"></i> Deactivate
+              <% end %>
+          <% else %>
+              | <%= link_to admin_user_path(user, user: {status: :active}), method: :put do %>
+                  <i class="glyphicon glyphicon-check"></i> Activate
+              <% end %>
+          <% end %>
+      <% end %>
+  <% end %>
+</h5>

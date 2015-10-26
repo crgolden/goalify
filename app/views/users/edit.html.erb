@@ -3,7 +3,10 @@
 <% title = 'Edit User' %>
 
 <%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: nil} do %>
-    <%= render partial: 'controls', locals: {user: @user} %>
+    <%= render layout: 'layouts/row' do %>
+        <li class="list-group-item">
+          <%= render partial: 'controls', locals: {user: @user} %>
+        </li>
+    <% end %>
     <%= render partial: 'form', locals: {action: :update, user: @user} %>
-    <%= render partial: 'items', locals: {user: @user} %>
 <% end %>

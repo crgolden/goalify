@@ -1,8 +1,16 @@
-<% unless current_page?(edit_subscription_path(subscription)) %>
-    <% if can? :update, subscription %>
-        <h5><%= link_to 'Edit', edit_subscription_path(subscription) %></h5>
-    <% end %>
-<% end %>
-<% if can? :destroy, subscription %>
-    <h5><%= link_to 'Delete', subscription, method: :delete, data: {confirm: 'Are you sure?'} %></h5>
-<% end %>
+<h5>
+  <% if subscription.completed? %>
+      <i class="glyphicon glyphicon-ok"></i> Completed
+  <% else %>
+      <% if can? :destroy, subscription %>
+          <%= link_to(subscription, method: :delete) do %>
+              <i class="glyphicon glyphicon-minus"></i> Unsubscribe
+          <% end %>
+      <% end %>
+      <% if can? :update, subscription %>
+          | <%= link_to subscription_path(subscription, subscription: {completed: true}), method: :put do %>
+              <i class="glyphicon glyphicon-ok"></i> Complete
+          <% end %>
+      <% end %>
+  <% end %>
+</h5>

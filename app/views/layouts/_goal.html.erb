@@ -1,31 +1,46 @@
-<% if @goal.id %>
-    <li class="active dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Goal <span class="caret"></span></a>
-      <ul class="dropdown-menu" role="menu">
-        <% if current_page?(@goal) %>
-            <li class="active"><%= link_to 'Show Goal', @goal %></li>
+<% title = 'Goal' %>
+
+<%= render layout: 'layouts/dropdown', locals: {title: title} do %>
+    <% if current_page?(goal) %>
+        <li class="active"><%= link_to 'Show Goal', goal %></li>
+    <% else %>
+        <li><%= link_to 'Show Goal', goal %></li>
+    <% end %>
+    <% if can? :update, goal %>
+        <% if current_page?(edit_goal_path goal) %>
+            <li class="active"><%= link_to 'Edit Goal', edit_goal_path(goal) %></li>
         <% else %>
-            <li><%= link_to 'Show Goal', @goal %></li>
+            <li><%= link_to 'Edit Goal', edit_goal_path(goal) %></li>
         <% end %>
-        <% if can? :update, @goal %>
-            <% if current_page?(edit_goal_path @goal) %>
-                <li class="active"><%= link_to 'Edit Goal', edit_goal_path(@goal) %></li>
+    <% end %>
+    <% if can? :destroy, goal %>
+        <li><%= link_to 'Delete Goal', goal, method: :delete, data: {confirm: 'Are you sure?'} %></li>
+    <% end %>
+    <% if goal.comments.accessible_by(current_ability).present? or
+            goal.scores.accessible_by(current_ability).present? or
+            goal.subscriptions.accessible_by(current_ability).present? %>
+        <li class="divider"></li>
+        <% if goal.comments.accessible_by(current_ability).present? %>
+            <% if current_page?(comments_path goal: goal) %>
+                <li class="active"><%= link_to 'Goal Comments', comments_path(goal: goal) %></li>
             <% else %>
-                <li><%= link_to 'Edit Goal', edit_goal_path(@goal) %></li>
+                <li><%= link_to 'Goal Comments', comments_path(goal: goal) %></li>
             <% end %>
         <% end %>
-        <% if can? :destroy, @goal %>
-            <li><%= link_to 'Delete Goal', @goal, method: :delete, data: {confirm: 'Are you sure?'} %></li>
+        <% if goal.score > 0 %>
+            <% if current_page?(scores_path goal: goal) %>
+                <li class="active"><%= link_to 'Goal Scores', scores_path(goal: goal) %></li>
+            <% else %>
+                <li><%= link_to 'Goal Scores', scores_path(goal: goal) %></li>
+            <% end %>
         <% end %>
-        <li class="divider"></li>
-        <% if @goal.comments.accessible_by(current_ability).present? %>
-            <li><%= link_to 'Goal Comments', comments_path(goal: @goal) %></li>
+        <% if goal.subscriptions.accessible_by(current_ability).present? %>
+            <% if current_page?(subscriptions_path goal: goal) %>
+                <li class="active"><%= link_to 'Goal Subscriptions', subscriptions_path(goal: goal) %></li>
+            <% else %>
+                <li><%= link_to 'Goal Subscriptions', subscriptions_path(goal: goal) %></li>
+            <% end %>
         <% end %>
-        <% if @goal.subscriptions.accessible_by(current_ability).present? %>
-            <li><%= link_to 'Goal Subscriptions', subscriptions_path(goal: @goal) %></li>
-        <% end %>
-        <li><%= link_to 'Goal User', @goal.user %></li>
-      </ul>
-    </li>
+        <li><%= link_to 'Goal User', goal.user %></li>
+    <% end %>
 <% end %>
-

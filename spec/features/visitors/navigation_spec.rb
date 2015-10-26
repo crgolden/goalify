@@ -4,6 +4,6 @@ feature 'Navigation links', :devise do
     expect(page).to have_content 'Goals'
     expect(page).to have_content 'Users'
     expect(page).to have_content 'Sign in'
-    expect(page).to have_content 'Register'
+    expect(page).to have_content 'Sign up'
   end
 end

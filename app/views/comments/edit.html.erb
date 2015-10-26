@@ -3,6 +3,10 @@
 <% title = 'Edit Comment' %>
 
 <%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: nil} do %>
-    <%= render partial: 'controls', locals: {comment: @comment} %>
+    <%= render layout: 'layouts/row' do %>
+        <li class="list-group-item">
+          <%= render partial: 'controls', locals: {comment: @comment} %>
+        </li>
+    <% end %>
     <%= render partial: 'form', locals: {action: :update, comment: @comment} %>
 <% end %>

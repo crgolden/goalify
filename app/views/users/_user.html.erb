@@ -1,15 +1,50 @@
-User name: <b><%= user.name %><br></b>
-User score: <%= link_to user.score, scores_path(user: user), class: 'badge' %><br>
-<% if user_signed_in? and (current_user.admin? or current_user == user) %>
-    User email: <%= mail_to user.email %><br>
-    User authentication token: <b><%= user.authentication_token %></b><br>
-<% end %>
-User status: <b><%= user.status %></b><br>
-User role: <b><%= user.role %></b><br>
-User joined on: <b><%= user.created_at.to_formatted_s :short %></b><br>
-<% if user.current_sign_in_at %>
-    User last logged in: <b><%= user.current_sign_in_at.to_formatted_s :short %></b>.<br>
-    User has logged in: <b><%= user.sign_in_count %></b> times.<br>
+User name: <b><%= user.name %></b>
+<br>
+User score:
+<% if user.score > 0 %>
+    <%= link_to user.score, scores_path(user: user), class: 'badge' %>
 <% else %>
-    User has never logged in.<br>
+    <span class="badge"><%= user.score %></span>
+<% end %>
+<br>
+<% if user_signed_in? and (current_user.admin? or current_user == user) %>
+    User email: <%= mail_to user.email %>
+    <br>
+    User authentication token: <b><%= user.authentication_token %></b>
+    <br>
+<% end %>
+User status: <b><%= user.status %></b>
+<br>
+User role: <b><%= user.role %></b>
+<br>
+User joined on: <b><%= user.created_at.to_formatted_s :short %></b>
+<br>
+<% if user.current_sign_in_at %>
+    User last logged in: <b><%= user.current_sign_in_at.to_formatted_s :short %></b>
+    <br>
+    User has logged in: <b><%= user.sign_in_count %></b> times
+    <br>
+<% else %>
+    User has never logged in
+    <br>
+<% end %>
+<% if user.comments.accessible_by(current_ability).present? %>
+    <%= link_to 'User Comments', comments_path(user: user) %>
+    <br>
+<% end %>
+<% if user.goals.accessible_by(current_ability).present? %>
+    <%= link_to 'User Goals', goals_path(user: user) %>
+    <br>
+<% end %>
+<% if user.score > 0 %>
+    <%= link_to 'User Scores', scores_path(user: user) %>
+    <br>
+<% end %>
+<% if user.subscriptions.accessible_by(current_ability).present? %>
+    <%= link_to 'User Subscriptions', subscriptions_path(user: user) %>
+    <br>
+<% end %>
+<% if user.tokens.accessible_by(current_ability).present? %>
+    <%= link_to 'User Tokens', user_tokens_path(user) %>
+    <br>
 <% end %>

@@ -4,6 +4,7 @@ describe SubscriptionsController do
     @user = create :user
     goal = create :goal, user: @user
     @subscription = create :subscription, goal: goal, user: @user
+    request.env['HTTP_REFERER'] = goal_path(goal)
   end
 
   context 'For a visitor' do
@@ -35,14 +36,6 @@ describe SubscriptionsController do
         expect(Subscription.find_by goal_id: attr[:goal_id], user_id: attr[:user_id]).not_to be nil
       end
 
-      it 'shows the edit page for own Subscription' do
-        get :edit, id: @subscription.id
-
-        expect(response.status).to eq 200
-        expect(response).to render_template :edit
-        expect(assigns :subscription).to eq @subscription
-      end
-
       it 'updates own Subscription' do
         attr = {completed: true}
         put :update, id: @subscription.id, subscription: attr
@@ -59,7 +52,7 @@ describe SubscriptionsController do
 
         expect(flash[:success]).to eq I18n.t 'subscriptions.destroy.success'
         expect(response.status).to eq 302
-        expect(response).to redirect_to subscriptions_path
+        expect(response).to redirect_to @subscription.goal
         expect(Subscription.find_by id: @subscription.id).to be nil
       end
 

@@ -1,14 +1,13 @@
-<li class="active dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Score <span class="caret"></span></a>
-  <ul class="dropdown-menu" role="menu">
-    <% if current_page?(@score) %>
-        <li class="active"><%= link_to 'Show Score', @score %></li>
+<% title = 'Score' %>
+
+<%= render layout: 'layouts/dropdown', locals: {title: title} do %>
+    <% if current_page?(score) %>
+        <li class="active"><%= link_to 'Show Score', score %></li>
     <% else %>
-        <li><%= link_to 'Show Score', @score %></li>
+        <li><%= link_to 'Show Score', score %></li>
     <% end %>
     <li class="divider"></li>
-    <li><%= link_to 'Score Goal:', @score.subscription.goal %></li>
-    <li><%= link_to 'Score Goal User:', @score.subscription.goal.user %></li>
-    <li><%= link_to 'Score User: ', @score.subscription.user %></li>
-  </ul>
-</li>
+    <li><%= link_to 'Score Goal', score.subscription.goal %></li>
+    <li><%= link_to 'Score Goal User', score.subscription.goal.user %></li>
+    <li><%= link_to 'Score User', score.subscription.user %></li>
+<% end %>

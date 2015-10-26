@@ -5,9 +5,6 @@ class ScoresController < ApplicationController
 
   def index
     filter
-    @subscription = Subscription.find params[:subscription] if params[:subscription]
-    @goal = Goal.find params[:goal] if params[:goal]
-    @user = User.find params[:user] if params[:user]
   end
 
   def show

@@ -61,9 +61,9 @@ def cancel_account
   page.driver.browser.switch_to.alert.accept
 end
 
-def goto_edit_registration
+def goto_edit_profile
   click_link "#{@visitor[:name]}"
-  click_link 'Edit registration'
+  click_link 'Edit Profile', match: :first
 end
 
 def alert_accept(alert, button)
@@ -193,21 +193,21 @@ When /^I sign in with a wrong password$/ do
 end
 
 When /^I change my name$/ do
-  goto_edit_registration
+  goto_edit_profile
   fill_in 'user_name', with: Faker::Name.name
   fill_in 'user_current_password', with: @visitor[:password]
   click_button 'Update'
 end
 
 When /^I change my email address$/ do
-  goto_edit_registration
+  goto_edit_profile
   fill_in 'user_email', with: Faker::Internet.email
   fill_in 'user_current_password', with: @visitor[:password]
   click_button 'Update'
 end
 
 When /^I delete my account$/ do
-  goto_edit_registration
+  goto_edit_profile
   click_on 'Deactivate User'
   page.accept_confirm do
     click_button('OK')
@@ -216,7 +216,7 @@ end
 
 When /^I try to edit another user's profile$/ do
   user = create :user, email: Faker::Internet.email
-  visit edit_user_path user
+  visit edit_admin_user_path user
 end
 
 When /^I visit another user's profile$/ do
@@ -227,13 +227,13 @@ end
 
 ### THEN ###
 Then /^I should be signed in$/ do
-  expect(page).to have_content 'Sign out' && 'Edit registration'
-  expect(page).not_to have_content 'Register' || 'Sign In'
+  expect(page).to have_content 'Sign out' && 'Edit Profile'
+  expect(page).not_to have_content 'Sign up' || 'Sign in'
 end
 
 Then /^I should be signed out$/ do
-  expect(page).not_to have_content 'Sign out' || 'Edit registration'
-  expect(page).to have_content 'Register' && 'Sign in'
+  expect(page).not_to have_content 'Sign out' || 'Edit Profile'
+  expect(page).to have_content 'Sign up' && 'Sign in'
 end
 
 Then(/^I see "(.*?)"$/) do |arg1|

@@ -1,1 +1,9 @@
-<h5><%= link_to 'Show', score unless current_page?(score) %></h5>
+<h5>
+  <% if current_page?(score) %>
+      <i class="glyphicon glyphicon-search"></i> Show
+  <% else %>
+      <%= link_to score do %>
+          <i class="glyphicon glyphicon-search"></i> Show
+      <% end %>
+  <% end %>
+</h5>

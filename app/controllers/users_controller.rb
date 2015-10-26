@@ -5,34 +5,22 @@ class UsersController < ApplicationController
   load_and_authorize_resource only: [:new, :create, :update, :destroy]
 
   def index
-    @users = User.accessible_by(current_ability)
-                 .page(params[:page])
-                 .per(params[:per_page])
+    filter
   end
 
   def show
-    @user = User.includes(:comments, :goals, :subscriptions, :tokens).find params[:id]
+    load_user
   end
 
   def new
   end
 
   def edit
-    @user = User.includes(:comments, :goals, :subscriptions, :tokens).find params[:id]
+    load_user
   end
 
   def create
-    if @user.save
-      if @user.confirmed_at.present?
-        flash[:success] = I18n.t 'users.create.confirmed_success'
-      else
-        flash[:notice] = I18n.t 'users.create.unconfirmed_success'
-      end
-      redirect_to @user
-    else
-      flash[:error] = I18n.t 'users.create.errors'
-      render :new
-    end
+    @user.save ? create_success : create_errors
   end
 
   def update
@@ -46,15 +34,13 @@ class UsersController < ApplicationController
 
   def destroy
     @user.soft_delete
-    flash[:success] = I18n.t 'users.update.confirmed_success'
-    redirect_to @user
+    destroy_success
   end
 
   private
 
   def user_params
-    accessible = [:name, :email, :role, :status, :confirmed_at, :score]
-    accessible << [:password, :password_confirmation] unless params[:user][:password].blank?
+    accessible = [:name, :email, :role, :status, :confirmed_at, :score, :password, :password_confirmation]
     params.require(:user).permit accessible
   end
 

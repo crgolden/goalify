@@ -1,0 +1,42 @@
+<%= content_for :title, t('api.title') %>
+
+<% title = link_to page_path('api') do %>
+    <i class="glyphicon glyphicon-transfer"></i> API
+<% end %>
+
+<%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: nil} do %>
+    <%= render layout: 'layouts/row' do %>
+        <li class="list-group-item">
+          <pre><%= link_to api_comments_path, api_comments_path %></pre>
+        </li>
+        <li class="list-group-item">
+          <pre><%= link_to api_goals_path, api_goals_path %></pre>
+        </li>
+        <li class="list-group-item">
+          <pre><%= link_to api_scores_path, api_scores_path %></pre>
+        </li>
+        <li class="list-group-item">
+          <pre><%= link_to api_subscriptions_path, api_subscriptions_path %></pre>
+        </li>
+        <% if user_signed_in? %>
+            <% if current_user.tokens.present? %>
+                <li class="list-group-item">
+                  <pre><%= link_to api_user_tokens_path(current_user), api_user_tokens_path(current_user) %></pre>
+                </li>
+            <% else %>
+                <li class="list-group-item">
+                  <pre>Sign in with <%= link_to 'Facebook', user_omniauth_authorize_path(:facebook) %>
+                    or <%= link_to 'Google', user_omniauth_authorize_path(:google_oauth2) %> to create tokens</pre>
+                </li>
+            <% end %>
+        <% else %>
+            <li class="list-group-item">
+              <pre>/goalify/api/<b>:user_id</b>/tokens</pre>
+              <span class="help-block">(Access '<samp>tokens</samp>' with <code>:user_id</code> when signed-in)</span>
+            </li>
+        <% end %>
+        <li class="list-group-item">
+          <pre><%= link_to api_users_path, api_users_path %></pre>
+        </li>
+    <% end %>
+<% end %>

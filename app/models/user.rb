@@ -1,7 +1,5 @@
 class User < ActiveRecord::Base
 
-  include Filterable
-
   acts_as_token_authenticatable
   devise :database_authenticatable, :registerable, :recoverable, :confirmable,
          :rememberable, :trackable, :validatable, :lockable, :timeoutable,
@@ -11,6 +9,8 @@ class User < ActiveRecord::Base
   has_many :goals
   has_many :comments
   has_many :subscriptions
+  has_many :goal_subscriptions, through: :goals, source: :subscriptions
+  has_many :scores, through: :goal_subscriptions
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true
@@ -44,18 +44,6 @@ class User < ActiveRecord::Base
 
   def self.with_highest_score
     find_by score: maximum(:score)
-  end
-
-  def scores
-    user_scores = []
-    self.goals.each do |goal|
-      goal.subscriptions.each do |subscription|
-        subscription.scores.each do |score|
-          user_scores << score
-        end
-      end
-    end
-    Kaminari.paginate_array user_scores
   end
 
 end

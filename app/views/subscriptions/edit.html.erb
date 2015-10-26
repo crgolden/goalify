@@ -1,8 +1,0 @@
-<%= content_for :title, t('subscriptions.title.edit') %>
-
-<% title = 'Edit Subscription' %>
-
-<%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: nil} do %>
-    <%= render partial: 'controls', locals: {subscription: @subscription} %>
-    <%= render partial: 'form', locals: {action: :update, subscription: @subscription} %>
-<% end %>

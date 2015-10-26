@@ -1,19 +1,32 @@
 <% if user_signed_in? %>
-    <% if @subscription %>
-        <% if @subscription.completed? %>
-            Completed
-        <% else %>
-            <h5><%= link_to 'Unsubscribe', @subscription, method: :delete %></h5>
-            <h5><%= link_to 'Complete', subscription_path(@subscription, subscription: {completed: true}), method: :put %></h5>
-        <% end %>
+    <% if subscription %>
+        <%= render partial: 'subscriptions/controls', locals: {subscription: subscription} %>
     <% else %>
-        <h5><%= link_to 'Subscribe', subscriptions_path(subscription: {goal_id: goal.id, user_id: current_user.id}), method: :post %></h5>
+        <%= link_to subscriptions_path(subscription: {goal_id: goal.id, user_id: current_user.id}), method: :post do %>
+            <h5><i class="glyphicon glyphicon-plus"></i> Subscribe</h5>
+        <% end %>
     <% end %>
 <% end %>
-<% unless current_page?(goal) %>
-    <h5><%= link_to 'Show', goal %></h5>
-<% end %>
-<% unless current_page?(edit_goal_path(goal)) %>
-    <h5><%= link_to 'Edit', edit_goal_path(goal) if can? :update, goal %></h5>
-<% end %>
-<h5><%= link_to 'Delete', goal, method: :delete, data: {confirm: 'Are you sure?'} if can? :destroy, goal %></h5>
+<h5>
+  <% if current_page?(goal) %>
+      <i class="glyphicon glyphicon-search"></i> Show
+  <% else %>
+      <%= link_to goal do %>
+          <i class="glyphicon glyphicon-search"></i> Show
+      <% end %>
+  <% end %>
+  <% if current_page?(edit_goal_path goal) %>
+      <% if can? :update, goal %>
+          | <i class="glyphicon glyphicon-pencil"></i> Edit
+      <% end %>
+  <% elsif can? :update, goal %>
+      | <%= link_to edit_goal_path(goal) do %>
+          <i class="glyphicon glyphicon-pencil"></i> Edit
+      <% end %>
+  <% end %>
+  <% if can? :destroy, goal %>
+      | <%= link_to goal, method: :delete, data: {confirm: 'Are you sure?'} do %>
+          <i class="glyphicon glyphicon-trash"></i> Delete
+      <% end %>
+  <% end %>
+</h5>

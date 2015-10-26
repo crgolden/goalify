@@ -1,56 +1,36 @@
 class GoalsController < ApplicationController
   include GoalsHelper
-  before_action :authenticate_user!, except: [:show, :index, :search]
-  authorize_resource only: [:index, :search, :show, :edit]
+  before_action :authenticate_user!, except: [:show, :index]
+  authorize_resource only: [:index, :show, :edit]
   load_and_authorize_resource only: [:new, :create, :update, :destroy]
 
   def index
     filter
-    @user = User.find params[:user] if params[:user]
-  end
-
-  def search
-    search_scope
   end
 
   def show
-    @goal = Goal.includes(:user, :comments, :subscriptions).find(params[:id])
-    @subscription = Subscription.exists_for_goal_and_user?(@goal, current_user)
+    load_goal
   end
 
   def new
   end
 
   def edit
-    @goal = Goal.includes(:user, :comments, :subscriptions).find(params[:id])
-    @subscription = Subscription.exists_for_goal_and_user?(@goal, current_user)
+    load_goal
   end
 
   def create
     @goal.user = current_user
-    if @goal.save
-      flash[:success] = I18n.t 'goals.create.success'
-      redirect_to @goal
-    else
-      flash[:error] = I18n.t 'goals.create.errors'
-      render :new
-    end
+    @goal.save ? create_success : create_errors
   end
 
   def update
-    if @goal.update goal_params
-      flash[:success] = I18n.t 'goals.update.success'
-      redirect_to @goal
-    else
-      flash[:error] = I18n.t 'goals.update.errors'
-      render :edit
-    end
+    @goal.update(goal_params) ? update_success : update_errors
   end
 
   def destroy
     @goal.destroy
-    flash[:success] = I18n.t 'goals.destroy.success'
-    redirect_to goals_path
+    destroy_success
   end
 
   private

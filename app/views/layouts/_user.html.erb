@@ -1,45 +1,72 @@
-<% if @user.id %>
-    <li class="active dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">User <span class="caret"></span></a>
-      <ul class="dropdown-menu" role="menu">
-        <% if current_page?(@user) %>
-            <li class="active"><%= link_to 'Show User', @user %></li>
-        <% else %>
-            <li><%= link_to 'Show User', @user %></li>
-        <% end %>
-        <% if can? :update, @user %>
-            <% if current_page?(edit_admin_user_path @user) || current_page?(edit_user_registration_path) %>
-                <% if user_signed_in? && current_user.admin? %>
-                    <li class="active"><%= link_to 'Edit User', edit_admin_user_path(@user) %></li>
-                <% elsif user_signed_in? && current_user == @user %>
-                    <li class="active"><%= link_to 'Edit User', edit_user_registration_path %></li>
-                <% end %>
+<% title = 'User' %>
+
+<%= render layout: 'layouts/dropdown', locals: {title: title} do %>
+    <% if current_page?(user) %>
+        <li class="active"><%= link_to 'Show User', user %></li>
+    <% else %>
+        <li><%= link_to 'Show User', user %></li>
+    <% end %>
+    <% if user_signed_in? %>
+        <% if user == current_user %>
+            <% if current_page?(edit_user_registration_path) %>
+                <li class="active"><%= link_to 'Edit Profile', edit_user_registration_path %></li>
             <% else %>
-                <li><%= link_to 'Edit User', edit_admin_user_path(@user) %></li>
+                <li><%= link_to 'Edit Profile', edit_user_registration_path %></li>
+            <% end %>
+            <li><%= link_to 'Deactivate Profile', registration_path(user), data: {confirm: 'Are you sure?'}, method: :delete %></li>
+        <% elsif current_user.admin? %>
+            <% if current_page?(edit_admin_user_path user) %>
+                <li class="active"><%= link_to 'Edit User', edit_admin_user_path(user) %></li>
+            <% else %>
+                <li><%= link_to 'Edit User', edit_admin_user_path(user) %></li>
+            <% end %>
+            <% if user.active? %>
+                <li><%= link_to 'Deactivate User', admin_user_path(user), method: :delete %></li>
+            <% else %>
+                <li><%= link_to 'Activate User', admin_user_path(user, user: {status: :active}), method: :put %></li>
             <% end %>
         <% end %>
-        <% if user_signed_in? && current_user.admin? %>
-            <% if @user.active? %>
-                <li><%= link_to 'Deactivate User', admin_user_path(@user), method: :delete, data: {confirm: 'Are you sure?'} %></li>
-            <% else %>
-                <li><%= link_to 'Activate User', admin_user_path(@user, user: {status: :active}), method: :put %></li>
-            <% end %>
-        <% elsif can? :destroy, @user %>
-            <li><%= link_to 'Deactivate User', cancel_user_registration_path, data: {confirm: 'Are you sure?'} %></li>
-        <% end %>
+    <% end %>
+    <% if user.comments.accessible_by(current_ability).present? or
+            user.goals.accessible_by(current_ability).present? or
+            user.scores.accessible_by(current_ability).present? or
+            user.subscriptions.accessible_by(current_ability).present? or
+            user.tokens.accessible_by(current_ability).present? %>
         <li class="divider"></li>
-        <% if @user.comments.accessible_by(current_ability).present? %>
-            <li><%= link_to 'User Comments', comments_path(user: @user) %></li>
+        <% if user.comments.accessible_by(current_ability).present? %>
+            <% if current_page?(comments_path user: user) %>
+                <li class="active"><%= link_to 'User Comments', comments_path(user: user) %></li>
+            <% else %>
+                <li><%= link_to 'User Comments', comments_path(user: user) %></li>
+            <% end %>
         <% end %>
-        <% if @user.goals.accessible_by(current_ability).present? %>
-            <li><%= link_to 'User Goals', goals_path(user: @user) %></li>
+        <% if user.goals.accessible_by(current_ability).present? %>
+            <% if current_page?(goals_path user: user) %>
+                <li class="active"><%= link_to 'User Goals', goals_path(user: user) %></li>
+            <% else %>
+                <li><%= link_to 'User Goals', goals_path(user: user) %></li>
+            <% end %>
         <% end %>
-        <% if @user.subscriptions.accessible_by(current_ability).present? %>
-            <li><%= link_to 'User Subscriptions', subscriptions_path(user: @user) %></li>
+        <% if user.scores.accessible_by(current_ability).present? %>
+            <% if current_page?(scores_path user: user) %>
+                <li class="active"><%= link_to 'User Scores', scores_path(user: user) %></li>
+            <% else %>
+                <li><%= link_to 'User Scores', scores_path(user: user) %></li>
+            <% end %>
         <% end %>
-        <% if @user.tokens.accessible_by(current_ability).present? %>
-            <li><%= link_to 'User Tokens', user_tokens_path(@user) %></li>
+        <% if user.subscriptions.accessible_by(current_ability).present? %>
+            <% if current_page?(subscriptions_path user: user) %>
+                <li class="active"><%= link_to 'User Subscriptions', subscriptions_path(user: user) %></li>
+            <% else %>
+                <li><%= link_to 'User Subscriptions', subscriptions_path(user: user) %></li>
+            <% end %>
         <% end %>
-      </ul>
-    </li>
+        <% if user.tokens.accessible_by(current_ability).present? %>
+            <% if current_page?(user_tokens_path user) %>
+                <li class="active"><%= link_to 'User Tokens', user_tokens_path(user) %></li>
+            <% else %>
+                <li><%= link_to 'User Tokens', user_tokens_path(user) %></li>
+            <% end %>
+        <% end %>
+    <% end %>
 <% end %>

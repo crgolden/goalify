@@ -1,5 +1,16 @@
+Comment Goal: <%= link_to comment.goal.title, comment.goal %>
+<% if comment.goal.score > 0 %>
+    <%= link_to comment.goal.score, scores_path(goal: comment.goal), class: 'badge' %>
+<% else %>
+    <span class="badge"><%= comment.goal.score %></span>
+<% end %>
+<br>
+Comment User: <%= link_to comment.user.name, comment.user %>
+<% if comment.user.score > 0 %>
+    <%= link_to comment.user.score, scores_path(user: comment.user), class: 'badge' %>
+<% else %>
+    <span class="badge"><%= comment.user.score %></span>
+<% end %>
+<br>
 <p><%= comment.body %></p>
-Comment Goal: <%= link_to comment.goal.title, comment.goal %> <%= link_to comment.goal.score, scores_path(goal: comment.goal), class: 'badge' %>
-<br>
-Comment User: <%= link_to comment.user.name, comment.user %> <%= link_to comment.user.score, scores_path(user: comment.user), class: 'badge' %>
-<br>
+

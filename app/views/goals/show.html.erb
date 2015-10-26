@@ -3,8 +3,11 @@
 <% title = 'Show Goal' %>
 
 <%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: nil} do %>
-    <%= render partial: 'controls', locals: {goal: @goal} %>
-    <%= render @goal, locals: {goal: @goal} %>
-    <%= render partial: 'items', locals: {goal: @goal} %>
-    <%= render partial: 'comments/form', locals: {action: :create, comment: @goal.comments.new, goal: @goal} %>
+    <%= render layout: 'layouts/row' do %>
+        <li class="list-group-item">
+          <%= render partial: 'controls', locals: {goal: @goal, subscription: @subscription} %>
+          <%= render @goal, locals: {goal: @goal} %>
+        </li>
+    <% end %>
+    <%= render partial: 'comments/form', locals: {action: :create, comment: @goal.comments.new, goal: @goal} if user_signed_in? %>
 <% end %>

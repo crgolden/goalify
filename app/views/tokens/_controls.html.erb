@@ -1,4 +1,14 @@
-<h5><%= link_to 'Show', token unless current_page?(token) %></h5>
-<% if can? :destroy, token %>
-    <h5><%= link_to 'Delete', token, method: :delete, data: {confirm: 'Are you sure?'} %></h5>
-<% end %>
+<h5>
+  <% if current_page?(token) %>
+      <i class="glyphicon glyphicon-search"></i> Show
+  <% else %>
+      <%= link_to token do %>
+          <i class="glyphicon glyphicon-search"></i> Show
+      <% end %>
+  <% end %>
+  <% if can? :destroy, token %>
+      | <%= link_to token, method: :delete, data: {confirm: 'Are you sure?'} do %>
+          <i class="glyphicon glyphicon-trash"></i> Delete
+      <% end %>
+  <% end %>
+</h5>

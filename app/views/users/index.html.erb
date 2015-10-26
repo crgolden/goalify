@@ -4,7 +4,12 @@
 
 <%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: @users} do %>
     <% @users.each do |user| %>
-        <%= render partial: 'controls', locals: {user: user} %>
-        <%= render user, locals: {user: user} %>
+        <%= render layout: 'layouts/row' do %>
+            <li class="list-group-item">
+              <%= render partial: 'controls', locals: {user: user} %>
+              <%= render user, locals: {user: user} %>
+            </li>
+        <% end %>
+        <hr>
     <% end %>
 <% end %>

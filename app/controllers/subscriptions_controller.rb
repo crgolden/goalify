@@ -5,35 +5,20 @@ class SubscriptionsController < ApplicationController
 
   def index
     filter
-    if params[:goal]
-      @goal = Goal.find params[:goal]
-    elsif params[:user]
-      @user = User.find params[:user]
-    end
-  end
-
-  def edit
   end
 
   def create
     @subscription.user = current_user
-    if @subscription.save
-      flash[:success] = I18n.t 'subscriptions.create.success'
-      redirect_to @subscription.goal
-    end
+    create_success if @subscription.save
   end
 
   def update
-    if @subscription.update subscription_params
-      flash[:success] = I18n.t 'subscriptions.update.success'
-      redirect_to @subscription.goal
-    end
+    update_success if @subscription.update subscription_params
   end
 
   def destroy
     @subscription.destroy
-    flash[:success] = I18n.t 'subscriptions.destroy.success'
-    redirect_to subscriptions_path
+    destroy_success
   end
 
   private

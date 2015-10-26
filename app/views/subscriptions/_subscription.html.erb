@@ -1,0 +1,18 @@
+Subscription Goal: <%= link_to subscription.goal.title, subscription.goal %>
+<% if subscription.goal.score > 0 %>
+    <%= link_to subscription.goal.score, scores_path(goal: subscription.goal), class: 'badge' %>
+<% else %>
+    <span class="badge"><%= subscription.goal.score %></span>
+<% end %>
+<br>
+Subscription User: <%= link_to subscription.user.name, subscription.user %>
+<% if subscription.goal.score > 0 %>
+    <%= link_to subscription.user.score, scores_path(user: subscription.user), class: 'badge' %>
+<% else %>
+    <span class="badge"><%= subscription.user.score %></span>
+<% end %>
+<br>
+<% if subscription.scores.accessible_by(current_ability).present? %>
+    <%= link_to 'Subscription Scores', scores_path(subscription: subscription) %>
+    <br>
+<% end %>

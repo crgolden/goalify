@@ -3,7 +3,10 @@
 <% title = 'Edit Goal' %>
 
 <%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: nil} do %>
-    <%= render partial: 'controls', locals: {goal: @goal} %>
+    <%= render layout: 'layouts/row' do %>
+        <li class="list-group-item">
+          <%= render partial: 'controls', locals: {goal: @goal, subscription: @subscription} %>
+        </li>
+    <% end %>
     <%= render partial: 'form', locals: {action: :update, goal: @goal} %>
-    <%= render partial: 'items', locals: {goal: @goal} %>
 <% end %>

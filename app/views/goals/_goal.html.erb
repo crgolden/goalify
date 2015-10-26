@@ -1,4 +1,29 @@
+Goal title: <b><%= goal.title %></b>
+<br>
+Goal score:
+<% if goal.score > 0 %>
+    <%= link_to goal.score, scores_path(goal: goal), class: 'badge' %>
+<% else %>
+    <span class="badge"><%= goal.score %></span>
+<% end %>
+<br>
+Goal User: <%= link_to goal.user.name, goal.user %>
+<% if goal.user.score > 0 %>
+    <%= link_to goal.user.score, scores_path(user: goal.user), class: 'badge' %>
+<% else %>
+    <span class="badge"><%= goal.user.score %></span>
+<% end %>
+<br>
+<% if goal.comments.accessible_by(current_ability).present? %>
+    <%= link_to 'Goal Comments', comments_path(goal: goal) %>
+    <br>
+<% end %>
+<% if goal.score > 0 %>
+    <%= link_to 'Goal Scores', scores_path(goal: goal) %>
+    <br>
+<% end %>
+<% if goal.subscriptions.accessible_by(current_ability).present? %>
+    <%= link_to 'Goal Subscriptions', subscriptions_path(goal: goal) %>
+    <br>
+<% end %>
 <p><%= goal.text %></p>
-Goal title: <b><%= goal.title %><br></b>
-Goal score: <%= link_to goal.score, scores_path(goal: goal), class: 'badge' %><br>
-Goal User: <%= link_to goal.user.name, goal.user %> <%= link_to goal.user.score, scores_path(user: goal.user), class: 'badge' %>

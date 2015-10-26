@@ -1,5 +1,23 @@
-Score value: <b><%= score.value %></b><br>
-Score Subscription Goal: <%= link_to score.subscription.goal.title, score.subscription.goal %> <%= link_to score.subscription.goal.score, scores_path(goal: score.subscription.goal), class: 'badge' %>
+Score value: <b><%= score.value %></b>
 <br>
-Score Subscription Goal User: <%= link_to score.subscription.goal.user.name, score.subscription.goal.user %> <%= link_to score.subscription.goal.user.score, scores_path(user: score.subscription.goal.user), class: 'badge' %>
+Score Subscription Goal: <%= link_to score.subscription.goal.title, score.subscription.goal %>
+<% if score.subscription.goal.score > 0 %>
+    <%= link_to score.subscription.goal.score, scores_path(goal: score.subscription.goal), class: 'badge' %>
+<% else %>
+    <span class="badge"><%= score.subscription.goal.score %></span>
+<% end %>
+<br>
+Score Subscription Goal User: <%= link_to score.subscription.goal.user.name, score.subscription.goal.user %>
+<% if score.subscription.goal.user.score > 0 %>
+    <%= link_to score.subscription.goal.user.score, scores_path(user: score.subscription.goal.user), class: 'badge' %>
+<% else %>
+    <span class="badge"><%= score.subscription.goal.user.score %></span>
+<% end %>
+<br>
+Score Subscription User: <%= link_to score.subscription.user.name, score.subscription.user %>
+<% if score.subscription.user.score > 0 %>
+    <%= link_to score.subscription.user.score, scores_path(user: score.subscription.user), class: 'badge' %>
+<% else %>
+    <span class="badge"><%= score.subscription.user.score %></span>
+<% end %>
 <br>

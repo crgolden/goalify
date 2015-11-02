@@ -53,7 +53,7 @@ class ApplicationController < ActionController::Base
   # end
 
   rescue_from CanCan::AccessDenied do |_exception|
-    flash.now[:error] = I18n.t 'cancan.ability.error'
+    flash[:error] = I18n.t 'cancan.ability.error'
     redirect_to :back
   end
 

@@ -1,4 +1,4 @@
 json.meta do
-  json.partial! 'api/v1/layouts/pagination', locals: {resource: @goals.accessible_by(current_ability)}
+  json.partial! 'api/v1/layouts/pagination', locals: {resource: @goals}
 end
-json.goals @goals.accessible_by(current_ability)
+json.goals @goals

@@ -1,4 +1,4 @@
 json.meta do
-  json.partial! 'api/v1/layouts/pagination', locals: {resource: @tokens.accessible_by(current_ability)}
+  json.partial! 'api/v1/layouts/pagination', locals: {resource: @tokens}
 end
-json.tokens @tokens.accessible_by(current_ability), partial: 'api/v1/tokens/token', as: :token
+json.tokens @tokens, partial: 'api/v1/tokens/token', as: :token

@@ -1,2 +1,2 @@
 <%= content_for :page_title, I18n.t('users.title.tokens') %>
-<%= render partial: 'tokens/token', collection: @tokens.accessible_by(current_ability) %>
+<%= render partial: 'tokens/token', collection: @tokens %>

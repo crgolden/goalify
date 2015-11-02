@@ -33,19 +33,19 @@
               Has never logged in
               <br>
           <% end %>
-          <% if user.comments.accessible_by(current_ability).present? %>
+          <% if user.comments? %>
               <%= link_to 'Comments', comments_user_path(user) %>
               <br>
           <% end %>
-          <% if user.goals.accessible_by(current_ability).present? %>
+          <% if user.goals? %>
               <%= link_to 'Goals', goals_user_path(user) %>
               <br>
           <% end %>
-          <% if user.subscriptions.accessible_by(current_ability).present? %>
+          <% if user.subscriptions? %>
               <%= link_to 'Subscriptions', subscriptions_user_path(user) %>
               <br>
           <% end %>
-          <% if user.tokens.accessible_by(current_ability).present? %>
+          <% if user.tokens? %>
               <%= link_to 'Tokens', tokens_user_path(user) %>
               <br>
           <% end %>

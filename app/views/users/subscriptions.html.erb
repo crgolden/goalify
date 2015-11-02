@@ -1,2 +1,2 @@
 <%= content_for :page_title, I18n.t('users.title.subscriptions') %>
-<%= render partial: 'goals/goal', collection: @subscriptions.accessible_by(current_ability), as: :goal %>
+<%= render partial: 'goals/goal', collection: @subscriptions, as: :goal %>

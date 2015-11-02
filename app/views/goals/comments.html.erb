@@ -1,2 +1,2 @@
 <%= content_for :page_title, I18n.t('goals.title.comments') %>
-<%= render partial: 'comments/comment', collection: @comments %>
+<%= render partial: 'comments/comment', collection: @comments.accessible_by(current_ability) %>

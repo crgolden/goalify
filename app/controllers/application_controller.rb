@@ -53,8 +53,8 @@ class ApplicationController < ActionController::Base
   # end
 
   rescue_from CanCan::AccessDenied do |_exception|
-    flash[:error] = I18n.t 'cancan.ability.error'
-    request.env['HTTP_REFERER'].present? ? redirect_to(:back) : redirect_to(root_path)
+    flash.now[:error] = I18n.t 'cancan.ability.error'
+    redirect_to :back
   end
 
   protected

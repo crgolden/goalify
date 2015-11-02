@@ -19,11 +19,11 @@
               <span class="badge"><%= goal.user.score %></span>
           <% end %>
           <br>
-          <% if goal.comments? %>
+          <% if goal.comments.accessible_by(current_ability).present? %>
               <%= link_to 'Comments', comments_goal_path(goal) %>
               <br>
           <% end %>
-          <% if goal.subscribers? %>
+          <% if goal.subscribers.accessible_by(current_ability).present? %>
               <%= link_to 'Subscribers', subscribers_goal_path(goal) %>
               <br>
           <% end %>

@@ -1,2 +1,2 @@
-json.partial! 'goal', goal: goal
+json.partial! @goal
 

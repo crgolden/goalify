@@ -1,67 +1,62 @@
-<%= content_for :title, t('about.title') %>
+<%= content_for :page_title, I18n.t('pages.about') %>
+<div class="row">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <%= link_to image_tag('https://travis-ci.org/deeprog/goalify.svg?branch=master', height: '20', width: '90'), 'https://travis-ci.org/deeprog/goalify' %>
+      <%= link_to image_tag('https://codeclimate.com/github/deeprog/goalify/badges/gpa.svg', height: '20', width: '110'), 'https://codeclimate.com/github/deeprog/goalify' %>
+      <%= link_to image_tag('https://codeclimate.com/github/deeprog/goalify/badges/coverage.svg', height: '20', width: '99'), 'https://codeclimate.com/github/deeprog/goalify/coverage' %>
+      <h3>A site to create and complete Goals.</h3>
 
-<% title = link_to page_path('about') do %>
-    <i class="glyphicon glyphicon-dashboard"></i> About
-<% end %>
+      <p>I built this app to get experience with <b><%= link_to 'Ruby on Rails', 'http://rubyonrails.org/' %></b>
+        and now I use it to practice new tools and technologies.</p>
 
-<%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: nil} do %>
-    <%= render layout: 'layouts/row' do %>
-        <li class="list-group-item">
-          <%= link_to image_tag('https://travis-ci.org/deeprog/goalify.svg?branch=master', height: '20', width: '90'), 'https://travis-ci.org/deeprog/goalify' %>
-          <%= link_to image_tag('https://codeclimate.com/github/deeprog/goalify/badges/gpa.svg', height: '20', width: '110'), 'https://codeclimate.com/github/deeprog/goalify' %>
-          <%= link_to image_tag('https://codeclimate.com/github/deeprog/goalify/badges/coverage.svg', height: '20', width: '99'), 'https://codeclimate.com/github/deeprog/goalify/coverage' %>
-          <h3>A site to create and complete Goals.</h3>
-
-          <p>I built this app to get experience with <b><%= link_to 'Ruby on Rails', 'http://rubyonrails.org/' %></b>
-            and
-            now I use it to practice new tools and technologies.</p>
-
-          <h3>Features</h3>
-          <ol>
-            <li>Visitors can view all <b><%= link_to 'Goals', goals_path %></b>,
-              <b><%= link_to 'Comments', comments_path %></b>, <b><%= link_to 'Subscriptions', subscriptions_path %></b>,
-              <b><%= link_to 'Scores', scores_path %></b>, and <b><%= link_to 'Users', users_path %></b></li>
-            <li>Visitors can search all <b>Goals</b> (results ranked by <code>:title</code>,
-              <code>:score</code>, then <code>:text</code>)
-            </li>
-            <li>Visitors and <b>Users</b> can <%= link_to 'sign-up', new_user_registration_path %>
-              / <%= link_to 'sign-in', new_user_session_path %> with <code>:email</code>
-              / <%= link_to 'Facebook', user_omniauth_authorize_path(:facebook) %>
-              / <%= link_to 'Google', user_omniauth_authorize_path(:google_oauth2) %>
-            </li>
-            <li><b>Users</b> can create new <b>Goals</b> and <b>Comments</b></li>
-            <li><b>Users</b> can '<samp>subscribe</samp>' to <b>Goals</b> (<i>50 points</i>) and '<samp>complete</samp>'
-              those <b>Subscriptions</b> (<i>100 points</i>)
-            </li>
-            <li>Developers can access the <b><%= link_to 'API', page_path('api') %></b> with their
-              <code>:authentication_token</code>s
-            </li>
-            <li>Developers can contribute to the open
-              source <b><%= link_to 'repository', 'https://github.com/deeprog/goalify' %></b></li>
-          </ol>
-          <h3>Tools and Technologies</h3>
-          <ol>
-            <li><%= link_to 'Action caching', 'https://github.com/rails/actionpack-action_caching' %>
-              , <%= link_to 'page caching', 'https://github.com/rails/actionpack-page_caching' %>
-              , <%= link_to 'pagination', 'https://github.com/amatsuda/kaminari' %>
-              , and <%= link_to 'static routing', 'https://github.com/thoughtbot/high_voltage' %> (Performance)
-            </li>
-            <li><%= link_to 'Bootstrap', 'http://getbootstrap.com/' %>
-              , <%= link_to 'Font Awesome', 'http://fortawesome.github.io/Font-Awesome/' %>
-              , and <%= link_to 'Sass', 'http://sass-lang.com/' %> (CSS styling)
-            <li><%= link_to 'CanCanCan', 'https://github.com/CanCanCommunity/cancancan' %> (Resource authorization)
-            <li><%= link_to 'Code Climate', 'https://codeclimate.com/' %>
-              , <%= link_to 'Travis CI', 'https://travis-ci.org/' %> (Reporting)
-            <li><%= link_to 'Cucumber', 'https://cucumber.io/' %>
-              , <%= link_to 'JSON Schema', 'http://json-schema.org/' %>
-              , <%= link_to 'RSpec', 'http://rspec.info/' %> (Testing)
-            <li><%= link_to 'Devise', 'https://github.com/plataformatec/devise' %> (User authentication)
-            <li><%= link_to 'Heroku', 'https://www.heroku.com/' %> (Deployment)
-            <li><%= link_to 'OAuth', 'http://oauth.net/' %> (User authentication with Facebook / Google)
-            <li><%= link_to 'PostgreSQL', 'http://www.postgresql.org/' %>
-              with <%= link_to 'full-text search', 'https://github.com/Casecommons/pg_search' %> (Database)
-            <li><%= link_to 'Puma', 'http://puma.io/' %> (Web Server)
-          </ol>
+      <h3>Features</h3>
+      <ol>
+        <li>Visitors can view all <b><%= link_to 'Goals', goals_path %></b> and
+          <b><%= link_to 'Users', users_path %></b></li>
+        <li>Visitors can search all <b>Goals</b> (results ranked by <code>title</code>,
+          <code>score</code>, then <code>text</code>) and <b>Users</b> and see when other <b>Users</b> complete their
+          <b>Subscriptions</b>
         </li>
-    <% end %>
-<% end %>
+        <li>Visitors and <b>Users</b> can <%= link_to 'sign-up', new_user_registration_path %>
+          / <%= link_to 'sign-in', new_user_session_path %> with email,
+          <%= link_to 'Facebook', user_omniauth_authorize_path(:facebook) %>, and
+          <%= link_to 'Google', user_omniauth_authorize_path(:google_oauth2) %>
+        </li>
+        <li><b>Users</b> can create new <b>Goals</b> and <b>Comments</b></li>
+        <li><b>Users</b> can subscribe to <b>Goals</b> (<i>50 points</i>) and complete those
+          <b>Subscriptions</b> (<i>100 points</i>)
+        </li>
+        <li><b>Users</b> can see when other <b>Users</b> complete their <b>Subscriptions</b>
+        <li>Developers can access the <%= link_to 'API', page_path('api') %> with their
+          <code>authentication_token</code>s
+        </li>
+        <li>Developers can contribute to the open
+          source <%= link_to 'repository', 'https://github.com/deeprog/goalify' %></li>
+      </ol>
+      <h3>Tools and Technologies</h3>
+      <ol>
+        <li><%= link_to 'Action caching', 'https://github.com/rails/actionpack-action_caching' %>
+          , <%= link_to 'page caching', 'https://github.com/rails/actionpack-page_caching' %>
+          , <%= link_to 'pagination', 'https://github.com/amatsuda/kaminari' %>
+          , and <%= link_to 'static routing', 'https://github.com/thoughtbot/high_voltage' %> (Performance)
+        </li>
+        <li><%= link_to 'Bootstrap', 'http://getbootstrap.com/' %>
+          , <%= link_to 'Font Awesome', 'http://fortawesome.github.io/Font-Awesome/' %>
+          , and <%= link_to 'Sass', 'http://sass-lang.com/' %> (CSS styling)
+        <li><%= link_to 'CanCanCan', 'https://github.com/CanCanCommunity/cancancan' %> (Resource authorization)
+        <li><%= link_to 'Code Climate', 'https://codeclimate.com/' %>
+          , <%= link_to 'Travis CI', 'https://travis-ci.org/' %> (Reporting)
+        <li><%= link_to 'Cucumber', 'https://cucumber.io/' %>
+          , <%= link_to 'JSON Schema', 'http://json-schema.org/' %>
+          , <%= link_to 'RSpec', 'http://rspec.info/' %> (Testing)
+        <li><%= link_to 'Devise', 'https://github.com/plataformatec/devise' %> (User authentication)
+        <li><%= link_to 'Heroku', 'https://www.heroku.com/' %> (Deployment)
+        <li><%= link_to 'OAuth', 'http://oauth.net/' %> (User authentication with Facebook / Google)
+        <li><%= link_to 'PostgreSQL', 'http://www.postgresql.org/' %>
+          with <%= link_to 'full-text search', 'https://github.com/Casecommons/pg_search' %> (Database)
+        <li><%= link_to 'Puma', 'http://puma.io/' %> (Web Server)
+      </ol>
+    </li>
+  </ul>
+</div>

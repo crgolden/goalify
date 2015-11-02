@@ -1,0 +1,19 @@
+<div class="row">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <div class="panel panel-danger">
+        <div class="panel-heading">
+          <h4 class="panel-title"><%= "#{pluralize(resource.errors.count, 'error')} prohibited this #{resource.class.name.downcase} from being saved:" %></h4>
+
+          <div class="panel-body">
+            <ul>
+              <% resource.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>

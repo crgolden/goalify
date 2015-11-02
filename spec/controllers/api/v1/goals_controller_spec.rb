@@ -14,7 +14,7 @@ describe Api::V1::GoalsController do
 
       expect(response.status).to eq 200
       expect(response).to render_template :show
-      expect(response).to match_response_schema 'goal'
+      expect(response).to match_response_schema 'schema'
       expect(goal[:id]).to eq @goal.id
       expect(goal[:user_id]).to eq @goal.user_id
       expect(goal[:title]).to eq @goal.title
@@ -26,7 +26,7 @@ describe Api::V1::GoalsController do
 
       expect(response.status).to eq 200
       expect(response).to render_template :index
-      expect(response).to match_response_schema 'goals'
+      expect(response).to match_response_schema 'schema'
       expect(json_response).to have_key :meta
       expect(json_response[:meta]).to have_key :pagination
       expect(json_response[:meta][:pagination]).to have_key :per_page
@@ -55,6 +55,58 @@ describe Api::V1::GoalsController do
       expect(@goal.title).not_to eq attr[:title]
     end
 
+    it 'shows all the Comments for a Goal' do
+      get :comments, id: @goal.id, format: :json
+
+      expect(response.status).to eq 200
+      expect(response).to render_template :comments
+      expect(response).to match_response_schema 'schema'
+      expect(json_response).to have_key :meta
+      expect(json_response[:meta]).to have_key :pagination
+      expect(json_response[:meta][:pagination]).to have_key :per_page
+      expect(json_response[:meta][:pagination]).to have_key :total_pages
+      expect(json_response[:meta][:pagination]).to have_key :total_objects
+    end
+
+    it 'shows all the Scores for a Goal' do
+      get :scores, id: @goal.id, format: :json
+
+      expect(response.status).to eq 200
+      expect(response).to render_template :scores
+      expect(response).to match_response_schema 'schema'
+      expect(json_response).to have_key :meta
+      expect(json_response[:meta]).to have_key :pagination
+      expect(json_response[:meta][:pagination]).to have_key :per_page
+      expect(json_response[:meta][:pagination]).to have_key :total_pages
+      expect(json_response[:meta][:pagination]).to have_key :total_objects
+    end
+
+    it 'shows all the Search results for a goal' do
+      get :search, q: 'Title', format: :json
+
+      expect(response.status).to eq 200
+      expect(response).to render_template :search
+      expect(response).to match_response_schema 'schema'
+      expect(json_response).to have_key :meta
+      expect(json_response[:meta]).to have_key :pagination
+      expect(json_response[:meta][:pagination]).to have_key :per_page
+      expect(json_response[:meta][:pagination]).to have_key :total_pages
+      expect(json_response[:meta][:pagination]).to have_key :total_objects
+    end
+
+    it 'shows all the Subscribers for a Goal' do
+      get :subscribers, id: @goal.id, format: :json
+
+      expect(response.status).to eq 200
+      expect(response).to render_template :subscribers
+      expect(response).to match_response_schema 'schema'
+      expect(json_response).to have_key :meta
+      expect(json_response[:meta]).to have_key :pagination
+      expect(json_response[:meta][:pagination]).to have_key :per_page
+      expect(json_response[:meta][:pagination]).to have_key :total_pages
+      expect(json_response[:meta][:pagination]).to have_key :total_objects
+    end
+
   end
 
   context 'With a valid authenticity_token' do
@@ -73,7 +125,7 @@ describe Api::V1::GoalsController do
 
         expect(response.status).to eq 201
         expect(response).to render_template :show
-        expect(response).to match_response_schema 'goal'
+        expect(response).to match_response_schema 'schema'
         expect(goal[:title]).to eq attr[:title]
         expect(goal[:text]).to eq attr[:text]
         expect(Goal.find_by title: attr[:title], text: attr[:text]).not_to be nil
@@ -97,7 +149,7 @@ describe Api::V1::GoalsController do
 
         expect(response.status).to eq 200
         expect(response).to render_template :show
-        expect(response).to match_response_schema 'goal'
+        expect(response).to match_response_schema 'schema'
         expect(goal[:title]).to eq attr[:title]
         expect(@goal.title).to eq attr[:title]
       end

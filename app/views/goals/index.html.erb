@@ -1,23 +1,2 @@
-<% if params[:q] %>
-    <%= content_for :title, t('goals.title.search') %>
-    <% title = @goals.count.to_s + ' Goals found for "' + params[:q] + '"' %>
-<% elsif params[:user] %>
-    <%= content_for :title, t('goals.title.index') %>
-    <% title = link_to('User', user_path(params[:user])) + ' Goals' %>
-<% else %>
-    <%= content_for :title, t('goals.title.index') %>
-    <% title = 'Goals' %>
-<% end %>
-
-<%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: @goals} do %>
-    <% @goals.each do |goal| %>
-        <%= render layout: 'layouts/row' do %>
-            <li class="list-group-item">
-              <% subscription = Subscription.exists_for_goal_and_user? goal, current_user %>
-              <%= render partial: 'controls', locals: {goal: goal, subscription: subscription} %>
-              <%= render goal, locals: {goal: goal} %>
-            </li>
-        <% end %>
-        <hr>
-    <% end %>
-<% end %>
+<%= content_for :page_title, I18n.t('goals.title.index') %>
+<%= render @goals %>

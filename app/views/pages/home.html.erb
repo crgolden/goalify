@@ -1,41 +1,39 @@
-<%= content_for :title, t('home.title') %>
-
-<% title = link_to page_path('home') do %>
-    <i class="glyphicon glyphicon-home"></i> Home
-<% end %>
-
-<% user = User.with_highest_score || User.new %>
-<% goal = Goal.with_highest_score || Goal.new %>
-
-<%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: nil} do %>
-    <%= render layout: 'layouts/row' do %>
-        <li class="list-group-item">
+<%= content_for :page_title, I18n.t('pages.home') %>
+<% user = User.with_highest_score
+   goal = Goal.with_highest_score %>
+<div class="row">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <% if user %>
           User: <%= link_to user.name, user %>
           <% if user.score > 0 %>
-              <%= link_to user.score, scores_path(user: user), class: 'badge' %>
+              <%= link_to user.score, scores_user_path(user), class: 'badge' %>
           <% else %>
               <span class="badge"><%= user.score %></span>
           <% end %>has the highest score
-          <br>
+      <% end %>
+      <br>
+      <% if goal %>
           Goal: <%= link_to goal.title, goal %>
           <% if goal.score > 0 %>
-              <%= link_to goal.score, scores_path(goal: goal), class: 'badge' %>
+              <%= link_to goal.score, scores_goal_path(goal), class: 'badge' %>
           <% else %>
               <span class="active"><%= goal.score %></span>
           <% end %>has the highest score
-          <br>
-          <%= link_to 'Comments', comments_path %>: <%= Comment.count %> created
-          <br>
-          <%= link_to 'Goals', goals_path %>: <%= Goal.count %> created
-          <br>
-          <%= link_to 'Scores', scores_path %>: <%= Score.count %> created
-          <br>
-          <%= link_to 'Subscriptions', subscriptions_path %>: <%= Subscription.count %> created
-          <br>
-          Tokens: <%= Token.count %> created (sign in to view your tokens)
-          <br>
-          <%= link_to 'Users', users_path %>: <%= User.where(status: 'active').count %> registered
-          <br>
-        </li>
-    <% end %>
-<% end %>
+      <% end %>
+      <br>
+      Comments: <%= Comment.count %> created
+      <br>
+      Goals: <%= Goal.count %> created
+      <br>
+      Scores: <%= Score.count %> created
+      <br>
+      Subscriptions: <%= GoalsUsers.count %> created
+      <br>
+      Tokens: <%= Token.count %> created (sign in to view your tokens)
+      <br>
+      Users: <%= User.where(status: 'active').count %> registered
+      <br>
+    </li>
+  </ul>
+</div>

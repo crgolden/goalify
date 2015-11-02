@@ -1,4 +1,4 @@
-<h5>
+<h5 align="center">
   <% if current_page?(user) %>
       <i class="glyphicon glyphicon-search"></i> Show
   <% else %>
@@ -11,8 +11,7 @@
           <% if current_page?(edit_user_registration_path) %>
               | <i class="glyphicon glyphicon-pencil"></i> Edit
           <% else %>
-              | <%= link_to edit_user_registration_path do %>
-                  <i class="glyphicon glyphicon-pencil"></i> Edit
+              | <%= link_to edit_user_registration_path do %><i class="glyphicon glyphicon-pencil"></i> Edit
               <% end %>
           <% end %>
           | <%= link_to registration_path(user), data: {confirm: 'Are you sure?'}, method: :delete do %>
@@ -22,17 +21,16 @@
           <% if current_page?(edit_admin_user_path user) %>
               | <i class="glyphicon glyphicon-pencil"></i> Edit
           <% else %>
-              | <%= link_to edit_admin_user_path(user) do %>
-                  <i class="glyphicon glyphicon-pencil"></i> Edit
+              | <%= link_to edit_admin_user_path(user) do %><i class="glyphicon glyphicon-pencil"></i> Edit
               <% end %>
           <% end %>
           <% if user.active? %>
-              | <%= link_to admin_user_path(user), method: :delete do %>
-                  <i class="glyphicon glyphicon-trash"></i> Deactivate
+              | <%= link_to admin_user_path(user), method: :delete do %><i class="glyphicon glyphicon-trash"></i>
+                  Deactivate
               <% end %>
           <% else %>
               | <%= link_to admin_user_path(user, user: {status: :active}), method: :put do %>
-                  <i class="glyphicon glyphicon-check"></i> Activate
+                  <i class="glyphicon glyphicon-plus"></i> Activate
               <% end %>
           <% end %>
       <% end %>

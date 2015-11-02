@@ -1,23 +1,26 @@
-Score value: <b><%= score.value %></b>
-<br>
-Score Subscription Goal: <%= link_to score.subscription.goal.title, score.subscription.goal %>
-<% if score.subscription.goal.score > 0 %>
-    <%= link_to score.subscription.goal.score, scores_path(goal: score.subscription.goal), class: 'badge' %>
-<% else %>
-    <span class="badge"><%= score.subscription.goal.score %></span>
+<% cache ['v1', score] do %>
+    <div class="row">
+      <ul class="list-group">
+        <li class="list-group-item">
+          Value: <b><%= score.value %></b>
+          <br>
+          Description: <b><%= score.description %></b>
+          <br>
+          Goal: <%= link_to score.goal.title, score.goal %>
+          <% if score.goal.score > 0 %>
+              <%= link_to score.goal.score, scores_goal_path(score.goal), class: 'badge' %>
+          <% else %>
+              <span class="badge"><%= score.goal.score %></span>
+          <% end %>
+          <br>
+          User: <%= link_to score.user.name, score.user %>
+          <% if score.user.score > 0 %>
+              <%= link_to score.user.score, scores_user_path(score.user), class: 'badge' %>
+          <% else %>
+              <span class="badge"><%= score.user.score %></span>
+          <% end %>
+          <br>
+        </li>
+      </ul>
+    </div>
 <% end %>
-<br>
-Score Subscription Goal User: <%= link_to score.subscription.goal.user.name, score.subscription.goal.user %>
-<% if score.subscription.goal.user.score > 0 %>
-    <%= link_to score.subscription.goal.user.score, scores_path(user: score.subscription.goal.user), class: 'badge' %>
-<% else %>
-    <span class="badge"><%= score.subscription.goal.user.score %></span>
-<% end %>
-<br>
-Score Subscription User: <%= link_to score.subscription.user.name, score.subscription.user %>
-<% if score.subscription.user.score > 0 %>
-    <%= link_to score.subscription.user.score, scores_path(user: score.subscription.user), class: 'badge' %>
-<% else %>
-    <span class="badge"><%= score.subscription.user.score %></span>
-<% end %>
-<br>

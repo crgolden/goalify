@@ -13,26 +13,12 @@ describe TokensController do
         sign_in @user
       end
 
-      it 'Shows a Token' do
-        get :show, id: @token.id
-
-        expect(response.status).to eq 200
-        expect(response).to render_template :show
-        expect(assigns :token).to eq @token
-      end
-      it 'Shows all the Tokens for a User' do
-        get :index, user_id: @token.user_id
-
-        expect(response.status).to eq 200
-        expect(response).to render_template :index
-      end
-
       it 'Deletes a Token' do
         delete :destroy, id: @token
 
         expect(flash[:success]).to eq I18n.t 'tokens.destroy.success'
         expect(response.status).to eq 302
-        expect(response).to redirect_to user_tokens_path(@token.user)
+        expect(response).to redirect_to tokens_user_path(@token.user)
         expect(Token.find_by id: @token.id).to be nil
       end
 

@@ -1,12 +1,2 @@
-<%= content_for :title, t('users.title.edit') %>
-
-<% title = 'Edit User' %>
-
-<%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: nil} do %>
-    <%= render layout: 'layouts/row' do %>
-        <li class="list-group-item">
-          <%= render partial: 'controls', locals: {user: @user} %>
-        </li>
-    <% end %>
-    <%= render partial: 'form', locals: {action: :update, user: @user} %>
-<% end %>
+<%= content_for :page_title, I18n.t('users.title.edit') %>
+<%= render partial: 'form', locals: {action: :update} %>

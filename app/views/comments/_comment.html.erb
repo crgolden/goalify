@@ -1,16 +1,31 @@
-Comment Goal: <%= link_to comment.goal.title, comment.goal %>
-<% if comment.goal.score > 0 %>
-    <%= link_to comment.goal.score, scores_path(goal: comment.goal), class: 'badge' %>
-<% else %>
-    <span class="badge"><%= comment.goal.score %></span>
-<% end %>
-<br>
-Comment User: <%= link_to comment.user.name, comment.user %>
-<% if comment.user.score > 0 %>
-    <%= link_to comment.user.score, scores_path(user: comment.user), class: 'badge' %>
-<% else %>
-    <span class="badge"><%= comment.user.score %></span>
-<% end %>
-<br>
-<p><%= comment.body %></p>
+<% cache ['v1', comment] do %>
+    <div class="row">
+      <ul class="list-group">
+        <li class="list-group-item">
+          <h5>
+            <% if can? :destroy, comment %>
+                <%= link_to comment, method: :delete, data: {confirm: 'Are you sure?'} do %>
+                    <i class="glyphicon glyphicon-trash"></i> Delete
+                <% end %>
+            <% end %>
+          </h5>
+          <%= link_to 'Goal', comment.goal %>: <%= comment.goal.title %>
+          <% if comment.goal.score > 0 %>
+              <%= link_to comment.goal.score, scores_goal_path(comment.goal), class: 'badge' %>
+          <% else %>
+              <span class="badge"><%= comment.goal.score %></span>
+          <% end %>
+          <br>
+          <%= link_to 'User', comment.user %>: <%= comment.user.name %>
+          <% if comment.user.score > 0 %>
+              <%= link_to comment.user.score, scores_user_path(comment.user), class: 'badge' %>
+          <% else %>
+              <span class="badge"><%= comment.user.score %></span>
+          <% end %>
+          <br>
 
+          <p><%= comment.body %></p>
+        </li>
+      </ul>
+    </div>
+<% end %>

@@ -1,0 +1,45 @@
+<h2 align="center">
+  <ol class="breadcrumb">
+    <% case controller_name
+         when 'pages'
+           case action_name
+             when 'show'
+               case params[:id]
+                 when 'api' %>
+                <li><%= params[:id].upcase %></li>
+            <% else %>
+                <li><%= params[:id].titleize %></li>
+            <% end %>
+        <% else
+           end %>
+    <% when 'registrations'
+         case action_name
+           when 'new' %>
+            <li>Sign up</li>
+        <% when 'edit' %>
+            <li><%= link_to resource.class.name, resource %></li>
+            <li><%= action_name.titleize %></li>
+        <% else
+           end %>
+    <% when 'sessions' %>
+        <li>Sign in</li>
+    <% else
+         case action_name
+           when 'index' %>
+            <li><%= link_to controller_name.titleize, controller_path %></li>
+        <% when 'new' %>
+            <li><%= link_to controller_name.titleize, controller_path %></li>
+        <% when 'search' %>
+        <% else %>
+            <li><%= link_to resource_name.titleize, get_resource %></li>
+        <% end
+           if action_name == 'search' %>
+            <li><%= instance_variable_get("@#{controller_name}").count.to_s + ' ' + resource_name.titleize %> results
+              for "<%= params[:q] %>"
+            </li>
+        <% else %>
+            <li><%= action_name.titleize %></li>
+        <% end %>
+    <% end %>
+  </ol>
+</h2>

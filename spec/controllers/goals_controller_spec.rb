@@ -21,6 +21,34 @@ describe GoalsController do
       expect(response).to render_template :index
     end
 
+    it 'shows all the Comments for a Goal' do
+      get :comments, id: @goal.id
+
+      expect(response.status).to eq 200
+      expect(response).to render_template :comments
+    end
+
+    it 'shows all the Scores for a Goal' do
+      get :scores, id: @goal.id
+
+      expect(response.status).to eq 200
+      expect(response).to render_template :scores
+    end
+
+    it 'shows all the Search results for a Goal' do
+      get :search, q: 'Title'
+
+      expect(response.status).to eq 200
+      expect(response).to render_template :search
+    end
+
+    it 'shows all the Subscribers for a Goal' do
+      get :subscribers, id: @goal.id
+
+      expect(response.status).to eq 200
+      expect(response).to render_template :subscribers
+    end
+
   end
 
   context 'For a signed-in User' do

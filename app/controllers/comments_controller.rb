@@ -1,33 +1,26 @@
 class CommentsController < ApplicationController
-  include CommentsHelper
-  before_action :authenticate_user!, except: [:show, :index]
-  load_and_authorize_resource
 
-  def index
-    filter
-  end
+  before_action :authenticate_user!
 
-  def show
-  end
-
-  def new
-  end
-
-  def edit
-  end
+  authorize_resource only: :create
+  load_and_authorize_resource only: :destroy
 
   def create
-    @comment.user = current_user
-    @comment.save ? create_success : create_errors
-  end
-
-  def update
-    @comment.update(comment_params) ? update_success : update_errors
+    @goal = Goal.find(comment_params[:goal_id])
+    @comment = @goal.comments.build comment_params
+    if @comment.save
+      flash[:success] = I18n.t 'comments.create.success'
+      redirect_to comments_goal_path @comment.goal
+    else
+      flash[:error] = I18n.t 'comments.create.errors'
+      redirect_to @comment.goal
+    end
   end
 
   def destroy
     @comment.destroy
-    destroy_success
+    flash[:success] = I18n.t 'comments.destroy.success'
+    redirect_to comments_goal_path @comment.goal
   end
 
   private

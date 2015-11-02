@@ -1,18 +1,12 @@
-<%= errors_for comment %>
-<%= form_for(comment, url: {controller: :comments, action: action}, html: {class: 'form-horizontal'}) do |f| %>
+<%= render partial: 'layouts/form_errors', locals: {resource: comment} if comment.errors.any? %>
+<%= form_for(comment, url: {controller: :comments, action: :create}, html: {class: 'form'}) do |f| %>
     <div class="form-group">
-      <%= f.label :comment, class: 'col-sm-2 control-label' %>
-      <div class="col-sm-8">
-        <%= f.text_area :body, class: 'form-control', placeholder: 'Body' %>
-      </div>
-      <div class="col-sm-2"></div>
+      <%= f.label :comment, class: 'control-label' %>
+      <%= f.text_area :body, class: 'form-control' %>
     </div>
     <div class="form-group">
-      <%= f.hidden_field :goal_id, value: comment.goal_id %>
-      <%= f.hidden_field :user_id, value: current_user.id unless comment.user.present? if user_signed_in? %>
-      <div class="col-sm-offset-2 col-sm-8">
-        <%= f.submit class: 'btn btn-default' %>
-      </div>
-      <div class="col-sm-2"></div>
+      <%= f.hidden_field :goal_id, value: goal.id %>
+      <%= f.hidden_field :user_id, value: current_user.id %>
+      <%= f.submit class: 'btn btn-default' %>
     </div>
 <% end %>

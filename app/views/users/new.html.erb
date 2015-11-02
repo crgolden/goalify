@@ -1,7 +1,2 @@
-<%= content_for :title, t('users.title.new') %>
-
-<% title = 'New User' %>
-
-<%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: nil} do %>
-    <%= render partial: 'form', locals: {action: :create, user: User.new} %>
-<% end %>
+<%= content_for :page_title, I18n.t('users.title.new') %>
+<%= render partial: 'form', locals: {action: :create} %>

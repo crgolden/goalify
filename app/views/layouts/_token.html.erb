@@ -1,8 +1,0 @@
-<% title = 'Token' %>
-
-<%= render layout: 'layouts/dropdown', locals: {title: title} do %>
-    <li class="active"><%= link_to 'Show Token', token %></li>
-    <li><%= link_to 'Delete Token', token, method: :delete, data: {confirm: 'Are you sure?'} %></li>
-    <li class="divider"></li>
-    <li><%= link_to 'Token User', token.user %></li>
-<% end %>

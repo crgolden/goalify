@@ -18,6 +18,7 @@ gem 'omniauth-google-oauth2'
 gem 'pg' # Use postgresql as the database for Active Record
 gem 'pg_search'
 gem 'puma'
+gem 'rack-timeout'
 gem 'rails'
 gem 'rails_12factor', group: :production
 gem 'sdoc', group: :doc # bundle exec rake doc:rails generates the API under doc/api
@@ -34,6 +35,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'json-schema'
   gem 'rspec-rails'
+  gem 'selenium-webdriver'
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
   gem 'spring' # Spring speeds up development by keeping your application running in the background.

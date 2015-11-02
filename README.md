@@ -8,13 +8,14 @@ I built this app to get experience with [Ruby on Rails](http://rubyonrails.org/)
 
 ####Features
 
-1. Visitors can view all Goals, Comments , Subscriptions, Scores , and Users
-2. Visitors can search Goals (results ranked by title, score, then text)
-3. Visitors and Users can sign-up / sign-in with email / Facebook / Google
+1. Visitors can view all Goals and Users
+2. Visitors can search Goals (results ranked by title, score, then text) and Users and see when other Users complete their Subscriptions
+3. Visitors and Users can sign-up / sign-in with email, Facebook, and Google
 4. Users can create new Goals and Comments
-5. Users can subscribe to (50 points) and complete (100 points) Goals
-6. Developers can access the API with their authentication token
-7. Developers can contribute to the open source repository
+5. Users can subscribe to Goals (50 points) and complete those Subscriptions (100 points)
+6. Users can when other Users complete their Subscriptions
+7. Developers can access the API with their authentication tokens
+8. Developers can contribute to the open source repository
 
 ####Tools and Technologies
 

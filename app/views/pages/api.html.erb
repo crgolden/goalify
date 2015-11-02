@@ -1,42 +1,35 @@
-<%= content_for :title, t('api.title') %>
-
-<% title = link_to page_path('api') do %>
-    <i class="glyphicon glyphicon-transfer"></i> API
-<% end %>
-
-<%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: nil} do %>
-    <%= render layout: 'layouts/row' do %>
-        <li class="list-group-item">
-          <pre><%= link_to api_comments_path, api_comments_path %></pre>
-        </li>
-        <li class="list-group-item">
-          <pre><%= link_to api_goals_path, api_goals_path %></pre>
-        </li>
-        <li class="list-group-item">
-          <pre><%= link_to api_scores_path, api_scores_path %></pre>
-        </li>
-        <li class="list-group-item">
-          <pre><%= link_to api_subscriptions_path, api_subscriptions_path %></pre>
-        </li>
-        <% if user_signed_in? %>
-            <% if current_user.tokens.present? %>
-                <li class="list-group-item">
-                  <pre><%= link_to api_user_tokens_path(current_user), api_user_tokens_path(current_user) %></pre>
-                </li>
-            <% else %>
-                <li class="list-group-item">
-                  <pre>Sign in with <%= link_to 'Facebook', user_omniauth_authorize_path(:facebook) %>
-                    or <%= link_to 'Google', user_omniauth_authorize_path(:google_oauth2) %> to create tokens</pre>
-                </li>
-            <% end %>
-        <% else %>
-            <li class="list-group-item">
-              <pre>/goalify/api/<b>:user_id</b>/tokens</pre>
-              <span class="help-block">(Access '<samp>tokens</samp>' with <code>:user_id</code> when signed-in)</span>
-            </li>
-        <% end %>
-        <li class="list-group-item">
-          <pre><%= link_to api_users_path, api_users_path %></pre>
-        </li>
-    <% end %>
-<% end %>
+<%= content_for :page_title, I18n.t('pages.api') %>
+<% user = User.demo_user %>
+<% goal = user.goals.find('008c10ce-7112-4ed0-9ddc-798d3d4067cc') %>
+<div class="row">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <h4>Goals</h4>
+      <pre><%= link_to api_goals_path, api_goals_path %></pre>
+      <pre><%= link_to(search_api_goals_path + '?q=error', search_api_goals_path(q: 'error')) %></pre>
+      <div class="help-block">Parameters permitted: <code>q</code>, <code>page</code>, <code>per_page</code></div>
+      <div class="help-block">Click links below to see sample JSON responses for <%= link_to 'Demo User', user %></div>
+      <pre><%= link_to('/api/goals/id', api_goal_path(goal)) %></pre>
+      <pre><%= link_to('/api/goals/id/comments', comments_api_goal_path(goal)) %></pre>
+      <pre><%= link_to('/api/goals/id/scores', scores_api_goal_path(goal)) %></pre>
+      <pre><%= link_to('/api/goals/id/subscribers', subscribers_api_goal_path(goal)) %></pre>
+    </li>
+  </ul>
+</div>
+<div class="row">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <h4>Users</h4>
+      <pre><%= link_to api_users_path, api_users_path %></pre>
+      <pre><%= link_to(search_api_users_path + '?q=Demo', search_api_users_path(q: 'Demo')) %></pre>
+      <div class="help-block">Parameters permitted: <code>q</code>, <code>page</code>, <code>per_page</code></div>
+      <div class="help-block">Click links below to see sample JSON responses for <%= link_to 'Demo User', user %></div>
+      <pre><%= link_to('/api/users/id', api_user_path(user)) %></pre>
+      <pre><%= link_to('/api/users/id/comments', comments_api_user_path(user)) %></pre>
+      <pre><%= link_to('/api/users/id/goals', goals_api_user_path(user)) %></pre>
+      <pre><%= link_to('/api/users/id/scores', scores_api_user_path(user)) %></pre>
+      <pre><%= link_to('/api/users/id/subscriptions', subscriptions_api_user_path(user)) %></pre>
+      <pre><%= link_to('/api/users/id/tokens', tokens_api_user_path(user)) %></pre>
+    </li>
+  </ul>
+</div>

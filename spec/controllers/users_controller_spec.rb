@@ -20,6 +20,41 @@ describe UsersController do
       expect(response).to render_template :index
     end
 
+    it 'shows all the Comments for a User' do
+      get :comments, id: @user.id
+
+      expect(response.status).to eq 200
+      expect(response).to render_template :comments
+    end
+
+    it 'shows all the Goals for a User' do
+      get :goals, id: @user.id
+
+      expect(response.status).to eq 200
+      expect(response).to render_template :goals
+    end
+
+    it 'shows all the Scores for a User' do
+      get :scores, id: @user.id
+
+      expect(response.status).to eq 200
+      expect(response).to render_template :scores
+    end
+
+    it 'shows all the Search results for a User' do
+      get :search, q: 'Name'
+
+      expect(response.status).to eq 200
+      expect(response).to render_template :search
+    end
+
+    it 'shows all the Subscriptions for a User' do
+      get :subscriptions, id: @user.id
+
+      expect(response.status).to eq 200
+      expect(response).to render_template :subscriptions
+    end
+
   end
 
   context 'For a signed-in User' do
@@ -28,6 +63,14 @@ describe UsersController do
 
       before :each do
         sign_in @user
+      end
+
+      it 'Shows all the Tokens for a User' do
+        @token = create :token, user: @user
+        get :tokens, id: @user.id
+
+        expect(response.status).to eq 200
+        expect(response).to render_template :tokens
       end
 
       it 'shows edit page for own User' do

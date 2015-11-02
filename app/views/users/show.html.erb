@@ -1,12 +1,2 @@
-<%= content_for :title, t('users.title.show') %>
-
-<% title = 'Show User' %>
-
-<%= render layout: 'layouts/jumbotron', locals: {title: title, paginatable: nil} do %>
-    <%= render layout: 'layouts/row' do %>
-        <li class="list-group-item">
-          <%= render partial: 'controls', locals: {user: @user} %>
-          <%= render @user, locals: {user: @user} %>
-        </li>
-    <% end %>
-<% end %>
+<%= content_for :page_title, I18n.t('users.title.show') %>
+<%= render @user %>

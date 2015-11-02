@@ -20,10 +20,6 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  about:
-    title: "Goalify: About"
-  api:
-    title: "Goalify: API"
   cancan:
     ability:
       error: "Access denied!"
@@ -36,14 +32,6 @@ en:
       errors: "There was a problem updating the comment."
     destroy:
       success: "Comment was successfully deleted."
-    title:
-      index: "Goalify: All Comments"
-      show: "Goalify: Showing Comment"
-      edit: "Goalify: Editing Comment"
-    panel:
-      index: "All Comments"
-      show: "Showing Comment"
-      edit: "Editing Comment"
   description: "A site to create and complete goals"
   goals:
     create:
@@ -60,47 +48,25 @@ en:
       edit: "Goalify: Editing Goal"
       new: "Goalify: New Goal"
       search: "Goalify: Search Goals"
-    panel:
-      index: "All Goals"
-      show: "Showing Goal"
-      edit: "Editing Goal"
-      new: "New Goal"
-  home:
-    title: "Goalify: Home"
-  scores:
-    title:
-      index: "Goalify: All Scores"
-      show: "Goalify: Showing Score"
-      edit: "Goalify: Editing Score"
-    panel:
-      index: "All Scores"
-      show: "Showing Score"
-      edit: "Editing Score"
-  subscriptions:
+      comments: "Goalify: Comments"
+      scores: "Goalify: Scores"
+      subscribers: "Goalify: Subscribers"
+  goals_users:
     create:
       success: "Successfully subscribed to this goal."
     update:
       success: "Successfully completed this goal."
     destroy:
       success: "Successfully unsubscribed from this goal."
-    title:
-      index: "Goalify: All Subscriptions"
-      show: "Goalify: Showing Subscription"
-      edit: "Goalify: Editing Subscription"
-    panle:
-      index: "All Subscriptions"
-      show: "Showing Subscription"
-      edit: "Editing Subscription"
+  pages:
+    about: "Goalify: About"
+    api: "Goalify: API"
+    blog: "Goalify: Blog"
+    home: "Goalify"
   title: "Goalify"
   tokens:
     destroy:
       success: "Token was successfully deleted."
-    title:
-      index: "Goalify: All Tokens"
-      show: "Goalify: Showing Token"
-    panel:
-      index: "All Tokens"
-      show: "Showing Token"
   users:
     create:
       confirmed_success: "User successfully created."
@@ -124,8 +90,29 @@ en:
       show: "Goalify: Showing User"
       edit: "Goalify: Editing User"
       new: "Goalify: New User"
-    panel:
-      index: "All Users"
-      show: "Showing User"
-      edit: "Editing User"
-      new: "New user"
+      search: "Goalify: Search"
+      comments: "Goalify: Comments"
+      goals: "Goalify: Goals"
+      scores: "Goalify: Scores"
+      subscriptions: "Goalify: Subscriptions"
+      tokens: "Goalify: "
+  views:
+    pagination:
+      first: !xml |
+             <span class="glyphicon glyphicon-fast-backward" aria-hidden="true"></span>
+      last: !xml |
+            <span class="glyphicon glyphicon-fast-forward" aria-hidden="true"></span>
+      previous: !xml |
+                <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+      next: !xml |
+            <span class="glyphicon glyphicon-forward" aria-hidden="true"></span>
+      truncate: "&hellip;"
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "No %{entry_name} found"
+          one: "Displaying <b>1</b> %{entry_name}"
+          other: "Displaying <b>all %{count}</b> %{entry_name}"
+      more_pages:
+        display_entries: "Displaying %{entry_name} <b>%{first}&nbsp;-&nbsp;%{last}</b>"

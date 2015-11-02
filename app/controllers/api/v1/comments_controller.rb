@@ -1,34 +1,20 @@
 class Api::V1::CommentsController < Api::V1::ApiController
-  include CommentsHelper
-  acts_as_token_authentication_handler_for User, except: [:show, :index], fallback: :exception
-  before_action :authenticate_user!, except: [:show, :index]
-  load_and_authorize_resource
 
-  def index
-    filter
-  end
+  acts_as_token_authentication_handler_for User, only: [:create, :destroy], fallback: :exception
 
-  def show
-  end
+  before_action :authenticate_user!
 
-  def new
-  end
+  authorize_resource :comment, only: :create
+  load_and_authorize_resource :comment, only: :destroy
 
-  def edit
-  end
+  wrap_parameters :comment, format: :json
 
   def create
-    @comment.user = current_user
+    @goal = Goal.find params[:goal_id]
+    @comment = @goal.comments.build comment_params
     if @comment.save
-      render :show, status: :created, location: [:api, @comment]
-    else
-      render json: @comment.errors, status: :unprocessable_entity
-    end
-  end
-
-  def update
-    if @comment.update comment_params
-      render :show, status: :ok, location: [:api, @comment]
+      @comments = Kaminari.paginate_array(@goal.comments).page(page_params[:page]).per page_params[:per_page]
+      render 'api/v1/goals/comments.json.jbuilder', status: :created, location: comments_api_goal_path(@goal)
     else
       render json: @comment.errors, status: :unprocessable_entity
     end
@@ -42,7 +28,7 @@ class Api::V1::CommentsController < Api::V1::ApiController
   private
 
   def comment_params
-    params.require(:comment).permit :body, :goal_id, :user_id
+    params.permit :body, :goal_id, :user_id
   end
 
 end

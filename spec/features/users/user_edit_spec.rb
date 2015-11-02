@@ -16,7 +16,7 @@ feature 'User edit', :devise do
     other = create(:user, email: 'other@example.com')
     login_as(me, scope: :user)
     visit edit_user_registration_path(other)
-    expect(page).to have_content 'Editing User'
+    expect(page).to have_content 'User Edit'
     expect(page).to have_field('Email', with: me.email)
     expect(page).not_to have_content other.email
   end

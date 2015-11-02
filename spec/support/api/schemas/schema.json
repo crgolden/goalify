@@ -1,0 +1,380 @@
+{
+  "definitions": {
+    "access_token": {
+      "type": "string"
+    },
+    "authentication_token": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string"
+    },
+    "comment": {
+      "type": "object",
+      "required": [
+        "comment"
+      ],
+      "properties": {
+        "comment": {
+          "type": "object",
+          "required": [
+            "id",
+            "body",
+            "goal_id",
+            "user_id"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/definitions/id"
+            },
+            "body": {
+              "$ref": "#/definitions/body"
+            },
+            "goal_id": {
+              "$ref": "#/definitions/goal_id"
+            },
+            "user_id": {
+              "$ref": "#/definitions/user_id"
+            }
+          }
+        }
+      }
+    },
+    "comments": {
+      "type": "array",
+      "required": [
+        "comments"
+      ],
+      "items": {
+        "$ref": "#/definitions/comment"
+      }
+    },
+    "confirmation_sent_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "confirmation_token": {
+      "type": "string"
+    },
+    "confirmed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "current_sign_in_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "current_sign_in_ip": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "encrypted_password": {
+      "type": "string"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "failed_attempts": {
+      "type": "integer"
+    },
+    "goal": {
+      "type": "object",
+      "required": [
+        "goal"
+      ],
+      "properties": {
+        "goal": {
+          "type": "object",
+          "required": [
+            "user_id",
+            "id",
+            "title",
+            "text"
+          ],
+          "properties": {
+            "user_id": {
+              "$ref": "#/definitions/user_id"
+            },
+            "id": {
+              "$ref": "#/definitions/id"
+            },
+            "title": {
+              "$ref": "#/definitions/title"
+            },
+            "text": {
+              "$ref": "#/definitions/text"
+            }
+          }
+        }
+      }
+    },
+    "goals": {
+      "type": "array",
+      "required": [
+        "goals"
+      ],
+      "items": {
+        "$ref": "#/definitions/goal"
+      }
+    },
+    "goal_id": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "image": {
+      "type": "string"
+    },
+    "last_sign_in_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_sign_in_ip": {
+      "type": "string"
+    },
+    "locked_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "name": {
+      "type": "string"
+    },
+    "parent": {
+      "type": "object"
+    },
+    "provider": {
+      "type": "string"
+    },
+    "refresh_token": {
+      "type": "string"
+    },
+    "remember_created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reset_password_sent_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "reset_password_token": {
+      "type": "string"
+    },
+    "role": {
+      "type": "integer"
+    },
+    "score": {
+      "type": "object",
+      "required": [
+        "score"
+      ],
+      "properties": {
+        "score": {
+          "type": "object",
+          "required": [
+            "id",
+            "value",
+            "goal_id",
+            "user_id"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/definitions/id"
+            },
+            "value": {
+              "$ref": "#/definitions/value"
+            },
+            "goal_id": {
+              "$ref": "#/definitions/goal_id"
+            },
+            "user_id": {
+              "$ref": "#/definitions/user_id"
+            }
+          }
+        }
+      }
+    },
+    "scores": {
+      "type": "array",
+      "required": [
+        "scores"
+      ],
+      "items": {
+        "$ref": "#/definitions/score"
+      }
+    },
+    "sign_in_count": {
+      "type": "integer"
+    },
+    "status": {
+      "type": "integer"
+    },
+    "subscriptions": {
+      "type": "array",
+      "required": [
+        "subscriptions"
+      ],
+      "items": {
+        "$ref": "#/definitions/goals"
+      }
+    },
+    "subscribers": {
+      "type": "array",
+      "required": [
+        "subscribers"
+      ],
+      "items": {
+        "$ref": "#/definitions/user"
+      }
+    },
+    "title": {
+      "type": "string"
+    },
+    "text": {
+      "type": "string"
+    },
+    "token": {
+      "type": "object",
+      "required": [
+        "token"
+      ],
+      "properties": {
+        "token": {
+          "type": "object",
+          "required": [
+            "user_id",
+            "id",
+            "provider",
+            "uid",
+            "access_token",
+            "refresh_token",
+            "image"
+          ],
+          "properties": {
+            "user_id": {
+              "$ref": "#/definitions/user_id"
+            },
+            "id": {
+              "$ref": "#/definitions/id"
+            },
+            "provider": {
+              "$ref": "#/definitions/provider"
+            },
+            "uid": {
+              "$ref": "#/definitions/uid"
+            },
+            "access_token": {
+              "$ref": "#/definitions/access_token"
+            },
+            "refresh_token": {
+              "$ref": "#/definitions/refresh_token"
+            },
+            "image": {
+              "$ref": "#/definitions/image"
+            }
+          }
+        }
+      }
+    },
+    "tokens": {
+      "type": "array",
+      "required": [
+        "tokens"
+      ],
+      "items": {
+        "$ref": "#/definitions/token"
+      }
+    },
+    "uid": {
+      "type": "string"
+    },
+    "unconfirmed_email": {
+      "type": "string"
+    },
+    "unlock_token": {
+      "type": "string"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "user": {
+      "type": "object",
+      "required": [
+        "user"
+      ],
+      "properties": {
+        "user": {
+          "type": "object",
+          "required": [
+            "email",
+            "id",
+            "name"
+          ],
+          "properties": {
+            "email": {
+              "$ref": "#/definitions/email"
+            },
+            "id": {
+              "$ref": "#/definitions/id"
+            },
+            "name": {
+              "$ref": "#/definitions/name"
+            }
+          }
+        }
+      }
+    },
+    "users": {
+      "type": "array",
+      "required": [
+        "users"
+      ],
+      "items": {
+        "$ref": "#/definitions/user"
+      }
+    },
+    "user_id": {
+      "type": "string"
+    },
+    "value": {
+      "type": "integer"
+    }
+  },
+  "links": [
+    {
+      "description": "Create a new goal.",
+      "href": "/goals",
+      "method": "POST",
+      "rel": "create",
+      "schema": {
+        "$ref": "#/definitions/goal"
+      },
+      "targetSchema": {
+        "$ref": "#/definitions/goal"
+      },
+      "title": "Create"
+    },
+    {
+      "description": "List goals.",
+      "href": "/goals",
+      "method": "GET",
+      "rel": "list",
+      "targetSchema": {
+        "items": {
+          "$ref": "#/definitions/goal"
+        },
+        "type": "array"
+      },
+      "title": "List"
+    }
+  ],
+  "type": "object"
+}

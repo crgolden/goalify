@@ -7,31 +7,33 @@
     paginator:     the paginator that renders the pagination tags inside
 -%>
 <%= paginator.render do -%>
-    <nav>
-      <ul class="pagination pagination-sm">
-        <% unless current_page.first? %>
-            <li><%= first_page_tag %></li>
-        <% end %>
-        <%# unless current_page.first? %>
-        <!--<li><%#= prev_page_tag %></li>-->
-        <%# end %>
-        <% each_page do |page| -%>
-            <% if page.left_outer? || page.right_outer? || page.inside_window? -%>
-                <% if page == current_page %>
-                    <li class="active"><%= page_tag page %></li>
-                <% else %>
-                    <li><%= page_tag page %></li>
-                <% end %>
-            <% elsif !page.was_truncated? -%>
-                <li><%= gap_tag %></li>
-            <% end -%>
-        <% end -%>
-        <%# unless current_page.last? %>
-        <!--<li><%#= next_page_tag %></li>-->
-        <%# end %>
-        <% unless current_page.last? %>
-            <li><%= last_page_tag %></li>
-        <% end %>
-      </ul>
-    </nav>
+    <div align="center">
+      <nav>
+        <ul class="pagination pagination-sm">
+          <% unless current_page.first? %>
+              <li><%= first_page_tag %></li>
+          <% end %>
+          <% unless current_page.first? %>
+              <li><%= prev_page_tag %></li>
+          <% end %>
+          <% each_page do |page| -%>
+              <% if page.left_outer? || page.right_outer? || page.inside_window? -%>
+                  <% if page == current_page %>
+                      <li class="active"><%= page_tag page %></li>
+                  <% else %>
+                      <li><%= page_tag page %></li>
+                  <% end %>
+              <% elsif !page.was_truncated? -%>
+                  <li class="disabled"><%= gap_tag %></li>
+              <% end -%>
+          <% end -%>
+          <% unless current_page.last? %>
+              <li><%= next_page_tag %></li>
+          <% end %>
+          <% unless current_page.last? %>
+              <li><%= last_page_tag %></li>
+          <% end %>
+        </ul>
+      </nav>
+    </div>
 <% end -%>

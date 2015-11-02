@@ -1,6 +1,6 @@
 class Token < ActiveRecord::Base
 
-  belongs_to :user
+  belongs_to :user, touch: true
 
   validates_presence_of :user, :uid, :provider
   validates_uniqueness_of :uid, scope: :provider

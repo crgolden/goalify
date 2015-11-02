@@ -1,42 +1,81 @@
 class GoalsController < ApplicationController
-  include GoalsHelper
-  before_action :authenticate_user!, except: [:show, :index]
-  authorize_resource only: [:index, :show, :edit]
-  load_and_authorize_resource only: [:new, :create, :update, :destroy]
+
+  before_action :authenticate_user!, only: [:new, :edit, :create, :update, :destroy]
+
+  authorize_resource only: [:index, :show, :edit, :comments, :scores, :search, :subscribers]
+  load_and_authorize_resource only: [:update, :destroy]
+  load_and_authorize_resource only: [:new, :create], through: :current_user
+
+  caches_page :index, :show, :comments, :scores, :search, :subscribers
+  caches_action :new, :edit
 
   def index
-    filter
+    @goals = Goal.includes(:user, :comments, :subscribers)
+                 .accessible_by(current_ability).page(page_params[:page]).per page_params[:per_page]
   end
 
   def show
-    load_goal
+    @goal = Goal.includes(:user, :comments, :subscribers).find params[:id]
   end
 
   def new
   end
 
   def edit
-    load_goal
+    @goal = Goal.includes(:user, :comments, :subscribers).find params[:id]
   end
 
   def create
-    @goal.user = current_user
-    @goal.save ? create_success : create_errors
+    if @goal.save
+      flash[:success] = I18n.t 'goals.create.success'
+      redirect_to @goal
+    else
+      flash.now[:error] = I18n.t 'goals.create.errors'
+      render :new
+    end
   end
 
   def update
-    @goal.update(goal_params) ? update_success : update_errors
+    if @goal.update goal_params
+      flash[:success] = I18n.t 'goals.update.success'
+      redirect_to @goal
+    else
+      flash.now[:error] = I18n.t 'goals.update.errors'
+      render :edit
+    end
   end
 
   def destroy
     @goal.destroy
-    destroy_success
+    flash[:success] = I18n.t 'goals.destroy.success'
+    redirect_to goals_path
+  end
+
+  def comments
+    @goal = Goal.includes(:user, :subscribers, comments: :user).find params[:id]
+    @comments = @goal.comments.includes(:user).page(page_params[:page]).per page_params[:per_page]
+  end
+
+  def scores
+    @goal = Goal.includes(:user, :comments, :subscribers, scores: :user).find params[:id]
+    @scores = @goal.scores.includes(:user).page(page_params[:page]).per page_params[:per_page]
+  end
+
+  def search
+    @goals = Goal.includes(:user, :comments, :subscribers)
+                 .accessible_by(current_ability).page(page_params[:page]).per(page_params[:per_page])
+                 .search_title_and_text query_params[:q]
+  end
+
+  def subscribers
+    @goal = Goal.includes(:user, :comments, subscribers: [:comments, :goals, :subscriptions, :tokens]).find(params[:id])
+    @subscribers = @goal.subscribers.includes(:comments, :goals, :subscriptions, :tokens).page(page_params[:page]).per page_params[:per_page]
   end
 
   private
 
   def goal_params
-    params.require(:goal).permit :title, :text, :score, comments_attributes: [:id, :body]
+    params.require(:goal).permit :title, :text, :user_id
   end
 
 end

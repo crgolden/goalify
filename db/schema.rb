@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151023003428) do
+ActiveRecord::Schema.define(version: 20151029143313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
@@ -20,22 +20,34 @@ ActiveRecord::Schema.define(version: 20151023003428) do
   create_table 'comments', id: :uuid, default: 'uuid_generate_v4()', force: :cascade do |t|
     t.uuid 'goal_id'
     t.uuid 'user_id'
-    t.text 'body'
+    t.text 'body', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
   end
+
+  add_index 'comments', ['goal_id'], name: 'index_comments_on_goal_id', using: :btree
+  add_index 'comments', ['user_id'], name: 'index_comments_on_user_id', using: :btree
 
   create_table 'goals', id: :uuid, default: 'uuid_generate_v4()', force: :cascade do |t|
+    t.uuid 'parent_id'
     t.uuid 'user_id'
     t.integer 'score', default: 0, null: false
-    t.string 'title'
+    t.string 'title', null: false
     t.text 'text'
-    t.integer 'parent_id'
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
   end
 
-  add_index 'goals', ['parent_id'], name: 'index_goals_on_parent_id', using: :btree
+  create_table 'goals_users', id: :uuid, default: 'uuid_generate_v4()', force: :cascade do |t|
+    t.uuid 'goal_id'
+    t.uuid 'user_id'
+    t.boolean 'completed', default: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+  end
+
+  add_index 'goals_users', ['goal_id'], name: 'index_goals_users_on_goal_id', using: :btree
+  add_index 'goals_users', ['user_id'], name: 'index_goals_users_on_user_id', using: :btree
 
   create_table 'pg_search_documents', force: :cascade do |t|
     t.text 'content'
@@ -48,19 +60,14 @@ ActiveRecord::Schema.define(version: 20151023003428) do
   add_index 'pg_search_documents', ['searchable_type', 'searchable_id'], name: 'index_pg_search_documents_on_searchable_type_and_searchable_id', using: :btree
 
   create_table 'scores', id: :uuid, default: 'uuid_generate_v4()', force: :cascade do |t|
-    t.uuid 'subscription_id'
-    t.integer 'value', default: 0
+    t.uuid 'goal_id'
+    t.integer 'value', null: false
+    t.string 'description', null: false
     t.datetime 'created_at', null: false
     t.datetime 'updated_at', null: false
   end
 
-  create_table 'subscriptions', id: :uuid, default: 'uuid_generate_v4()', force: :cascade do |t|
-    t.uuid 'user_id'
-    t.uuid 'goal_id'
-    t.boolean 'completed', default: false
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-  end
+  add_index 'scores', ['goal_id'], name: 'index_scores_on_goal_id', using: :btree
 
   create_table 'tokens', id: :uuid, default: 'uuid_generate_v4()', force: :cascade do |t|
     t.uuid 'user_id'
@@ -74,14 +81,15 @@ ActiveRecord::Schema.define(version: 20151023003428) do
     t.datetime 'updated_at', null: false
   end
 
-  add_index 'tokens', ['provider'], name: 'index_users_on_provider', using: :btree
-  add_index 'tokens', ['uid'], name: 'index_users_on_uid', using: :btree
+  add_index 'tokens', ['provider'], name: 'index_tokens_on_provider', using: :btree
+  add_index 'tokens', ['uid'], name: 'index_tokens_on_uid', using: :btree
+  add_index 'tokens', ['user_id'], name: 'index_tokens_on_user_id', using: :btree
 
   create_table 'users', id: :uuid, default: 'uuid_generate_v4()', force: :cascade do |t|
     t.integer 'score', default: 0, null: false
     t.integer 'role', default: 0, null: false
     t.integer 'status', default: 0, null: false
-    t.string 'email', default: '', null: false
+    t.string 'email', null: false
     t.string 'name'
     t.string 'authentication_token'
     t.string 'encrypted_password', default: '', null: false
@@ -112,9 +120,7 @@ ActiveRecord::Schema.define(version: 20151023003428) do
 
   add_foreign_key 'comments', 'goals'
   add_foreign_key 'comments', 'users'
+  add_foreign_key 'scores', 'goals'
   add_foreign_key 'goals', 'users'
-  add_foreign_key 'scores', 'subscriptions'
-  add_foreign_key 'subscriptions', 'goals'
-  add_foreign_key 'subscriptions', 'users'
   add_foreign_key 'tokens', 'users'
 end

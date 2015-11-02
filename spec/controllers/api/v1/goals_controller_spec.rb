@@ -166,6 +166,7 @@ describe Api::V1::GoalsController do
       end
 
       it 'doesn\'t delete own goal' do
+        request.env['HTTP_REFERER'] = root_path
         delete :destroy, id: @goal.id, format: :json
 
         expect(response.status).to eq 302

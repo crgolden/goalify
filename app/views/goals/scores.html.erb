@@ -1,2 +1,2 @@
 <%= content_for :page_title, I18n.t('goals.title.scores') %>
-<%= render partial: 'scores/score', collection: @scores %>
+<%= render partial: 'scores/score', collection: @scores.accessible_by(current_ability) %>

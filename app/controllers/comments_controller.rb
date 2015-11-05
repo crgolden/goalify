@@ -1,25 +1,26 @@
 class CommentsController < ApplicationController
 
+  include ActionView::Helpers::TextHelper
+
   before_action :authenticate_user!
 
   authorize_resource only: :create
   load_and_authorize_resource only: :destroy
 
   def create
-    @goal = Goal.find(comment_params[:goal_id])
-    @comment = @goal.comments.build comment_params
+    @comment = Goal.find(comment_params[:goal_id]).comments.build comment_params
     if @comment.save
-      flash[:success] = I18n.t 'comments.create.success'
+      flash[:notice] = I18n.t 'comments.create.success'
       redirect_to comments_goal_path @comment.goal
     else
-      flash[:error] = I18n.t 'comments.create.errors'
-      redirect_to @comment.goal
+      flash.now[:error] = I18n.t 'comments.errors', count: pluralize(@comment.errors.count, 'error')
+      render 'goals/show', goal: @comment.goal
     end
   end
 
   def destroy
     @comment.destroy
-    flash[:success] = I18n.t 'comments.destroy.success'
+    flash[:notice] = I18n.t 'comments.destroy.success'
     redirect_to comments_goal_path @comment.goal
   end
 

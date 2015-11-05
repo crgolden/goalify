@@ -2,41 +2,49 @@ module UsersHelper
 
   protected
 
-  def check_password
-    false unless user_params[:password].blank?
-    user_params.delete [:password, :password_confirmation]
-  end
-
   def init_users
-    User.includes(comments: :goal, goals: [:comments, :subscribers], scores: :goal, subscriptions: [:user, :comments, :subscribers], tokens: []).accessible_by(current_ability).page(page_params[:page]).per page_params[:per_page]
+    @users = User.includes(:comments, :goals, :scores, :subscriptions, :tokens).accessible_by(current_ability).page(page_params[:page]).per page_params[:per_page]
   end
 
   def init_user
-    @user = init_users.find params[:id]
+    init_users
+    @user = @users.find params[:id]
+    @comments = @user.comments.accessible_by(current_ability).any?
+    @goals = @user.goals.accessible_by(current_ability).any?
+    @scores = @user.scores.accessible_by(current_ability).any?
+    @subscriptions = @user.subscriptions.accessible_by(current_ability).any?
+    @tokens = @user.tokens.accessible_by(current_ability).any?
   end
 
   def init_comments
-    init_user.comments.accessible_by(current_ability).includes :goal
+    init_user
+    @comments = Kaminari.paginate_array(@user.comments.includes(:goal).accessible_by current_ability).page(page_params[:page]).per page_params[:per_page]
   end
 
   def init_goals
-    init_user.goals.accessible_by(current_ability).includes :comments, :subscribers
+    init_user
+    @goals = Kaminari.paginate_array(@user.goals.includes(:comments, :scores, :subscribers).accessible_by current_ability).page(page_params[:page]).per page_params[:per_page]
   end
 
   def init_scores
-    init_user.scores.accessible_by(current_ability).includes :goal
-  end
-
-  def init_search
-    init_users.search_name query_params
+    init_user
+    @scores = Kaminari.paginate_array(@user.scores.includes(:goal).accessible_by current_ability).page(page_params[:page]).per page_params[:per_page]
   end
 
   def init_subscriptions
-    init_user.subscriptions.accessible_by(current_ability).includes :user, :comments, :subscribers
+    init_user
+    @subscriptions = Kaminari.paginate_array(@user.subscriptions.includes(:user, :comments, :subscribers).accessible_by current_ability).page(page_params[:page]).per page_params[:per_page]
   end
 
   def init_tokens
-    init_user.tokens.accessible_by current_ability
+    init_user
+    @tokens = Kaminari.paginate_array(@user.tokens.accessible_by current_ability).page(page_params[:page]).per page_params[:per_page]
+  end
+
+  def check_password
+    false unless user_params[:password].blank?
+    user_params.delete :password
+    user_params.delete :password_confirmation
   end
 
   def needs_password?

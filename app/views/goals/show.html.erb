@@ -1,2 +1,23 @@
-<%= content_for :page_title, I18n.t('goals.title.show') %>
-<%= render @goal %>
+<% @goal = Goal.find params[:comment][:goal_id] if controller_name == 'comments' %>
+<%= content_for :page_title, t('goals.title.show') %>
+<%= content_for :nav, render('goals/dropdown_menu', goal: @goal) %>
+<%= render layout: 'layouts/list_group' do %>
+    <%= render 'goals/controls', goal: @goal %>
+    <%= render @goal %>
+    <% if @comments %>
+        <%= link_to 'Comments', comments_goal_path %>
+        <br>
+    <% end %>
+    <% if @scores %>
+        <%= link_to 'Scores', scores_goal_path %>
+        <br>
+    <% end %>
+    <% if @subscribers %>
+        <%= link_to 'Subscribers', subscribers_goal_path %>
+        <br>
+    <% end %>
+    <% if user_signed_in? %>
+        <% comment ||= @goal.comments.build %>
+        <%= render 'comments/form', comment: comment %>
+    <% end %>
+<% end %>

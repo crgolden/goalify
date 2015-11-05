@@ -1,26 +1,27 @@
 <% cache ['v1', score] do %>
-    <div class="row">
-      <ul class="list-group">
-        <li class="list-group-item">
-          Value: <b><%= score.value %></b>
-          <br>
-          Description: <b><%= score.description %></b>
-          <br>
-          Goal: <%= link_to score.goal.title, score.goal %>
-          <% if score.goal.score > 0 %>
-              <%= link_to score.goal.score, scores_goal_path(score.goal), class: 'badge' %>
-          <% else %>
-              <span class="badge"><%= score.goal.score %></span>
-          <% end %>
-          <br>
-          User: <%= link_to score.user.name, score.user %>
-          <% if score.user.score > 0 %>
-              <%= link_to score.user.score, scores_user_path(score.user), class: 'badge' %>
-          <% else %>
-              <span class="badge"><%= score.user.score %></span>
-          <% end %>
-          <br>
-        </li>
-      </ul>
-    </div>
+    Value: <b><%= score.value %></b>
+    <br>
+    Description: <b><%= score.description %></b>
+    <br>
+    Goal: <%= link_to score.goal.title, score.goal %>
+    <% if score.goal.score > 0 %>
+        <%= link_to score.goal.score, scores_goal_path(score.goal), class: 'badge' %>
+    <% else %>
+        <span class="badge"><%= score.goal.score %></span>
+    <% end %>
+    <br>
+    Goal Subscriber: <%= link_to score.user.name, score.user %>
+    <% if score.user.score > 0 %>
+        <%= link_to score.user.score, scores_user_path(score.user), class: 'badge' %>
+    <% else %>
+        <span class="badge"><%= score.user.score %></span>
+    <% end %>
+    <br>
+    Goal User: <%= link_to score.goal.user.name, score.user %>
+    <% if score.goal.user.score > 0 %>
+        <%= link_to score.goal.user.score, scores_user_path(score.goal.user), class: 'badge' %>
+    <% else %>
+        <span class="badge"><%= score.goal.user.score %></span>
+    <% end %>
+    <br>
 <% end %>

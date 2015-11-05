@@ -16,7 +16,6 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :subscriptions, class_name: 'Goal', touch: true
 
   validates :name, presence: true
-  validates :email, presence: true, uniqueness: true
   validates :authentication_token, uniqueness: true
 
   paginates_per 10
@@ -35,7 +34,7 @@ class User < ActiveRecord::Base
   end
 
   def self.demo_user
-    User.includes(:goals).find_by(email: Rails.application.secrets.admin_email)
+    User.includes(:goals).find_by email: Rails.application.secrets.admin_email
   end
 
   def self.exists_for_email?(email)
@@ -74,10 +73,6 @@ class User < ActiveRecord::Base
 
   def tokens?
     self.tokens.any?
-  end
-
-  def users?
-    self.users.any?
   end
 
   def self.with_highest_score

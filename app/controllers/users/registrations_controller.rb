@@ -1,4 +1,5 @@
 class Users::RegistrationsController < Devise::RegistrationsController
+
   # DELETE /resource
   def destroy
     resource.soft_delete
@@ -7,4 +8,5 @@ class Users::RegistrationsController < Devise::RegistrationsController
     yield resource if block_given?
     respond_with_navigational(resource){ redirect_to after_sign_out_path_for(resource_name) }
   end
+
 end

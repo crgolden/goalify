@@ -1,13 +1,9 @@
 <h5 align="center">
-  <% if current_page?(goal) %>
+  <%= link_to_unless_current '<i class="glyphicon glyphicon-search"></i> Show'.html_safe, goal do %>
       <i class="glyphicon glyphicon-search"></i> Show
-  <% else %>
-      <%= link_to goal do %>
-          <i class="glyphicon glyphicon-search"></i> Show
-      <% end %>
   <% end %>
   <% if user_signed_in? %>
-      <% if goal.has_subscriber?(current_user) %>
+      <% if goal.has_subscriber? current_user %>
           <% subscription = GoalsUsers.find_by goal: goal, user: current_user %>
           <% if subscription.completed? %>
               | <i class="glyphicon glyphicon-ok"></i> Completed
@@ -28,12 +24,8 @@
               <i class="glyphicon glyphicon-plus"></i> Subscribe
           <% end %>
       <% end %>
-      <% if current_page?(edit_goal_path goal) %>
-          <% if can? :update, goal %>
-              | <i class="glyphicon glyphicon-pencil"></i> Edit
-          <% end %>
-      <% elsif can? :update, goal %>
-          | <%= link_to edit_goal_path(goal) do %>
+      <% if can? :update, goal %>
+          | <%= link_to_unless_current '<i class="glyphicon glyphicon-pencil"></i> Edit'.html_safe, edit_goal_path(goal) do %>
               <i class="glyphicon glyphicon-pencil"></i> Edit
           <% end %>
       <% end %>

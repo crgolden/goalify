@@ -6,7 +6,7 @@ class TokensController < ApplicationController
 
   def destroy
     @token.destroy
-    flash[:success] = I18n.t 'tokens.destroy.success'
+    flash[:notice] = I18n.t 'tokens.destroy.success'
     redirect_to tokens_user_path(@token.user)
   end
 

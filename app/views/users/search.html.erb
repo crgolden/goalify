@@ -1,2 +1,8 @@
-<%= content_for :page_title, I18n.t('users.title.search') %>
-<%= render @users %>
+<%= content_for :page_title, t('users.title.search') %>
+<%= content_for :nav, render('form_search') %>
+<% @users.each do |user| %>
+    <%= render layout: 'layouts/list_group' do %>
+        <%= render 'controls', user: user %>
+        <%= render user %>
+    <% end %>
+<% end %>

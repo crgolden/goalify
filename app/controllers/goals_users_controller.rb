@@ -5,7 +5,7 @@ class GoalsUsersController < ApplicationController
   def create
     subscription = GoalsUsers.new subscription_params
     if subscription.save
-      flash[:success] = I18n.t 'goals_users.create.success'
+      flash[:notice] = I18n.t 'goals_users.create.success'
       redirect_to :back
     end
   end
@@ -21,7 +21,7 @@ class GoalsUsersController < ApplicationController
   def destroy
     subscription = GoalsUsers.find params[:id]
     subscription.destroy
-    flash[:success] = I18n.t 'goals_users.destroy.success'
+    flash[:notice] = I18n.t 'goals_users.destroy.success'
     redirect_to :back
   end
 

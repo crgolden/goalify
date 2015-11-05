@@ -120,7 +120,7 @@ describe Api::V1::GoalsController do
 
       it 'creates a goal with valid data' do
         attr = {title: 'New Title', text: 'New Text'}
-        post :create, goal: attr, format: :json
+        post :create, attr, format: :json
         goal = json_response[:goal]
 
         expect(response.status).to eq 201
@@ -142,8 +142,8 @@ describe Api::V1::GoalsController do
       end
 
       it 'updates own goal with valid data' do
-        attr = {title: 'Updated Title', text: 'Updated Text'}
-        put :update, id: @goal.id, goal: attr, format: :json
+        attr = {id: @goal.id, title: 'Updated Title', text: 'Updated Text'}
+        put :update, attr, format: :json
         goal = json_response[:goal]
         @goal.reload
 
@@ -155,8 +155,8 @@ describe Api::V1::GoalsController do
       end
 
       it 'doesn\'t update own goal with blank title' do
-        attr = {title: ''}
-        put :update, id: @goal.id, goal: attr, format: :json
+        attr = {id: @goal.id, title: ''}
+        put :update, attr, format: :json
         goal = json_response
         @goal.reload
 

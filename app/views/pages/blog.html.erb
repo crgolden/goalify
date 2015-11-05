@@ -1,8 +1,6 @@
-<%= content_for :page_title, I18n.t('pages.blog') %>
-<div class="row">
-  <ul class="list-group">
-    <li class="list-group-item">
-      <h3>Coming Soon!</h3>
-    </li>
-  </ul>
-</div>
+<%= cache do %>
+    <%= content_for :page_title, t('pages.blog') %>
+    <%= render layout: 'layouts/list_group' do %>
+        <h3>Coming Soon!</h3>
+    <% end %>
+<% end %>

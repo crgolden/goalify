@@ -109,7 +109,6 @@ describe Api::V1::UsersController do
       end
 
       it 'updates own user with valid name (with password)' do
-        skip 'show template?'
         attr = {id: @user.id, name: Faker::Name.name, password: @user.password, password_confirmation: @user.password}
         put :update, attr, format: :json
         user = json_response[:user]
@@ -122,7 +121,6 @@ describe Api::V1::UsersController do
         expect(@user.name).to eq attr[:name]
       end
       it 'updates own user with valid email (without password)' do
-        skip 'show template?'
         attr = {id: @user.id, email: Faker::Internet.email}
         put :update, attr, format: :json
         user = json_response[:user]
@@ -175,7 +173,6 @@ describe Api::V1::UsersController do
       end
 
       it 'creates another user with valid data' do
-        skip 'show template?'
         attr = {name: Faker::Name.name, email: Faker::Internet.email, password: Faker::Internet.password}
         post :create, attr, format: :json
         user = json_response[:user]
@@ -208,7 +205,6 @@ describe Api::V1::UsersController do
       end
 
       it 'updates another user with valid name (without password)' do
-        skip 'show template?'
         attr = {id: @user.id, name: Faker::Name.name}
         put :update, attr, format: :json
         user = json_response
@@ -221,7 +217,6 @@ describe Api::V1::UsersController do
         expect(@user.name).to eq attr[:name]
       end
       it 'updates another user with valid email (with password)' do
-        skip 'show template?'
         attr = {id: @user.id, email: Faker::Internet.email}
         put :update, attr, format: :json
         user = json_response

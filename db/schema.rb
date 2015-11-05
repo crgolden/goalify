@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20151029143313) do
 
   create_table 'scores', id: :uuid, default: 'uuid_generate_v4()', force: :cascade do |t|
     t.uuid 'goal_id'
+    t.uuid 'user_id'
     t.integer 'value', null: false
     t.string 'description', null: false
     t.datetime 'created_at', null: false
@@ -68,6 +69,7 @@ ActiveRecord::Schema.define(version: 20151029143313) do
   end
 
   add_index 'scores', ['goal_id'], name: 'index_scores_on_goal_id', using: :btree
+  add_index 'scores', ['user_id'], name: 'index_scores_on_user_id', using: :btree
 
   create_table 'tokens', id: :uuid, default: 'uuid_generate_v4()', force: :cascade do |t|
     t.uuid 'user_id'
@@ -121,6 +123,7 @@ ActiveRecord::Schema.define(version: 20151029143313) do
   add_foreign_key 'comments', 'goals'
   add_foreign_key 'comments', 'users'
   add_foreign_key 'scores', 'goals'
+  add_foreign_key 'scores', 'users'
   add_foreign_key 'goals', 'users'
   add_foreign_key 'tokens', 'users'
 end

@@ -19,7 +19,7 @@ describe GoalsUsersController do
         attr = {goal_id: @subscription.goal_id, user_id: @user.id}
         post :create, subscription: attr
 
-        expect(flash[:success]).to eq I18n.t 'goals_users.create.success'
+        expect(flash[:notice]).to eq I18n.t 'goals_users.create.success'
         expect(response.status).to eq 302
         expect(response).to redirect_to @subscription.goal
         expect(GoalsUsers.find_by goal_id: attr[:goal_id], user_id: attr[:user_id]).not_to be nil
@@ -39,7 +39,7 @@ describe GoalsUsersController do
       it 'deletes own GoalsUsers' do
         delete :destroy, id: @subscription.id
 
-        expect(flash[:success]).to eq I18n.t 'goals_users.destroy.success'
+        expect(flash[:notice]).to eq I18n.t 'goals_users.destroy.success'
         expect(response.status).to eq 302
         expect(response).to redirect_to @subscription.goal
         expect(GoalsUsers.find_by id: @subscription.id).to be nil

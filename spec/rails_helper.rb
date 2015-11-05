@@ -15,6 +15,7 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
   config.infer_spec_type_from_file_location!
 
+  config.include ActionView::Helpers::TextHelper, type: :controller
   config.include Devise::TestHelpers, type: :controller # sign_in, sign_out methods in controller specs
   config.include FactoryGirl::Syntax::Methods # create, build, etc. methods without FactoryGirl prefix
   config.include Omniauth::Mock

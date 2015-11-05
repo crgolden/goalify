@@ -1,2 +1,9 @@
-<%= content_for :page_title, I18n.t('users.title.scores') %>
-<%= render partial: 'scores/score', collection: @scores %>
+<% cache ['v1', @scores] do %>
+    <%= content_for :page_title, t('users.title.scores') %>
+    <%= content_for :nav, render('dropdown_menu') %>
+    <% @scores.each do |score| %>
+        <%= render layout: 'layouts/list_group' do %>
+            <%= render 'scores/score', score: score %>
+        <% end %>
+    <% end %>
+<% end %>

@@ -26,22 +26,22 @@ en:
   comments:
     create:
       success: "Comment successfully created."
-      errors: "There was a problem creating the comment."
     update:
       success: "Comment was successfully updated."
-      errors: "There was a problem updating the comment."
     destroy:
       success: "Comment was successfully deleted."
+    errors: !xml |
+            %{count} prohibited this Comment from being saved:
   description: "A site to create and complete goals"
   goals:
     create:
       success: "Goal successfully created."
-      errors: "There was a problem creating the goal."
     update:
       success: "Goal was successfully updated."
-      errors: "There was a problem updating the goal."
     destroy:
       success: "Goal was successfully deleted."
+    errors: !xml |
+            %{count} prohibited this Goal from being saved:
     title:
       index: "Goalify: All Goals"
       show: "Goalify: Showing Goal"
@@ -71,13 +71,13 @@ en:
     create:
       confirmed_success: "User successfully created."
       unconfirmed_success: "User successfully created. Email sent with confirmation instructions."
-      errors: "There was a problem creating the user."
     update:
       confirmed_success: "User was successfully updated."
       unconfirmed_success: "User was successfully updated. Email sent with confirmation instructions."
-      errors: "There was a problem updating the user."
     destroy:
       success: "User was successfully deactivated."
+    errors: !xml |
+            %{count} prohibited this User from being saved:
     registration:
       title:
         edit: "Goalify: Edit Registration"
@@ -95,7 +95,7 @@ en:
       goals: "Goalify: Goals"
       scores: "Goalify: Scores"
       subscriptions: "Goalify: Subscriptions"
-      tokens: "Goalify: "
+      tokens: "Goalify: Tokens"
   views:
     pagination:
       first: !xml |

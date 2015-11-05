@@ -1,2 +1,10 @@
-<%= content_for :page_title, I18n.t('users.title.goals') %>
-<%= render partial: 'goals/goal', collection: @goals %>
+<% cache ['v1', @goals] do %>
+    <%= content_for :page_title, t('users.title.goals') %>
+    <%= content_for :nav, render('dropdown_menu') %>
+    <% @goals.each do |goal| %>
+        <%= render layout: 'layouts/list_group' do %>
+            <%= render 'goals/controls', goal: goal %>
+            <%= render 'goals/goal', goal: goal %>
+        <% end %>
+    <% end %>
+<% end %>

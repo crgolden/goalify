@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
 
+  include ActionView::Helpers::TextHelper
   include UsersHelper
 
   before_action :authenticate_user!, only: [:new, :edit, :create, :update, :destroy]
@@ -11,30 +12,30 @@ class UsersController < ApplicationController
   caches_action :new, :edit
 
   def index
-    @users = init_users
+    init_users
   end
 
   def show
-    @user = init_user
+    init_user
   end
 
   def new
   end
 
   def edit
-    @user = init_user
+    init_user
   end
 
   def create
     if @user.save
       if @user.confirmed_at.present?
-        flash[:success] = I18n.t('users.create.confirmed_success')
+        flash[:notice] = I18n.t('users.create.confirmed_success')
       else
         flash[:notice] = I18n.t('users.create.unconfirmed_success')
       end
       redirect_to @user
     else
-      flash.now[:error] = I18n.t 'users.create.errors'
+      flash.now[:error] = I18n.t 'users.errors', count: pluralize(@user.errors.count, 'error')
       render :new
     end
   end
@@ -50,51 +51,56 @@ class UsersController < ApplicationController
 
   def destroy
     @user.soft_delete
-    flash[:success] = I18n.t 'users.update.confirmed_success'
+    flash[:notice] = I18n.t 'users.update.confirmed_success'
     redirect_to @user
   end
 
   def comments
-    @comments = Kaminari.paginate_array(init_comments).page(page_params[:page]).per page_params[:per_page]
+    init_comments
   end
 
   def goals
-    @goals = Kaminari.paginate_array(init_goals).page(page_params[:page]).per page_params[:per_page]
+    init_goals
   end
 
   def search
-    @users = init_search
+    @users = init_users.search_name query_params[:q]
   end
 
   def scores
-    @scores = Kaminari.paginate_array(init_scores).page(page_params[:page]).per page_params[:per_page]
+    init_scores
   end
 
   def subscriptions
-    @subscriptions = Kaminari.paginate_array(init_subscriptions).page(page_params[:page]).per page_params[:per_page]
+    init_subscriptions
   end
 
   def tokens
-    @tokens = Kaminari.paginate_array(init_tokens).page(page_params[:page]).per page_params[:per_page]
+    init_tokens
   end
 
   protected
 
-  def update_errors
-    flash[:error] = I18n.t 'users.update.errors'
-    render :edit
+  def update_success
+    if @user.unconfirmed_email.present?
+      flash[:notice] = I18n.t 'users.update.unconfirmed_success'
+    else
+      flash[:notice] = I18n.t 'users.update.confirmed_success'
+    end
+    redirect_to @user
   end
 
-  def update_success
-    update_current_user
-    @user.unconfirmed_email.present? ? flash[:notice] = I18n.t('users.update.unconfirmed_success') : flash[:success] = I18n.t('users.update.confirmed_success')
-    redirect_to @user
+  def update_errors
+    flash.now[:error] = I18n.t 'users.errors', count: pluralize(@user.errors.count, 'error')
+    render :edit
   end
 
   private
 
   def user_params
-    params.require(:user).permit :name, :email, :role, :status, :confirmed_at, :password, :password_confirmation
+    accessible = [:name, :email, :role, :status, :confirmed_at]
+    accessible << [:password, :password_confirmation] unless params[:user][:password].blank?
+    params.require(:user).permit(accessible)
   end
 
 end

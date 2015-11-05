@@ -1,2 +1,26 @@
-<%= content_for :page_title, I18n.t('users.title.show') %>
-<%= render @user %>
+<%= content_for :page_title, t('users.title.show') %>
+<%= content_for :nav, render('dropdown_menu') %>
+<%= render layout: 'layouts/list_group' do %>
+    <%= render 'controls', user: @user %>
+    <%= render @user %>
+    <% if @comments %>
+        <%= link_to 'Comments', comments_user_path %>
+        <br>
+    <% end %>
+    <% if @goals %>
+        <%= link_to 'Goals', goals_user_path %>
+        <br>
+    <% end %>
+    <% if @scores %>
+        <%= link_to 'Scores', scores_user_path %>
+        <br>
+    <% end %>
+    <% if @subscriptions %>
+        <%= link_to 'Subscriptions', subscriptions_user_path %>
+        <br>
+    <% end %>
+    <% if @tokens %>
+        <%= link_to 'Tokens', tokens_user_path %>
+        <br>
+    <% end %>
+<% end %>

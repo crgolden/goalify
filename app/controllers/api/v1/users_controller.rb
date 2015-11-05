@@ -14,16 +14,16 @@ class Api::V1::UsersController < Api::V1::ApiController
   wrap_parameters :user, format: :json
 
   def index
-    @users = init_users
+    init_users
   end
 
   def show
-    @user = init_user
+    init_user
   end
 
   def create
     if @user.save
-      render :show, status: :created, location: [:api, @user]
+      render :show, status: :created, location: [:api, @user], formats: :json
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -33,9 +33,9 @@ class Api::V1::UsersController < Api::V1::ApiController
     check_password
     if needs_password?
       @user.update(user_params) ? update_success : update_errors
+    else
+      @user.update_without_password(user_params) ? update_success : update_errors
     end
-  else
-    @user.update_without_password(user_params) ? update_success : update_errors
   end
 
   def destroy
@@ -44,44 +44,45 @@ class Api::V1::UsersController < Api::V1::ApiController
   end
 
   def comments
-    @comments = Kaminari.paginate_array(init_comments).page(page_params[:page]).per page_params[:per_page]
+    init_comments
   end
 
   def goals
-    @goals = Kaminari.paginate_array(init_goals).page(page_params[:page]).per page_params[:per_page]
+    init_goals
   end
 
   def search
-    @users = init_search
+    @users = init_users.search_name query_params[:q]
   end
 
   def scores
-    @scores = Kaminari.paginate_array(init_scores).page(page_params[:page]).per page_params[:per_page]
+    init_scores
   end
 
   def subscriptions
-    @subscriptions = Kaminari.paginate_array(init_subscriptions).page(page_params[:page]).per page_params[:per_page]
+    init_subscriptions
   end
 
   def tokens
-    @tokens = Kaminari.paginate_array(init_tokens).page(page_params[:page]).per page_params[:per_page]
+    init_tokens
   end
 
   protected
+
+  def update_success
+    render :show, status: :ok, location: [:api, @user], formats: :json
+  end
 
   def update_errors
     render json: @user.errors, status: :unprocessable_entity
   end
 
-  def update_success
-    update_current_user
-    render :show, status: :ok, location: [:api, @user]
-  end
-
   private
 
   def user_params
-    params.permit :name, :email, :role, :status, :confirmed_at, :password, :password_confirmation
+    accessible = [:name, :email, :role]
+    accessible << [:password, :password_confirmation] unless params[:password].blank?
+    params.permit accessible
   end
 
 end

@@ -1,12 +1,9 @@
 class GoalsUsers < ActiveRecord::Base
 
-  belongs_to :goal
-  belongs_to :user
+  belongs_to :goal, class_name: 'Goal'
+  belongs_to :user, class_name: 'User'
 
-  after_create { self.goal.scores.create value: Score.created_value, description: (self.user.name + ' subscribed to ' + self.goal.title) }
-  after_update { self.goal.scores.create value: Score.completed_value, description: (self.user.name + ' completed ' + self.goal.title) }
-  after_destroy { self.goal.scores.each do |score|
-    score.destroy
-  end }
-
+  after_create { Score.create value: Score.created_value, description: (self.user.name + ' subscribed to ' + self.goal.title), user: self.user, goal: self.goal }
+  after_update { Score.create value: Score.completed_value, description: (self.user.name + ' completed ' + self.goal.title), user: self.user, goal: self.goal }
+  before_destroy { Score.where(user: self.user, goal: self.goal).each { |score| score.destroy } }
 end

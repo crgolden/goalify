@@ -1,2 +1,10 @@
-<%= content_for :page_title, I18n.t('users.title.comments') %>
-<%= render partial: 'comments/comment', collection: @comments %>
+<% cache ['v1', @comments] do %>
+    <%= content_for :page_title, t('users.title.comments') %>
+    <%= content_for :nav, render('dropdown_menu') %>
+    <% @comments.each do |comment| %>
+        <%= render layout: 'layouts/list_group' do %>
+            <%= render 'comments/controls', comment: comment %>
+            <%= render 'comments/comment', comment: comment %>
+        <% end %>
+    <% end %>
+<% end %>

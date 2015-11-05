@@ -1,2 +1,4 @@
-<%= content_for :page_title, I18n.t('users.title.new') %>
-<%= render partial: 'form', locals: {action: :create} %>
+<%= content_for :page_title, t('users.title.new') %>
+<%= render layout: 'layouts/list_group' do %>
+    <%= render 'form', user: @user, url: admin_users_path, action: :create %>
+<% end %>

@@ -15,16 +15,17 @@ class Api::V1::GoalsController < Api::V1::ApiController
   wrap_parameters :goal, format: :json
 
   def index
-    @goals = init_goals
+    init_goals
   end
 
   def show
-    @goal = init_goal
+    init_goal
+    @subscription = GoalsUsers.find_by(goal: @goal, user: current_user) if user_signed_in?
   end
 
   def create
     if @goal.save
-      render :show, status: :created, location: [:api, @goal]
+      render :show, status: :created, location: [:api, @goal], formats: :json
     else
       render json: @goal.errors, status: :unprocessable_entity
     end
@@ -32,7 +33,7 @@ class Api::V1::GoalsController < Api::V1::ApiController
 
   def update
     if @goal.update goal_params
-      render :show, status: :ok, location: [:api, @goal]
+      render :show, status: :ok, location: [:api, @goal], formats: :json
     else
       render json: @goal.errors, status: :unprocessable_entity
     end
@@ -44,25 +45,25 @@ class Api::V1::GoalsController < Api::V1::ApiController
   end
 
   def comments
-    @comments = Kaminari.paginate_array(init_comments).page(page_params[:page]).per page_params[:per_page]
+    init_comments
   end
 
   def scores
-    @scores = Kaminari.paginate_array(init_scores).page(page_params[:page]).per page_params[:per_page]
+    init_scores
   end
 
   def search
-    @goals = init_search
+    @goals = init_goals.search_title_and_text query_params[:q]
   end
 
   def subscribers
-    @subscribers = Kaminari.paginate_array(init_subscribers).page(page_params[:page]).per page_params[:per_page]
+    init_subscribers
   end
 
   private
 
   def goal_params
-    params.require(:goal).permit :title, :text
+    params.permit :title, :text
   end
 
 end

@@ -1,2 +1,6 @@
-<%= content_for :page_title, I18n.t('goals.title.edit') %>
-<%= render partial: 'form' %>
+<%= content_for :page_title, t('goals.title.edit') %>
+<%= content_for :nav, render('goals/dropdown_menu', goal: @goal) %>
+<%= render layout: 'layouts/list_group' do %>
+    <%= render 'controls', goal: @goal %>
+    <%= render 'form', goal: @goal %>
+<% end %>

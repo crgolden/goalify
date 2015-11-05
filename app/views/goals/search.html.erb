@@ -1,2 +1,8 @@
-<%= content_for :page_title, I18n.t('goals.title.search') %>
-<%= render @goals %>
+<%= content_for :page_title, t('goals.title.search') %>
+<%= content_for :nav, render('form_search') %>
+<% @goals.each do |goal| %>
+    <%= render layout: 'layouts/list_group' do %>
+        <%= render 'controls', goal: goal %>
+        <%= render goal %>
+    <% end %>
+<% end %>

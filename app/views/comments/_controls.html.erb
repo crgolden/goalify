@@ -1,0 +1,7 @@
+<h5 align="center">
+  <% if can? :destroy, comment %>
+      <%= link_to comment, method: :delete, data: {confirm: 'Are you sure?'} do %>
+          <i class="glyphicon glyphicon-trash"></i> Delete
+      <% end %>
+  <% end %>
+</h5>

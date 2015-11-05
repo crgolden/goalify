@@ -1,41 +1,44 @@
-<ul class="dropdown-menu" role="menu">
-  <% if current_page? action: :show %>
-      <li class="active">
-  <% else %>
-      <li>
-  <% end %><%= link_to 'Show Goal', goal %></li>
-
-  <% if can? :update, goal %>
-      <% if current_page? action: :edit %>
-          <li class="active">
-      <% else %>
-          <li>
-      <% end %><%= link_to 'Edit Goal', goal %></li>
-  <% end %>
-  <% if can? :destroy, goal %>
-      <li><%= link_to 'Delete Goal', goal, method: :delete %></li>
-  <% end %>
-  <% if goal.comments? or (goal.score >0) or goal.subscribers? %>
-      <li class="divider"></li>
-      <% if goal.comments? %>
-          <% if current_page? comments_goal_path(goal) %>
-              <li class="active">
-          <% else %>
-              <li>
-          <% end %><%= link_to 'Goal Comments', comments_goal_path(goal) %></li>
-      <% elsif goal.score > 0 %>
-          <% if current_page? scores_goal_path(goal) %>
-              <li class="active">
-          <% else %>
-              <li>
-          <% end %><%= link_to 'Goal Scores', scores_goal_path(goal) %></li>
-      <% elsif goal.subscribers? %>
-          <% if current_page? scores_goal_path(goal) %>
-              <li class="active">
-          <% else %>
-              <li>
-          <% end %><%= link_to 'Goal Subscribers', subscribers_goal_path(goal) %></li>
-      <% else %>
-      <% end %>
-  <% end %>
-</ul>
+<li class="active dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">Goal
+    <span class="caret"></span></a>
+  <ul class="dropdown-menu" role="menu">
+    <% if current_page? goal %>
+        <li class="active">
+    <% else %>
+        <li>
+    <% end %><%= link_to 'Show Goal', goal %></li>
+    <% if can? :update, goal %>
+        <% if current_page? edit_goal_path(goal) %>
+            <li class="active">
+        <% else %>
+            <li>
+        <% end %><%= link_to 'Edit Goal', edit_goal_path(goal) %></li>
+    <% end %>
+    <% if can? :destroy, goal %>
+        <li><%= link_to 'Delete Goal', goal, method: :delete %></li>
+    <% end %>
+    <li class="divider"></li>
+    <li><%= link_to 'Goal User', goal.user %></li>
+    <% if @comments %>
+        <% if current_page? comments_goal_path(goal) %>
+            <li class="active">
+        <% else %>
+            <li>
+        <% end %><%= link_to 'Goal Comments', comments_goal_path(goal) %></li>
+    <% end %>
+    <% if @scores %>
+        <% if current_page? scores_goal_path(goal) %>
+            <li class="active">
+        <% else %>
+            <li>
+        <% end %><%= link_to 'Goal Scores', scores_goal_path(goal) %></li>
+    <% end %>
+    <% if @subscribers %>
+        <% if current_page? subscribers_goal_path(goal) %>
+            <li class="active">
+        <% else %>
+            <li>
+        <% end %><%= link_to 'Goal Subscribers', subscribers_goal_path(goal) %></li>
+    <% end %>
+  </ul>
+</li>

@@ -1,2 +1,10 @@
-<%= content_for :page_title, I18n.t('users.title.tokens') %>
-<%= render partial: 'tokens/token', collection: @tokens %>
+<% cache ['v1', @tokens] do %>
+    <%= content_for :page_title, t('users.title.tokens') %>
+    <%= content_for :nav, render('dropdown_menu') %>
+    <% @tokens.each do |token| %>
+        <%= render layout: 'layouts/list_group' do %>
+            <%= render 'tokens/controls', token: token %>
+            <%= render 'tokens/token', token: token %>
+        <% end %>
+    <% end %>
+<% end %>

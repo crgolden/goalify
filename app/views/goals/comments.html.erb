@@ -1,2 +1,10 @@
-<%= content_for :page_title, I18n.t('goals.title.comments') %>
-<%= render partial: 'comments/comment', collection: @comments %>
+<% cache ['v1', @comments] do %>
+    <%= content_for :page_title, t('goals.title.comments') %>
+    <%= content_for :nav, render('goals/dropdown_menu', goal: @goal) %>
+    <% @comments.each do |comment| %>
+        <%= render layout: 'layouts/list_group' do %>
+            <%= render 'comments/controls', comment: comment %>
+            <%= render 'comments/comment', comment: comment %>
+        <% end %>
+    <% end %>
+<% end %>

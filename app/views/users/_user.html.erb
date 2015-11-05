@@ -1,55 +1,32 @@
 <% cache ['v1', user] do %>
-    <div class="row">
-      <ul class="list-group">
-        <li class="list-group-item">
-          <%= render partial: 'users/controls', locals: {user: user} %>
-          Name: <b><%= user.name %></b>
-          <br>
-          Score:
-          <% if user.score > 0 %>
-              <%= link_to user.score, scores_user_path(user), class: 'badge' %>
-          <% else %>
-              <span class="badge"><%= user.score %></span>
-          <% end %>
-          <br>
-          <% if user_signed_in? and (current_user.admin? or current_user == user) %>
-              Email: <%= mail_to user.email %>
-              <br>
-              Authentication token: <b><%= user.authentication_token %></b>
-              <br>
-          <% end %>
-          Status: <b><%= user.status %></b>
-          <br>
-          Role: <b><%= user.role %></b>
-          <br>
-          Joined on: <b><%= user.created_at.to_formatted_s :short %></b>
-          <br>
-          <% if user.current_sign_in_at %>
-              Last logged in: <b><%= user.current_sign_in_at.to_formatted_s :short %></b>
-              <br>
-              Has logged in: <b><%= user.sign_in_count %></b> times
-              <br>
-          <% else %>
-              Has never logged in
-              <br>
-          <% end %>
-          <% if user.comments? %>
-              <%= link_to 'Comments', comments_user_path(user) %>
-              <br>
-          <% end %>
-          <% if user.goals? %>
-              <%= link_to 'Goals', goals_user_path(user) %>
-              <br>
-          <% end %>
-          <% if user.subscriptions? %>
-              <%= link_to 'Subscriptions', subscriptions_user_path(user) %>
-              <br>
-          <% end %>
-          <% if user.tokens? %>
-              <%= link_to 'Tokens', tokens_user_path(user) %>
-              <br>
-          <% end %>
-        </li>
-      </ul>
-    </div>
+    Name: <b><%= user.name %></b>
+    <br>
+    Score:
+    <% if user.score > 0 %>
+        <%= link_to user.score, scores_user_path(user), class: 'badge' %>
+    <% else %>
+        <span class="badge"><%= user.score %></span>
+    <% end %>
+    <br>
+    Joined on: <b><%= user.created_at.to_formatted_s :short %></b>
+    <br>
+    <% if user.current_sign_in_at %>
+        Last logged in: <b><%= user.current_sign_in_at.to_formatted_s :short %></b>
+        <br>
+        Has logged in: <b><%= user.sign_in_count %></b> times
+        <br>
+    <% else %>
+        Has never logged in
+        <br>
+    <% end %>
+    <% if user_signed_in? and (current_user.admin? or current_user == user) %>
+        Email: <%= mail_to user.email %>
+        <br>
+        Authentication token: <b><%= user.authentication_token %></b>
+        <br>
+    <% end %>
+    Status: <b><%= user.status %></b>
+    <br>
+    Role: <b><%= user.role %></b>
+    <br>
 <% end %>

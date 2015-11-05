@@ -1,5 +1,6 @@
 class GoalsController < ApplicationController
 
+  include ActionView::Helpers::TextHelper
   include GoalsHelper
 
   before_action :authenticate_user!, only: [:new, :edit, :create, :update, :destroy]
@@ -12,60 +13,62 @@ class GoalsController < ApplicationController
   caches_action :new, :edit
 
   def index
-    @goals = init_goals
+    init_goals
   end
 
   def show
-    @goal = init_goal
+    init_goal
+    @subscription = GoalsUsers.find_by(goal: @goal, user: current_user) if user_signed_in?
   end
 
   def new
   end
 
   def edit
-    @goal = init_goal
+    init_goal
+    @subscription = GoalsUsers.find_by(goal: @goal, user: current_user) if user_signed_in?
   end
 
   def create
     if @goal.save
-      flash[:success] = I18n.t 'goals.create.success'
+      flash[:notice] = I18n.t 'goals.create.success'
       redirect_to @goal
     else
-      flash.now[:error] = I18n.t 'goals.create.errors'
+      flash.now[:notice] = I18n.t 'goals.errors', count: pluralize(@goal.errors.count, 'error')
       render :new
     end
   end
 
   def update
     if @goal.update goal_params
-      flash[:success] = I18n.t 'goals.update.success'
+      flash[:notice] = I18n.t 'goals.update.success'
       redirect_to @goal
     else
-      flash.now[:error] = I18n.t 'goals.update.errors'
+      flash.now[:notice] = I18n.t 'goals.errors', count: pluralize(@goal.errors.count, 'error')
       render :edit
     end
   end
 
   def destroy
     @goal.destroy
-    flash[:success] = I18n.t 'goals.destroy.success'
+    flash[:notice] = I18n.t 'goals.destroy.success'
     redirect_to goals_path
   end
 
   def comments
-    @comments = Kaminari.paginate_array(init_comments).page(page_params[:page]).per page_params[:per_page]
+    init_comments
   end
 
   def scores
-    @scores = Kaminari.paginate_array(init_scores).page(page_params[:page]).per page_params[:per_page]
+    init_scores
   end
 
   def search
-    @goals = init_search
+    @goals = init_goals.search_title_and_text query_params[:q]
   end
 
   def subscribers
-    @subscribers = Kaminari.paginate_array(init_subscribers).page(page_params[:page]).per page_params[:per_page]
+    init_subscribers
   end
 
   private

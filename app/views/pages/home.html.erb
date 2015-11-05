@@ -1,39 +1,39 @@
-<%= content_for :page_title, I18n.t('pages.home') %>
-<% user = User.with_highest_score
-   goal = Goal.with_highest_score %>
-<div class="row">
-  <ul class="list-group">
-    <li class="list-group-item">
-      <% if user %>
-          User: <%= link_to user.name, user %>
-          <% if user.score > 0 %>
-              <%= link_to user.score, scores_user_path(user), class: 'badge' %>
-          <% else %>
-              <span class="badge"><%= user.score %></span>
-          <% end %>has the highest score
-      <% end %>
-      <br>
-      <% if goal %>
-          Goal: <%= link_to goal.title, goal %>
-          <% if goal.score > 0 %>
-              <%= link_to goal.score, scores_goal_path(goal), class: 'badge' %>
-          <% else %>
-              <span class="active"><%= goal.score %></span>
-          <% end %>has the highest score
-      <% end %>
-      <br>
-      Comments: <%= Comment.count %> created
-      <br>
-      Goals: <%= Goal.count %> created
-      <br>
-      Scores: <%= Score.count %> created
-      <br>
-      Subscriptions: <%= GoalsUsers.count %> created
-      <br>
-      Tokens: <%= Token.count %> created (sign in to view your tokens)
-      <br>
-      Users: <%= User.where(status: 'active').count %> registered
-      <br>
-    </li>
-  </ul>
-</div>
+<%= cache do %>
+    <%= content_for :page_title, t('pages.home') %>
+    <% user = User.with_highest_score
+       goal = Goal.with_highest_score %>
+    <%= render layout: 'layouts/list_group' do %>
+        <br>
+        <% if user %>
+            <%= link_to user.name, user %>
+            <% if user.score > 0 %>
+                <%= link_to user.score, scores_user_path(user), class: 'badge' %>
+            <% else %>
+                <span class="badge"><%= user.score %></span>
+            <% end %>has the highest score
+        <% end %>
+        <br>
+        <% if goal %>
+            <%= link_to goal.title, goal %>
+            <% if goal.score > 0 %>
+                <%= link_to goal.score, scores_goal_path(goal), class: 'badge' %>
+            <% else %>
+                <span class="active"><%= goal.score %></span>
+            <% end %>has the highest score
+        <% end %>
+        <br>
+        Comments: <%= Comment.count %> created
+        <br>
+        Goals: <%= Goal.count %> created
+        <br>
+        Scores: <%= Score.count %> created
+        <br>
+        Subscriptions: <%= GoalsUsers.count %> created
+        <br>
+        Tokens: <%= Token.count %> created (sign in to view your tokens)
+        <br>
+        Users: <%= User.where(status: 'active').count %> registered
+        <br>
+        <h2 align="center"><%= link_to image_tag('favicon.ico', alt: 'deeprog'), 'http://deeprog.com/' %></h2>
+    <% end %>
+<% end %>

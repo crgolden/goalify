@@ -30,6 +30,10 @@ module ApplicationHelper
     instance_variable_get "@#{resource_name}"
   end
 
+  def get_resources
+    instance_variable_get "@#{controller_name}"
+  end
+
   # The resource class based on the controller
   # @return [Class]
   def resource_class

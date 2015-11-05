@@ -1,45 +1,54 @@
 <h2 align="center">
   <ol class="breadcrumb">
     <% case controller_name
-         when 'pages'
-           case action_name
-             when 'show'
-               case params[:id]
+         when 'pages' %>
+        <% case action_name
+             when 'show' %>
+            <% case params[:id]
                  when 'api' %>
                 <li><%= params[:id].upcase %></li>
             <% else %>
                 <li><%= params[:id].titleize %></li>
             <% end %>
-        <% else
-           end %>
-    <% when 'registrations'
-         case action_name
-           when 'new' %>
+        <% else %>
+        <% end %>
+    <% when 'registrations' %>
+        <% case action_name
+             when 'new, create' %>
             <li>Sign up</li>
-        <% when 'edit' %>
+        <% when 'edit', 'update' %>
             <li><%= link_to resource.class.name, resource %></li>
             <li><%= action_name.titleize %></li>
-        <% else
-           end %>
+        <% else %>
+        <% end %>
     <% when 'sessions' %>
         <li>Sign in</li>
-    <% else
-         case action_name
-           when 'index' %>
+    <% when 'goals', 'users' %>
+        <% case action_name
+             when 'index' %>
             <li><%= link_to controller_name.titleize, controller_path %></li>
+            <li><%= action_name.titleize %></li>
+            <%= paginate get_resources %>
+        <% when 'search' %>
+            <li><%= pluralize(get_resources.count, resource_name).titleize %> found for "<%= params[:q] %>"</li>
+            <%= paginate get_resources %>
         <% when 'new' %>
             <li><%= link_to controller_name.titleize, controller_path %></li>
-        <% when 'search' %>
+            <li><%= action_name.titleize %></li>
         <% else %>
             <li><%= link_to resource_name.titleize, get_resource %></li>
-        <% end
-           if action_name == 'search' %>
-            <li><%= instance_variable_get("@#{controller_name}").count.to_s + ' ' + resource_name.titleize %> results
-              for "<%= params[:q] %>"
-            </li>
-        <% else %>
             <li><%= action_name.titleize %></li>
+            <% unless %q(show, edit, new, create, update, destroy).include? action_name %>
+                <%= paginate instance_variable_get "@#{action_name}" %>
+            <% end %>
         <% end %>
+    <% else %>
     <% end %>
   </ol>
 </h2>
+<%= render 'layouts/flashes' if flash.any? %>
+<% if %q(goals, users).include? controller_name %>
+    <% if %q(show, edit, new, create, update, destroy).include? action_name %>
+        <%= render 'layouts/form_errors', resource: get_resource if get_resource.errors.any? %>
+    <% end %>
+<% end %>

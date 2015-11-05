@@ -1,2 +1,4 @@
-<%= content_for :page_title, I18n.t('goals.title.new') %>
-<%= render 'form' %>
+<%= content_for :page_title, t('goals.title.new') %>
+<%= render layout: 'layouts/list_group' do %>
+    <%= render 'form', goal: @goal %>
+<% end %>

@@ -1,35 +1,19 @@
 <% cache ['v1', goal] do %>
-    <div class="row">
-      <ul class="list-group">
-        <li class="list-group-item">
-          <%= render partial: 'goals/controls', locals: {goal: goal} %>
-          Title: <b><%= goal.title %></b>
-          <br>
-          Score:
-          <% if goal.score > 0 %>
-              <%= link_to goal.score, scores_goal_path(goal), class: 'badge' %>
-          <% else %>
-              <span class="badge"><%= goal.score %></span>
-          <% end %>
-          <br>
-          User: <%= link_to goal.user.name, goal.user %>
-          <% if goal.user.score > 0 %>
-              <%= link_to goal.user.score, scores_user_path(goal.user), class: 'badge' %>
-          <% else %>
-              <span class="badge"><%= goal.user.score %></span>
-          <% end %>
-          <br>
-          <% if goal.comments? %>
-              <%= link_to 'Comments', comments_goal_path(goal) %>
-              <br>
-          <% end %>
-          <% if goal.subscribers? %>
-              <%= link_to 'Subscribers', subscribers_goal_path(goal) %>
-              <br>
-          <% end %>
-          <p><%= goal.text %></p>
-          <%= render partial: 'comments/form', locals: {comment: goal.comments.build, goal: goal} if user_signed_in? %>
-        </li>
-      </ul>
-    </div>
+    <p><%= goal.text %></p>
+    Title: <b><%= goal.title %></b>
+    <br>
+    Score:
+    <% if goal.score > 0 %>
+        <%= link_to goal.score, scores_goal_path(goal), class: 'badge' %>
+    <% else %>
+        <span class="badge"><%= goal.score %></span>
+    <% end %>
+    <br>
+    User: <%= link_to goal.user.name, goal.user %>
+    <% if goal.user.score > 0 %>
+        <%= link_to goal.user.score, scores_user_path(goal.user), class: 'badge' %>
+    <% else %>
+        <span class="badge"><%= goal.user.score %></span>
+    <% end %>
+    <br>
 <% end %>

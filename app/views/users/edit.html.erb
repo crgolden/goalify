@@ -1,2 +1,6 @@
-<%= content_for :page_title, I18n.t('users.title.edit') %>
-<%= render partial: 'form', locals: {action: :update} %>
+<%= content_for :page_title, t('users.title.edit') %>
+<%= content_for :nav, render('dropdown_menu') %>
+<%= render layout: 'layouts/list_group' do %>
+    <%= render 'controls', user: @user %>
+    <%= render 'form', user: @user, url: admin_user_path, action: :update %>
+<% end %>

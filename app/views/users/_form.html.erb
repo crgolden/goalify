@@ -1,41 +1,33 @@
-<div class="row">
-  <ul class="list-group">
-    <li class="list-group-item">
-      <%= render partial: 'layouts/form_errors', locals: {resource: @user} if @user.errors.any? %>
-      <%= render partial: 'users/controls', locals: {user: @user} unless action_name == 'new' or action_name == 'create' %>
-      <%= form_for @user, url: admin_user_path, action: action, html: {class: 'form'} do |f| %>
-          <div class="form-group">
-            <%= f.label :name, class: 'control-label' %>
-            <%= f.text_field :name, autofocus: true, class: 'form-control', placeholder: 'Name' %>
-          </div>
-          <div class="form-group">
-            <%= f.label :email, class: 'control-label' %>
-            <%= f.text_field :email, class: 'form-control', placeholder: 'Email' %>
-          </div>
-          <% if user_signed_in? && current_user.admin? %>
-              <div class="form-group">
-                <%= f.label :status, class: 'control-label' %>
-                <%= f.select(:status, User.statuses.keys, {}, class: 'form-control') %>
-              </div>
-              <div class="form-group">
-                <%= f.label :role, class: 'control-label' %>
-                <%= f.select(:role, User.roles.keys, {}, class: 'form-control') %>
-              </div>
-          <% end %>
-          <fieldset>
-            <div class="form-group">
-              <%= f.label :password, class: 'control-label' %>
-              <%= f.password_field :password, class: 'form-control', placeholder: 'Password' %>
-            </div>
-            <div class="form-group">
-              <%= f.label :password_confirmation, class: 'control-label' %>
-              <%= f.password_field :password_confirmation, class: 'form-control', placeholder: 'Password' %>
-            </div>
-          </fieldset>
-          <div class="form-group">
-            <%= f.submit class: 'btn btn-default' %>
-          </div>
-      <% end %>
-    </li>
-  </ul>
-</div>
+<%= form_for user, url: url, action: action, html: {class: 'form'} do |f| %>
+    <div class="form-group">
+      <%= f.label :name, class: 'control-label' %>
+      <%= f.text_field :name, autofocus: true, class: 'form-control', placeholder: 'Name' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :email, class: 'control-label' %>
+      <%= f.text_field :email, class: 'form-control', placeholder: 'Email' %>
+    </div>
+    <% if user_signed_in? && current_user.admin? %>
+        <div class="form-group">
+          <%= f.label :status, class: 'control-label' %>
+          <%= f.select :status, User.statuses.keys, {}, class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :role, class: 'control-label' %>
+          <%= f.select :role, User.roles.keys, {}, class: 'form-control' %>
+        </div>
+    <% end %>
+    <fieldset>
+      <div class="form-group">
+        <%= f.label :password, class: 'control-label' %>
+        <%= f.password_field :password, class: 'form-control', placeholder: 'Password' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :password_confirmation, class: 'control-label' %>
+        <%= f.password_field :password_confirmation, class: 'form-control', placeholder: 'Password' %>
+      </div>
+    </fieldset>
+    <div class="form-group">
+      <%= f.submit class: 'btn btn-default' %>
+    </div>
+<% end %>

@@ -1,0 +1,9 @@
+<%= form_tag search_users_path, method: :get, class: 'navbar-form navbar-left' do %>
+    <div class="form-group input-group">
+      <div class="input-group-addon">Users:</div>
+      <%= search_field_tag :q, nil, class: 'form-control' %>
+    </div>
+    <div class="form-group">
+      <%= submit_tag 'Search', class: 'btn btn-default' %>
+    </div>
+<% end %>

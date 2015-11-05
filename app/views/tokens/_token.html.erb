@@ -1,33 +1,20 @@
 <% cache ['v1', token] do %>
-    <div class="row">
-      <ul class="list-group">
-        <li class="list-group-item">
-          <h5>
-            <% if can? :destroy, token %>
-                <%= link_to token, method: :delete, data: {confirm: 'Are you sure?'} do %>
-                    <i class="glyphicon glyphicon-trash"></i> Delete
-                <% end %>
-            <% end %>
-          </h5>
-          <%= image_tag token.image, width: '50', height: '50' %>
-          <br>
-          Provider: <b><%= token.provider %></b>
-          <br>
-          UID: <b><%= token.uid %></b>
-          <br>
-          Expires at: <b><%= token.expires_at.to_formatted_s :short %></b>
-          <br>
-          Access token: <b><%= token.access_token %></b>
-          <br>
-          Refresh token: <b><%= token.refresh_token %></b>
-          <br>
-          User: <%= link_to token.user.name, token.user %>
-          <% if token.user.score > 0 %>
-              <%= link_to token.user.score, scores_user_path(user: token.user), class: 'badge' %>
-          <% else %>
-              <span class="badge"><%= token.user.score %></span>
-          <% end %>
-        </li>
-      </ul>
-    </div>
+    <%= image_tag token.image, width: '50', height: '50' %>
+    <br>
+    Provider: <b><%= token.provider %></b>
+    <br>
+    UID: <b><%= token.uid %></b>
+    <br>
+    Expires at: <b><%= token.expires_at.to_formatted_s :short %></b>
+    <br>
+    Access token: <b><%= token.access_token %></b>
+    <br>
+    Refresh token: <b><%= token.refresh_token %></b>
+    <br>
+    User: <%= link_to token.user.name, token.user %>
+    <% if token.user.score > 0 %>
+        <%= link_to token.user.score, scores_user_path(user: token.user), class: 'badge' %>
+    <% else %>
+        <span class="badge"><%= token.user.score %></span>
+    <% end %>
 <% end %>

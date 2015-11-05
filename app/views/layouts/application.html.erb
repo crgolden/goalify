@@ -19,19 +19,10 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <%= link_to image_tag('favicon.ico', alt: 'Goalify', class: 'navbar-brand'), root_path %>
+      <%= link_to image_tag('favicon.ico', alt: 'deeprog', class: 'navbar-brand'), root_path %>
     </div>
     <div class="collapse navbar-collapse">
-      <%= render 'layouts/nav' %>
-      <%= form_tag search_goals_path, method: :get, class: 'navbar-form navbar-left' do %>
-          <div class="form-group input-group">
-            <div class="input-group-addon">Goals:</div>
-            <%= search_field_tag :q, nil, class: 'form-control' %>
-          </div>
-          <div class="form-group">
-            <%= submit_tag 'Search', class: 'btn btn-default' %>
-          </div>
-      <% end %>
+      <%= render 'layouts/navbar_nav' %>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
@@ -56,31 +47,7 @@
           <div class="row">
             <div class="col-sm-offset-2 col-sm-8">
               <div class="container">
-                <% if flash.any?
-                     flash.each do |msg_type, message| %>
-                        <div class="alert <%= bootstrap_class_for msg_type %> alert-dismissible " role="alert">
-                          <button class="close" data-dismiss="alert">&times;</button>
-                          <i class="glyphicon glyphicon-<%= bootstrap_icon_for msg_type %>">&nbsp;</i><%= message %>
-                        </div>
-                    <% end
-                       flash.clear %>
-                <% end %>
-                <div class="row">
-                  <ul class="list-group">
-                    <li class="list-group-item">
-                      <%= render 'layouts/breadcrumb' %>
-                    </li>
-                  </ul>
-                </div>
-                <% if ['goals', 'users'].include?(controller_name)
-                     unless ['new', 'create', 'show', 'edit', 'update'].include?(action_name)
-                       if ['index', 'search'].include?(action_name) %>
-                            <%= paginate instance_variable_get("@#{controller_name}") %>
-                        <% else %>
-                            <%= paginate instance_variable_get("@#{action_name}") %>
-                        <% end %>
-                    <% end %>
-                <% end %>
+                <%= render partial: 'layouts/breadcrumb', layout: 'layouts/list_group' %>
                 <%= yield %>
               </div>
             </div>

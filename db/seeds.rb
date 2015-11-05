@@ -13,30 +13,30 @@ end
 500.times do
   Token.create access_token: Faker::Lorem.characters(12), refresh_token: Faker::Lorem.characters(8),
                provider: Faker::Lorem.word, uid: Faker::Number.between(1, 100), expires_at: Time.now,
-               user: User.offset(rand(User.count)).first, image: Faker::Avatar.image
+               user: User.offset(rand User.count).first, image: Faker::Avatar.image
 end
 
 1500.times do
   Goal.create title: Faker::Lorem.word, text: Faker::Lorem.paragraph(4),
-              user: User.offset(rand(User.count)).first
+              user: User.offset(rand User.count).first
 end
 
 2500.times do
-  user = User.offset(rand(User.count)).first
-  goal = Goal.offset(rand(Goal.count)).first
-  goal = Goal.offset(rand(Goal.count)).first while GoalsUsers.find_by(goal: goal, user: user).present?
-  GoalsUsers.create goal: goal, user: user
+  subscriber = User.offset(rand User.count).first
+  subscription = Goal.offset(rand Goal.count).first
+  subscription = Goal.offset(rand Goal.count).first while GoalsUsers.find_by(goal: subscription, user: subscriber).present?
+  GoalsUsers.create goal: subscription, user: subscriber
   rand = rand 5
   if rand == (1 || 2)
-    GoalsUsers.find_by(goal: goal, user: user).update completed: true
+    GoalsUsers.find_by(goal: subscription, user: subscriber).update completed: true
     if rand == 1
-      users = GoalsUsers.where(completed: false)
-      users.offset(rand(users.count)).first.update completed: true
+      subscriptions = GoalsUsers.where completed: false
+      subscriptions.offset(rand subscriptions.count).first.update completed: true
     end
   end
 end
 
 1500.times do
-  Comment.create body: Faker::Lorem.paragraph, user: User.offset(rand(User.count)).first,
-                 goal: Goal.offset(rand(Goal.count)).first
+  Comment.create body: Faker::Lorem.paragraph, user: User.offset(rand User.count).first,
+                 goal: Goal.offset(rand Goal.count).first
 end

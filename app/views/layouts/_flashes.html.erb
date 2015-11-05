@@ -1,0 +1,7 @@
+<% flash.each do |msg_type, message| %>
+    <h5 class="alert <%= bootstrap_class_for msg_type %> alert-dismissible" align="center">
+      <button class="close" data-dismiss="alert">&times;</button>
+      <i class="glyphicon glyphicon-<%= bootstrap_icon_for msg_type %>">&nbsp;</i><%= message %>
+    </h5>
+<% end %>
+<% flash.clear %>

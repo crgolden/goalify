@@ -1,21 +1,13 @@
-<div class="row">
-  <ul class="list-group">
-    <li class="list-group-item">
-      <%= render partial: 'layouts/form_errors', locals: {resource: @goal} if @goal.errors.any? %>
-      <%= render partial: 'goals/controls', locals: {goal: @goal} unless action_name == 'new' %>
-      <%= form_for(@goal, html: {class: 'form'}) do |f| %>
-          <div class="form-group">
-            <%= f.label :title, class: 'control-label' %>
-            <%= f.text_field :title, class: 'form-control', placeholder: 'Title' %>
-          </div>
-          <div class="form-group">
-            <%= f.label :text, class: 'control-label' %>
-            <%= f.text_area :text, class: 'form-control', placeholder: 'Text' %>
-          </div>
-          <div class="form-group">
-            <%= f.submit class: 'btn btn-default' %>
-          </div>
-      <% end %>
-    </li>
-  </ul>
-</div>
+<%= form_for(goal, html: {class: 'form'}) do |f| %>
+    <div class="form-group">
+      <%= f.label :title, class: 'control-label' %>
+      <%= f.text_field :title, class: 'form-control', placeholder: 'Title' %>
+    </div>
+    <div class="form-group">
+      <%= f.label :text, class: 'control-label' %>
+      <%= f.text_area :text, class: 'form-control', placeholder: 'Text' %>
+    </div>
+    <div class="form-group">
+      <%= f.submit class: 'btn btn-default' %>
+    </div>
+<% end %>

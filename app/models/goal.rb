@@ -29,10 +29,6 @@ class Goal < ActiveRecord::Base
     self.scores.any?
   end
 
-  def subscriptions?
-    self.steps.any?
-  end
-
   def subscribers?
     self.subscribers.any?
   end

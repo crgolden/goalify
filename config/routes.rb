@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: {omniauth_callbacks: 'users/omniauth_callbacks', registrations: 'users/registrations'}
 
+  get 'about' => 'high_voltage/pages#show', id: 'about'
+  get 'api' => 'high_voltage/pages#show', id: 'api'
+  get 'blog' => 'high_voltage/pages#show', id: 'blog'
+
   resources :goals do
     collection do
       get '(page/:page)', action: :index

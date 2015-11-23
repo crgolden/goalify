@@ -14,7 +14,7 @@
         <% end %>
     <% when 'registrations' %>
         <% case action_name
-             when 'new, create' %>
+             when 'new', 'create' %>
             <li>Sign up</li>
         <% when 'edit', 'update' %>
             <li><%= link_to resource.class.name, resource %></li>

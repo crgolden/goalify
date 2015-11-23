@@ -3,6 +3,7 @@ gem 'actionpack-action_caching'
 gem 'actionpack-page_caching'
 gem 'bootstrap-sass'
 gem 'cancancan'
+gem 'coffee-script-source', '1.8.0'
 gem 'coffee-rails' # Use CoffeeScript for .coffee assets and views
 gem 'devise'
 gem 'faker'

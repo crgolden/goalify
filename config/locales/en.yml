@@ -85,6 +85,10 @@ en:
     session:
       title:
         new: "Goalify: Sign In"
+    password:
+      title:
+        new: "Goalify: Reset Password"
+        edit: "Goalify: Edit Password"
     title:
       index: "Goalify: All Users"
       show: "Goalify: Showing User"

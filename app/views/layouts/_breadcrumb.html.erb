@@ -12,6 +12,15 @@
             <% end %>
         <% else %>
         <% end %>
+    <% when 'passwords' %>
+        <% case action_name
+             when 'new', 'create' %>
+            <li>Reset Password</li>
+        <% when 'edit', 'update' %>
+            <li><%= link_to resource.class.name, resource %></li>
+            <li><%= action_name.titleize %></li>
+        <% else %>
+        <% end %>
     <% when 'registrations' %>
         <% case action_name
              when 'new', 'create' %>
